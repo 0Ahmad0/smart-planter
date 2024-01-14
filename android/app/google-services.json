@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "106221736878",
+    "firebase_url": "https://plant-care-1e777-default-rtdb.firebaseio.com",
+    "project_id": "plant-care-1e777",
+    "storage_bucket": "plant-care-1e777.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:106221736878:android:3bcfe24943b17d1e58ee3f",
+        "android_client_info": {
+          "package_name": "com.example.plant_flutter_application_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRsbVQn0gh7jjswxRHy74D5CQPxr8ijk8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:106221736878:android:5114e0fd193d0c3258ee3f",
+        "android_client_info": {
+          "package_name": "com.example.smart_plans"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRsbVQn0gh7jjswxRHy74D5CQPxr8ijk8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
