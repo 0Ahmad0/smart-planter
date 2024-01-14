@@ -9,6 +9,7 @@ class ColorManager{
   static const textFieldHintColor = Color(0xffB9B9B9);
   static const facebookButtonColor = Color(0xff4C8ECC);
   static const appBarColor = Color(0xff212A34);
+  static const progressColor = Color(0xffAFD056);
 
   ///--- Neutral
   static const black = Color(0xff13181E);

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:smart_plans/app/widgets/details_plant_widget.dart';
+import 'package:smart_plans/core/route/app_route.dart';
 import 'package:smart_plans/core/utils/app_constant.dart';
 import 'package:smart_plans/core/utils/assets_manager.dart';
 
@@ -46,7 +48,29 @@ class MyPlantItem extends StatelessWidget {
               children: AppConstants.plantsDetailsList
                   .map(
                     (e) => DetailsPlantWidget(
-                      onTap: () {},
+                      onTap: () {
+                        print(e.text);
+                        if (e.text != 'Monitor') {
+                          Get.toNamed(
+                            AppRoute.detailsRoute,
+                            arguments: {
+                              'text': e.text,
+                              'details':{
+                                'pump':'e.pumb',
+                                'quantity':'e.quantity',
+                                'soil':'e.soil',
+                                'repeat':'e.repeat',
+
+                              }
+                            },
+                          );
+                        } else {
+                          Get.toNamed(
+                            AppRoute.monitorDetailsRoute,
+                            arguments: {'text': e.text},
+                          );
+                        }
+                      },
                       text: e.text,
                       image: e.image,
                     ),

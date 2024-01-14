@@ -18,6 +18,10 @@ class AppString {
   static const empty= 'Empty';
   static const establishConnection = 'Go to settings to establish a connection';
   static const addPlant = 'Add Plant';
+  static const age = 'Age : ';
+  static const pump = 'Pump : ';
+  static const apply = 'Apply';
+
 
   ///<User Message>//
   static const requiredFiled = 'Filed is required*';

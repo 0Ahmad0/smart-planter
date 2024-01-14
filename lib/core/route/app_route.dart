@@ -1,4 +1,6 @@
 import 'package:smart_plans/app/pages/add_plant_screen.dart';
+import 'package:smart_plans/app/pages/details/details_screen.dart';
+import 'package:smart_plans/app/pages/details/monitor_details_screen.dart';
 
 import '../../app/pages/forget_passord_screen.dart';
 import '../../app/pages/home_screen.dart';
@@ -14,6 +16,8 @@ class AppRoute {
   static const forgetPasswordRoute = '/forgetPassword';
   static const homeRoute = '/home';
   static const addPlantRoute = '/addPlant';
+  static const detailsRoute = '/details';
+  static const monitorDetailsRoute = '/monitorDetails';
 
   ///<Screens Widgets>///
 
@@ -24,5 +28,7 @@ class AppRoute {
     forgetPasswordRoute: (context) => ForgetPasswordScreen(),
     homeRoute: (context) => HomeScreen(),
     addPlantRoute: (context) => AddPlantScreen(),
+    detailsRoute: (context) => DetailsScreen(),
+    monitorDetailsRoute: (context) => MonitorDetailsScreen(),
   };
 }
