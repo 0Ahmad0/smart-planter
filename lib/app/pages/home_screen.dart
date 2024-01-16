@@ -2,6 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:smart_plans/app/controller/controller.dart';
+import 'package:smart_plans/app/widgets/add_new_plant.dart';
 import 'package:smart_plans/app/widgets/drawer_widget.dart';
 import 'package:smart_plans/app/widgets/my_plant_item.dart';
 import 'package:smart_plans/core/helper/sizer_media_query.dart';
@@ -20,51 +22,57 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.toNamed(AppRoute.addPlantRoute);
-        },
-        child: Icon(Icons.add),
-      ),
-      appBar: AppBar(
-        title: Text(AppString.myPlants),
-        leading: Builder(builder: (context) {
-          return IconButton(
+    final ListController listPlant = Get.put(ListController());
+    return Obx(() => Scaffold(
+          floatingActionButton: FloatingActionButton(
             onPressed: () {
-              Scaffold.of(context).openDrawer();
+              Get.toNamed(AppRoute.connectionWifiRoute);
             },
-            icon: Icon(
-              Icons.settings_outlined,
-              size: 40.sp,
-            ),
-          );
-        }),
-      ),
-      drawer: DrawerWidget(),
-      body: AppConstants.plantsList.isNotEmpty
-          ? Center(
-              child: CarouselSlider(
-                options: CarouselOptions(
-                  height: getWidth(context),
-                  viewportFraction: .9,
-                  initialPage: 0,
-                  enableInfiniteScroll: false,
-                  reverse: false,
-                  autoPlayCurve: Curves.fastOutSlowIn,
-                  enlargeCenterPage: true,
-                  enlargeFactor: 0.17,
+            child: Icon(Icons.add),
+          ),
+          appBar: AppBar(
+            title: Text(AppString.myPlants),
+            leading: Builder(builder: (context) {
+              return IconButton(
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+                icon: Icon(
+                  Icons.settings_outlined,
+                  size: 40.sp,
                 ),
-                items: AppConstants.plantsList.map((i) {
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return MyPlantItem();
-                    },
-                  );
-                }).toList(),
+              );
+            }),
+          ),
+          drawer: DrawerWidget(),
+          body: listPlant.list.isNotEmpty
+              ? Center(
+            child: CarouselSlider(
+              options: CarouselOptions(
+                height: getWidth(context),
+                viewportFraction: .9,
+                initialPage: 0,
+                enableInfiniteScroll: false,
+                reverse: false,
+                autoPlayCurve: Curves.fastOutSlowIn,
+                enlargeCenterPage: true,
+                enlargeFactor: 0.17,
               ),
-            )
-          : EmptyPlantsWidget(),
-    );
+              items: [1].map((i) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return MyPlantItem();
+                  },
+                );
+              }).toList(),
+            ),
+          )
+              : (listPlant.listTemp.isNotEmpty)
+                  ? AddNewPlant()
+                  : EmptyPlantsWidget(),
+        ));
   }
 }
+/*
+
+ */

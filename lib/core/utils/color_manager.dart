@@ -14,12 +14,10 @@ class ColorManager{
   ///--- Neutral
   static const black = Color(0xff13181E);
   static const white = Color(0xffFFFFFF);
-  static const grey = Color(0xffDADEE7);
+  static const grey = Colors.grey;
   // static const darkGrey = Color(0xff827D89);
   // static const lightGrey = Color(0xffEFEEF0);
 
-  ///--- Scaffold BackGround
-  static const scaffoldBackground = Color(0xffEDF2FD);
   ///--- Success
   static const success = Color(0xff16FACD);
   // static const successDark = Color(0xff1F7F40);

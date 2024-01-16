@@ -8,7 +8,7 @@ class AppConstants {
   static double designWidth = 430.0;
   static double designHeight = 932.0;
 
-  static final List<String> plantsList = ['1','2','3','4','5'];
+  static final List<String> plantsList = [];
   static final List<PlantModel> plantsDetailsList = [
     PlantModel(text: 'Fertilize', image: AssetsManager.seedBagIMG),
     PlantModel(text: 'Water', image: AssetsManager.waterDropIMG),

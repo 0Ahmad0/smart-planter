@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -96,48 +97,17 @@ class _DetailsScreenState extends State<DetailsScreen> {
             Row(
               children: [
                 Expanded(
-                    child: TextField(
-                  autofocus: true,
-                  readOnly: true,
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: AppSize.s12),
-                    border: OutlineInputBorder(),
-                  ),
+                    child: DetailsContainer(
+                  value: '10',
                 )),
                 const SizedBox(
                   width: AppSize.s10,
                 ),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.r),
-                    ),
-                    minimumSize: Size(50.w, 50.w),
-                    backgroundColor: ColorManager.secondary,
-                  ),
-                  onPressed: () {},
-                  child: Icon(
-                    Icons.add,
-                    color: ColorManager.primary,
-                  ),
-                ),
+                DetailsButton(icon: Icons.add,onPressed: (){},),
                 const SizedBox(
                   width: AppSize.s10,
                 ),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.r),
-                    ),
-                    minimumSize: Size(50.w, 50.w),
-                    backgroundColor: ColorManager.secondary,
-                  ),
-                  onPressed: () {},
-                  child: Icon(
-                    Icons.remove,
-                    color: ColorManager.primary,
-                  ),
-                ),
+                DetailsButton(icon: Icons.remove,onPressed: (){},),
               ],
             ),
 
@@ -154,48 +124,16 @@ class _DetailsScreenState extends State<DetailsScreen> {
             Row(
               children: [
                 Expanded(
-                    child: TextField(
-                  autofocus: true,
-                  readOnly: true,
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: AppSize.s12),
-                    border: OutlineInputBorder(),
-                  ),
-                )),
+                    child: DetailsContainer(value: '20',)),
                 const SizedBox(
                   width: AppSize.s10,
                 ),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.r),
-                    ),
-                    minimumSize: Size(50.w, 50.w),
-                    backgroundColor: ColorManager.secondary,
-                  ),
-                  onPressed: () {},
-                  child: Icon(
-                    Icons.add,
-                    color: ColorManager.primary,
-                  ),
-                ),
+                DetailsButton(icon: Icons.add,onPressed: (){},),
                 const SizedBox(
                   width: AppSize.s10,
                 ),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.r),
-                    ),
-                    minimumSize: Size(50.w, 50.w),
-                    backgroundColor: ColorManager.secondary,
-                  ),
-                  onPressed: () {},
-                  child: Icon(
-                    Icons.remove,
-                    color: ColorManager.primary,
-                  ),
-                ),
+                DetailsButton(icon: Icons.remove,onPressed: (){},),
+
               ],
             ),
 
@@ -213,11 +151,15 @@ class _DetailsScreenState extends State<DetailsScreen> {
             DropdownButtonFormField(
                 icon: Icon(
                   Icons.keyboard_arrow_down,
-                  color: ColorManager.secondary,
+                  color: ColorManager.primary,
                 ),
                 decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: AppSize.s12),
-                    border: OutlineInputBorder()),
+                    filled: true,
+                    fillColor: ColorManager.secondary,
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: AppSize.s12),
+                    border: OutlineInputBorder(),
+                    hintText: 'value'),
                 items: [1, 2, 3, 4]
                     .map((e) => DropdownMenuItem(
                           child: Text(
@@ -239,6 +181,61 @@ class _DetailsScreenState extends State<DetailsScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class DetailsButton extends StatelessWidget {
+  const DetailsButton({
+    super.key,
+    required this.icon,
+    this.onPressed,
+  });
+
+  final IconData icon;
+  final VoidCallback? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      style: TextButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.r),
+        ),
+        minimumSize: Size(50.w, 50.w),
+        backgroundColor: ColorManager.secondary,
+      ),
+      onPressed: onPressed,
+      child: Icon(
+        icon,
+        color: ColorManager.primary,
+      ),
+    );
+  }
+}
+
+class DetailsContainer extends StatelessWidget {
+  const DetailsContainer({
+    super.key,
+    required this.value,
+  });
+
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      style: StylesManager.titleNormalTextStyle(
+          size: 20.sp, color: ColorManager.primary),
+      textAlign: TextAlign.center,
+      controller: TextEditingController(text: value),
+      onTap: null,
+      readOnly: true,
+      decoration: InputDecoration(
+          contentPadding: EdgeInsets.symmetric(horizontal: AppSize.s12),
+          border: OutlineInputBorder(),
+          filled: true,
+          fillColor: ColorManager.secondary),
     );
   }
 }

@@ -9,14 +9,16 @@ import '../../core/utils/values_manager.dart';
 class DetailsPlantWidget extends StatelessWidget {
   const DetailsPlantWidget({
     super.key,
-    required this.onTap,
+     this.onTap,
     required this.text,
     required this.image,
+    this.active = true,
   });
 
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final String text;
   final String image;
+  final bool active;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ class DetailsPlantWidget extends StatelessWidget {
               margin: const EdgeInsets.only(top: AppMargin.m30,left: AppMargin.m8,right: AppMargin.m8,),
               padding: const EdgeInsets.all( AppPadding.p8),
               decoration: BoxDecoration(
-                  color: ColorManager.primary,
+                  color: active?ColorManager.primary:ColorManager.grey,
                   borderRadius: BorderRadius.circular(14.r)),
               child: Text(text,style: StylesManager.titleBoldTextStyle(
                 size: 22.sp
@@ -51,7 +53,8 @@ class DetailsPlantWidget extends StatelessWidget {
                     color: ColorManager.secondary,
                     width: AppSize.s4,
                   ),
-                  color: ColorManager.primary,
+
+                  color: active?ColorManager.primary:ColorManager.grey,
                   shape: BoxShape.circle),
               child: Padding(
                 padding: const EdgeInsets.all(AppPadding.p10),

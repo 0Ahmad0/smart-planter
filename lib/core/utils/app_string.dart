@@ -21,6 +21,11 @@ class AppString {
   static const age = 'Age : ';
   static const pump = 'Pump : ';
   static const apply = 'Apply';
+  static const connectionWifi = 'Connections Wifi';
+  static const notifications = 'Notifications';
+  static const setting = 'Setting';
+  static const userProfile = 'User Profile';
+
 
 
   ///<User Message>//

@@ -7,6 +7,7 @@ class AssetsManager {
   static const String splashBackgroundIMG = '$imagePath/splash_background.png';
   static const String logoIMG = '$imagePath/logo.png';
   static const String emptyIMG = '$imagePath/empty_plants.png';
+  static const String addPlantIMG = '$imagePath/add_plant.png';
 
   ///=================<<Icon>>=================///
   static const String cameraIMG = '$iconPath/camera.png';

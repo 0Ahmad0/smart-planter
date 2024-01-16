@@ -24,6 +24,9 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(AppString.resetPassword),
+      ),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
@@ -32,23 +35,26 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(
-                  height: AppSize.s20,
-                ),
-                Text(
-                  AppString.resetPassword,
-                  textAlign: TextAlign.start,
-                  style: StylesManager.titleBoldTextStyle(
-                    size: 40,
+                Container(
+                  padding: EdgeInsets.all(AppPadding.p12),
+                  decoration: BoxDecoration(
+                      color: ColorManager.secondary,
+                      borderRadius: BorderRadius.circular(8.r)),
+                  child: ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: Icon(Icons.notes_sharp,color: ColorManager.error,),
+                    subtitle: Text(
+                      AppString.emailRecoveryDescription,
+                      textAlign: TextAlign.center,
+                      style: StylesManager.titleNormalTextStyle(
+                        size: 20.sp,
+
+                        color: ColorManager.black
+                      )?.copyWith(
+                        height: 1.8,
+                      ),
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: AppSize.s20,
-                ),
-                Text(
-                  AppString.emailRecoveryDescription,
-                  textAlign: TextAlign.start,
-                  style: StylesManager.titleBoldTextStyle(size: 20.sp,),
                 ),
                 const SizedBox(
                   height: AppSize.s30,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:smart_plans/core/route/app_route.dart';
 import 'package:smart_plans/core/utils/app_string.dart';
 import 'package:smart_plans/core/utils/assets_manager.dart';
 import 'package:smart_plans/core/utils/styles_manager.dart';
@@ -25,7 +27,9 @@ class EmptyPlantsWidget extends StatelessWidget {
             style: StylesManager.titleNormalTextStyle(),
           ),
           TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.toNamed(AppRoute.connectionWifiRoute);
+              },
               child: Text(
                 AppString.establishConnection,
                 style: TextStyle(

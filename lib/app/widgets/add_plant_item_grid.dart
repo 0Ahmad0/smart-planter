@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:smart_plans/core/route/app_route.dart';
 import 'package:smart_plans/core/utils/color_manager.dart';
 import 'package:smart_plans/core/utils/values_manager.dart';
 
 import '../../core/utils/styles_manager.dart';
+import '../controller/controller.dart';
 
 class AddPlantItemGrid extends StatelessWidget {
   const AddPlantItemGrid({
@@ -12,8 +15,13 @@ class AddPlantItemGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ListController listController = Get.find();
+
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        listController.add();
+        Get.offAllNamed(AppRoute.homeRoute);
+      },
       child: Container(
         padding: const EdgeInsets.all(AppPadding.p6),
         decoration: BoxDecoration(
