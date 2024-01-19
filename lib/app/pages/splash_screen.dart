@@ -12,6 +12,8 @@ import 'package:smart_plans/core/utils/color_manager.dart';
 import 'package:smart_plans/core/utils/styles_manager.dart';
 import 'package:smart_plans/core/utils/values_manager.dart';
 
+import '../controller/splashController.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -26,8 +28,9 @@ class _SplashScreenState extends State<SplashScreen> {
       //time navigation
       Duration(seconds: AppConstants.splashDelay),
       () {
+        SplashController().init(context);
         //get navigation by screen name
-        Get.offNamed(AppRoute.loginRoute);
+        ///Get.offNamed(AppRoute.loginRoute);
       },
     );
   }

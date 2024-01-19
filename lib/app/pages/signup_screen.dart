@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:smart_plans/core/utils/app_constant.dart';
+import '../controller/auth_controller.dart';
 import '/app/widgets/textfield_app.dart';
 import '/core/helper/sizer_media_query.dart';
 import '/core/route/app_route.dart';
@@ -27,7 +29,13 @@ class _SignupScreenState extends State<SignupScreen> {
 
   //
   final _formKey = GlobalKey<FormState>();
+  late AuthController authController;
 
+  @override
+  void initState() {
+    authController = AuthController(context: context);
+    super.initState();
+  }
   @override
   void dispose() {
     nameController.dispose();
@@ -125,7 +133,11 @@ class _SignupScreenState extends State<SignupScreen> {
                     backgroundColor: ColorManager.secondary,
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        print('Yes');
+                          authController.signUp(context,
+                              email: emailController.value.text,
+                              password: passwordController.value.text,
+                              typeUser: AppConstants.collectionUser,
+                              name: nameController.value.text);
                       } else {
                         print('No');
                       }

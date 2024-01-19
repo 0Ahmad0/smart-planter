@@ -7,6 +7,7 @@ import '../../core/utils/app_string.dart';
 import '../../core/utils/color_manager.dart';
 import '../../core/utils/styles_manager.dart';
 import '../../core/utils/values_manager.dart';
+import '../controller/auth_controller.dart';
 import '../widgets/button_app.dart';
 import '../widgets/textfield_app.dart';
 
@@ -21,6 +22,13 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   final emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
+  late AuthController authController;
+
+  @override
+  void initState() {
+    authController = AuthController(context: context);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,8 +82,9 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   text: AppString.send,
                   textColor: ColorManager.primary,
                   backgroundColor: ColorManager.secondary,
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
+                      await authController.sendPasswordResetEmail(context, email: emailController.value.text);
                       print('Send Email ');
                     } else {
                       print('Error');

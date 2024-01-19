@@ -10,6 +10,7 @@ import 'package:smart_plans/core/utils/color_manager.dart';
 import 'package:smart_plans/core/utils/styles_manager.dart';
 import 'package:smart_plans/core/utils/values_manager.dart';
 
+import '../controller/auth_controller.dart';
 import '../widgets/button_app.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -26,6 +27,13 @@ class _LoginScreenState extends State<LoginScreen> {
   //
   final _formKey = GlobalKey<FormState>();
 
+  late AuthController authController;
+
+  @override
+  void initState() {
+    authController = AuthController(context: context);
+    super.initState();
+  }
   @override
   void dispose() {
     emailController.dispose();
@@ -88,9 +96,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     text: AppString.login,
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        print('Yes');
-                        Get.offNamed(AppRoute.homeRoute);
-
+                        authController.login(
+                          context,
+                          email:emailController.value.text ,
+                          password: passwordController.value.text,
+                        );
                       } else {
                         print('No');
                       }

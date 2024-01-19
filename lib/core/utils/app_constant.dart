@@ -15,4 +15,15 @@ class AppConstants {
     PlantModel(text: 'Monitor', image: AssetsManager.cameraIMG),
   ];
 
+  //local storage
+  static const rememberMe = "rememberMe";
+  static const tokenKEY = "token";
+  static const idKEY = "id";
+  static const uidKEY = "uid";
+  //collection
+  static String collection = "";
+  static String collectionUser = "User";
+  static String collectionNotification = "Notification";
+
+
 }

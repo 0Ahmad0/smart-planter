@@ -47,6 +47,16 @@ dependencies:
   esptouch_smartconfig: ^1.1.0
   flutter_blue: ^0.8.0
 
+  get_storage:
+  #firebase:
+  firebase_auth:
+  cloud_firestore:
+  firebase_storage:
+  #flutter_state_management:
+  provider:
+
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
