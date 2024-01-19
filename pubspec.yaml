@@ -41,19 +41,20 @@ dependencies:
   flutter_spinkit: ^5.2.0
   flutter_launcher_icons: ^0.13.1
   carousel_slider: ^4.2.1
-  firebase_core: ^2.24.2
   percent_indicator: ^4.2.3
   intl: ^0.18.1
-  esptouch_smartconfig: ^1.1.0
-  flutter_blue: ^0.8.0
+#  esptouch_smartconfig: ^1.1.0
+#  flutter_blue: ^0.8.0
 
-  get_storage:
   #firebase:
-  firebase_auth:
-  cloud_firestore:
-  firebase_storage:
+  firebase_core: ^2.15.1
+  firebase_auth: ^4.8.0
+  firebase_storage: ^11.2.6
+  cloud_firestore: ^4.9.0
   #flutter_state_management:
   provider:
+  #local_db:
+  get_storage:
 
 
 

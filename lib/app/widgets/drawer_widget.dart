@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:smart_plans/app/controller/auth_controller.dart';
 import 'package:smart_plans/core/route/app_route.dart';
 import 'package:smart_plans/core/utils/app_string.dart';
 import 'package:smart_plans/core/utils/color_manager.dart';
