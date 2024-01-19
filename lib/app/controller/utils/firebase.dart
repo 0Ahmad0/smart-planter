@@ -279,9 +279,22 @@ class FirebaseFun{
   static Future<Map<String,dynamic>>  onError(error) async {
     print(false);
     print(error);
+    var errorMessage;
+    if (error is FirebaseAuthException) {
+      errorMessage = error.message ?? "Firebase Authentication Error";
+    }
+    else if(error is FirebaseException)
+    {
+      errorMessage = error.message ?? "Firebase Error";
+    }
+    else
+    {
+      errorMessage = error;
+    }
+
     return {
       'status':false,
-      'message':error,
+      'message':errorMessage,
       //'body':""
     };
   }
