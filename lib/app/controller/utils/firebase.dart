@@ -197,6 +197,13 @@ class FirebaseFun{
         .catchError(onError);
     return result;
   }
+  static sendEmailVerification()  async {
+    final result=await auth.currentUser?.sendEmailVerification(
+    ).then((onValueSendEmailVerification))
+        .catchError(onError);
+    return result;
+  }
+
   static updatePassword( {required String newPassword})  async {
     final result=await auth.currentUser?.updatePassword(newPassword)
         .then((onValueUpdatePassword))
@@ -337,6 +344,13 @@ class FirebaseFun{
     return {
       'status':true,
       'message':'Email successfully send code ',
+      'body':{}
+    };
+  }
+  static Future<Map<String,dynamic>>onValueSendEmailVerification(value) async{
+    return {
+      'status':true,
+      'message':'Email successfully send verify url ',
       'body':{}
     };
   }

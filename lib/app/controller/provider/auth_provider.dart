@@ -156,6 +156,16 @@ class AuthProvider with ChangeNotifier{
     Const.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()));
     return result;
   }
+  bool isEmailVerification() {
+    return FirebaseFun.auth.currentUser?.emailVerified??false;
+
+  }
+  sendEmailVerification(context,) async{
+    var result =await FirebaseFun.sendEmailVerification();
+    print(result);
+    Const.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()));
+    return result;
+  }
   recoveryPassword(context,{required UserModel user}) async{
     var result =await FirebaseFun.updatePassword(newPassword: user.password);
     if(result["status"])

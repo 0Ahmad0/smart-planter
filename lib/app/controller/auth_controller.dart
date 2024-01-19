@@ -27,6 +27,7 @@ class AuthController {
     final result = await authProvider.login(context);
     Navigator.of(context).pop();
     if (result['status']) {
+      isEmailVerification(context);
       Get.offNamed(AppRoute.homeRoute);
 
     }
@@ -53,7 +54,7 @@ class AuthController {
     final result = await authProvider.signup(context);
     Navigator.of(context).pop();
     if (result['status']) {
-      Get.offNamed(AppRoute.homeRoute);
+      Get.offNamed(AppRoute.verifyEmail);
     }
     return result;
   }
@@ -66,5 +67,17 @@ class AuthController {
     if (result['status']) {
       Navigator.of(context).pop();
     }
+  }
+  isEmailVerification(BuildContext context)  {
+    bool result =authProvider.isEmailVerification();
+    if (result)
+      Get.offNamed(AppRoute.addPlantRoute);
+    }
+
+  sendEmailVerification(BuildContext context,) async {
+    Const.loading(context);
+    final result =
+    await authProvider.sendEmailVerification(context);
+    Navigator.of(context).pop();
   }
 }

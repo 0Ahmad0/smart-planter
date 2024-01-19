@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:smart_plans/app/models/user_model.dart';
 import '../../../core/local/storage.dart';
 import '../../widgets/constans.dart';
+import '../auth_controller.dart';
 import '../utils/firebase.dart';
 
 
@@ -35,8 +36,9 @@ class ProfileProvider with ChangeNotifier{
      if(name.value.text=='');
      tempUser.name='${firstName.value.text} ${lastName.value.text}';
      var result;
-     if(user.email!=tempUser.email)
+     if(user.email!=tempUser.email){
      result=await FirebaseFun.updateUserEmail(user: tempUser);
+     }
      if(result==null||result['status']){
         result =await FirebaseFun.updateUser(user: tempUser);
        if(result['status']){
@@ -46,6 +48,8 @@ class ProfileProvider with ChangeNotifier{
      }
      print(result);
      Const.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()));
+     ///For Verify Email
+     AuthController(context: context).isEmailVerification(context);
      return result;
    }
    logout(context)async{

@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_plans/app/controller/auth_controller.dart';
 import 'package:smart_plans/app/controller/provider/auth_provider.dart';
 import 'package:smart_plans/app/controller/provider/profile_provider.dart';
 import '../../core/local/storage.dart';
@@ -35,6 +36,8 @@ class SplashController{
           }
           else{
             profileProvider.updateUser(user:UserModel.fromJson(result['body']));
+            ///For verify Email
+            AuthController(context: context).isEmailVerification(context);
               Navigator.pushReplacement(context, MaterialPageRoute(
                   builder: (ctx)=>HomeScreen()));
           }
