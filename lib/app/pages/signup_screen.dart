@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:smart_plans/core/utils/app_constant.dart';
+import '../../core/helper/validator.dart';
+import '/core/utils/app_constant.dart';
 import '../controller/auth_controller.dart';
 import '/app/widgets/textfield_app.dart';
 import '/core/helper/sizer_media_query.dart';
@@ -92,6 +93,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     height: AppSize.s40,
                   ),
                   TextFiledApp(
+                    validator: (value)=>Validator.validateName(name: nameController.text),
                     controller: nameController,
                     iconData: Icons.person_outline,
                     hintText: AppString.name,
@@ -100,6 +102,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     height: AppSize.s30,
                   ),
                   TextFiledApp(
+                    validator: (value)=>Validator.validateEmail(email: emailController.text),
                     controller: emailController,
                     iconData: Icons.alternate_email,
                     hintText: AppString.email,
@@ -108,6 +111,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     height: AppSize.s30,
                   ),
                   TextFiledApp(
+                    validator: (value)=>Validator.validatePassword(password: passwordController.text),
                     controller: passwordController,
                     iconData: Icons.lock_outline,
                     hintText: AppString.passWord,
@@ -118,6 +122,10 @@ class _SignupScreenState extends State<SignupScreen> {
                     height: AppSize.s30,
                   ),
                   TextFiledApp(
+                    validator: (value)=>Validator.validateConfirmPassword(
+                      confirmPassword: confirmPasswordController.text,
+                      password: passwordController.text
+                    ),
                     controller: confirmPasswordController,
                     iconData: Icons.lock_outline,
                     hintText: AppString.confirmPassword,

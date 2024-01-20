@@ -3,21 +3,39 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:lottie/lottie.dart';
 import 'package:smart_plans/core/utils/color_manager.dart';
 
 import '../../core/utils/assets_manager.dart';
 import '../models/enums/state_stream_enum.dart';
 
-class Const{
-  static loading (context){
-    Get.dialog(Center(
-      child: Container(width: 80,height: 80,decoration: BoxDecoration(
-          color: ColorManager.white,
-          borderRadius: BorderRadius.circular(8.r)
+class Const {
+  static loading(context) {
+    Get.dialog(
+      Center(
+        child: Container(
+          width: 80.w,
+          height: 80.w,
+          decoration: BoxDecoration(
+              color: ColorManager.primary,
+              borderRadius: BorderRadius.circular(8.r),
+              boxShadow: [
+                BoxShadow(
+                  color: ColorManager.black.withOpacity(.2),
+                  offset: const Offset(0, 4),
+                  blurRadius: 8.sp,
+                )
+              ]),
+          child: Center(
+              child: Lottie.asset(
+            AssetsManager.loadingIMG,
+          )),
+        ),
+      ),
+      barrierDismissible: false,
 
-      ),child: Center(child: CircularProgressIndicator()),),
-    ),
-        barrierDismissible: false);
+
+    );
     // Get.dialog(
     //     Center(
     //       child: Container(
@@ -36,24 +54,22 @@ class Const{
     //     barrierDismissible: false
     // );
   }
-  static LOADING_DROPDOWN ({required String text,StateStreamEnum? stateStream}){
-    return  ListTile(
+
+  static LOADING_DROPDOWN(
+      {required String text, StateStreamEnum? stateStream}) {
+    return ListTile(
       title: Text(
         text,
-        style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white),
+        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
       ),
-      trailing:
-      stateStream==StateStreamEnum.Empty?
-          Icon(Icons.hourglass_empty_outlined)
-      : stateStream==StateStreamEnum.Error?
-      Icon(Icons.error_outline)
-     : CircularProgressIndicator(
-        color: Colors.white,
-        strokeWidth: 2,
-        strokeAlign: CircularProgressIndicator.strokeAlignInside,
-      ),
+      trailing: stateStream == StateStreamEnum.Empty
+          ? Icon(Icons.hourglass_empty_outlined)
+          : stateStream == StateStreamEnum.Error
+              ? Icon(Icons.error_outline)
+              : CircularProgressIndicator(
+                  color: Colors.white,
+                  strokeWidth: 2,
+                ),
     );
   }
 
@@ -66,23 +82,25 @@ class Const{
     //     textStyle: getRegularStyle(color: ColorManager.white)
     // );
   }
+
   static SHOWLOADINGINDECATOR() {
     return Center(
-      child: CircularProgressIndicator(
-      ),
-    );}
+      child: CircularProgressIndicator(),
+    );
+  }
 
-  static emptyWidget(context,{text='Not Data Yet!'})=>SingleChildScrollView(
-      child: Column(
+  static emptyWidget(context, {text = 'Not Data Yet!'}) =>
+      SingleChildScrollView(
+          child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(AssetsManager.emptyIMG),
-          Text(text,style: TextStyle(
-              fontSize: MediaQuery.sizeOf(context).width * 0.08,
-              fontWeight: FontWeight.bold
-          ),),
+          Text(
+            text,
+            style: TextStyle(
+                fontSize: MediaQuery.of(context).size.width * 0.08,
+                fontWeight: FontWeight.bold),
+          ),
         ],
       ));
-
-
 }

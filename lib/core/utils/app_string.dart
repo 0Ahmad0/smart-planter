@@ -36,6 +36,15 @@ class AppString {
 
   ///<User Message>//
   static const requiredFiled = 'Filed is required*';
+  static const enterValidEmail = 'Please enter a valid email';
+  static const enterValidName = 'Please enter a valid Name';
+
+  static const enterValidPasswordNumeric = 'Password must contain at least one numeric digit';
+  static const enterValidPasswordLowerCase = 'Password must contain at least one lowercase letter';
+  static const enterValidPasswordUpperCase = 'Password must contain at least one uppercase letter';
+  static const enterValidPasswordLength = 'Password should be at least 8 characters';
+  static const enterValidPasswordSpecial = 'Password must contain at least one special character (e.g. , ! @ # \$ & * ~)';
+  static const enterValidConfirmPassword = 'Password must be same as above';
 
   ///<Error Message Firebase>//
   static const message_email_successfully_send_code= "Email successfully send code";

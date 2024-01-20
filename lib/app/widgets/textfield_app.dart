@@ -56,6 +56,7 @@ class _TextFiledAppState extends State<TextFiledApp> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+
       maxLines: widget.maxLine,
       minLines: widget.minLine,
       readOnly: widget.readOnly,
@@ -80,6 +81,7 @@ class _TextFiledAppState extends State<TextFiledApp> {
         focusedBorder: StylesManager.borderTextFiled(width: 4),
         hintStyle: TextStyle(color: ColorManager.secondary.withOpacity(.75)),
         errorStyle: TextStyle(color: ColorManager.secondary),
+        errorMaxLines: 2,
         prefixIcon: widget.iconData == null
             ? null
             : Icon(

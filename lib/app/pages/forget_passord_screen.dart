@@ -70,6 +70,13 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 Form(
                   key: _formKey,
                   child: TextFiledApp(
+                    validator: (value){
+                      if(!value!.isEmail){
+                        return 'error';
+                      }else{
+                        return null;
+                      }
+                    },
                     controller: emailController,
                     iconData: Icons.alternate_email,
                     hintText: AppString.emailRecovery,

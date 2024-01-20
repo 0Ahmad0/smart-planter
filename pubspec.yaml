@@ -55,6 +55,7 @@ dependencies:
   provider:
   #local_db:
   get_storage:
+  lottie: ^2.3.2
 
 
 

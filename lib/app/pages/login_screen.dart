@@ -10,6 +10,7 @@ import 'package:smart_plans/core/utils/color_manager.dart';
 import 'package:smart_plans/core/utils/styles_manager.dart';
 import 'package:smart_plans/core/utils/values_manager.dart';
 
+import '../../core/helper/validator.dart';
 import '../controller/auth_controller.dart';
 import '../widgets/button_app.dart';
 
@@ -75,6 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: AppSize.s40,
                   ),
                   TextFiledApp(
+                    validator: (value)=>Validator.validateEmail(email: emailController.text),
                     controller: emailController,
                     iconData: Icons.alternate_email,
                     hintText: AppString.email,
@@ -83,6 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: AppSize.s30,
                   ),
                   TextFiledApp(
+                    validator: (value)=>Validator.validatePassword(password: passwordController.text),
                     controller: passwordController,
                     iconData: Icons.lock_outline,
                     hintText: AppString.passWord,
