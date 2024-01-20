@@ -32,9 +32,9 @@ class SmartPlantsApp extends StatelessWidget {
                 title: AppString.appName,
                 debugShowCheckedModeBanner: false,
                 theme: ThemeManager.myTheme,
-                home: VerifyEmailScreen(),
-                // initialRoute: AppRoute.initialRoute,
-                // routes: AppRoute.routesMap,
+               // home: VerifyEmailScreen(),
+                 initialRoute: AppRoute.initialRoute,
+                routes: AppRoute.routesMap,
               ));
         });
   }
