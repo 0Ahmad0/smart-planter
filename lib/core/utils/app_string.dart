@@ -16,7 +16,7 @@ class AppString {
   static const emailRecoveryDescription =
       "Enter the email associated with your account and we’ll send an email with instruction to reset your password.";
   static const verifyEmailDescription =
-      "A verification link has been sent to your email. Please check your inbox and click on the provided link to confirm your account.";
+      "Verify Your Email" ;
   static const verifyEmailDescription2 = 'If it\'s not there, you can request a new verification email.';
   static const thankChoosingUs = 'Thank you for choosing us!';
   static const resend = 'Resend';
