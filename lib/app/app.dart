@@ -11,6 +11,7 @@ import '../core/route/app_route.dart';
 import 'controller/provider/auth_provider.dart';
 import 'controller/provider/notification_provider.dart';
 import 'controller/provider/profile_provider.dart';
+import 'pages/verify_email_screen.dart';
 
 class SmartPlantsApp extends StatelessWidget {
   const SmartPlantsApp({super.key});
