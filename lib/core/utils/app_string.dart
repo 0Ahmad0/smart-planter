@@ -11,6 +11,7 @@ class AppString {
   static const confirmPassword = "Confirm Password";
   static const allReadyHaveAccount = "all ready have Account ? ";
   static const send = "Send";
+  static const update = "Update";
   static const resetPassword = "Reset password";
   static const  verifyEmail= "Verify Email";
   static const emailRecoveryDescription =

@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 
 import 'package:path/path.dart';
@@ -569,21 +568,21 @@ class FirebaseFun{
             day);
   }
 
-
-  static Future uploadFile2({required File file, required String folder}) async {
-    try {
-
-      String path = basename(file.path??'');
-      print(file.path);
-
-//FirebaseStorage storage = FirebaseStorage.instance.ref().child(path);
-      Reference storage = FirebaseStorage.instance.ref().child("${folder}/${path}");
-      UploadTask storageUploadTask = storage.putFile(file);
-      TaskSnapshot taskSnapshot = await storageUploadTask;
-      String url = await taskSnapshot.ref.getDownloadURL();
-      return url;
-    } catch (ex) {
-      //Const.TOAST( context,textToast:FirebaseFun.findTextToast("Please, upload the image"));
-    }
-  }
+//
+//   static Future uploadFile2({required File file, required String folder}) async {
+//     try {
+//
+//       String path = basename(file.path??'');
+//       print(file.path);
+//
+// //FirebaseStorage storage = FirebaseStorage.instance.ref().child(path);
+//       Reference storage = FirebaseStorage.instance.ref().child("${folder}/${path}");
+//       UploadTask storageUploadTask = storage.putFile(file);
+//       TaskSnapshot taskSnapshot = await storageUploadTask;
+//       String url = await taskSnapshot.ref.getDownloadURL();
+//       return url;
+//     } catch (ex) {
+//       //Const.TOAST( context,textToast:FirebaseFun.findTextToast("Please, upload the image"));
+//     }
+//   }
 }

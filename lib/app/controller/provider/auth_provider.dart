@@ -30,6 +30,7 @@ class AuthProvider with ChangeNotifier{
     bool checkPhoneOrEmailFound =await FirebaseFun.checkPhoneOrEmailFound(email:user.email, phone: '', cardId: '');
     var result;
     if(checkPhoneOrEmailFound){
+
      result =await FirebaseFun.signup(email: user.email, password: user.password);
     if(result['status']){
       user.uid=result['body']?.uid;
@@ -158,7 +159,6 @@ class AuthProvider with ChangeNotifier{
   }
   bool isEmailVerification() {
     return FirebaseFun.auth.currentUser?.emailVerified??false;
-
   }
   sendEmailVerification(context,) async{
     var result =await FirebaseFun.sendEmailVerification();
