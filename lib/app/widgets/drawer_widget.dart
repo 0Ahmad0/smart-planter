@@ -3,25 +3,38 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:smart_plans/app/controller/auth_controller.dart';
 import 'package:smart_plans/core/route/app_route.dart';
 import 'package:smart_plans/core/utils/app_string.dart';
 import 'package:smart_plans/core/utils/color_manager.dart';
 import 'package:smart_plans/core/utils/styles_manager.dart';
 
+import '../../core/local/storage.dart';
+import '../controller/provider/profile_provider.dart';
 import 'list_tile_drawer_item.dart';
 
-class DrawerWidget extends StatelessWidget {
+class DrawerWidget extends StatefulWidget {
   const DrawerWidget({super.key});
+
+  @override
+  State<DrawerWidget> createState() => _DrawerWidgetState();
+}
+
+class _DrawerWidgetState extends State<DrawerWidget> {
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: Column(
         children: [
+      ChangeNotifierProvider<ProfileProvider>.value(
+      value: Provider.of<ProfileProvider>(context),
+      child: Consumer<ProfileProvider>(
+        builder: (context, profileProvider, child) =>
           UserAccountsDrawerHeader(
-            accountName: Text('User'),
-            accountEmail: Text('user@gmail.com'),
+            accountName: Text(  '${profileProvider.user.name}',),
+            accountEmail: Text(  '${profileProvider.user.email}',),
             otherAccountsPictures: [
               IconButton(
                   onPressed: () {
@@ -39,7 +52,7 @@ class DrawerWidget extends StatelessWidget {
             decoration: BoxDecoration(
               color: ColorManager.primary,
             ),
-          ),
+          ))),
           ListTileDrawerItem(
             text: AppString.connectionWifi,
             icon: Icons.wifi,
@@ -76,7 +89,8 @@ class DrawerWidget extends StatelessWidget {
           ListTileDrawerItem(
             text: 'Log out',
             icon: Icons.logout,
-            onTap: (){
+            onTap: () async {
+              await AppStorage.depose();
               Get.back();
               Get.offAllNamed(AppRoute.loginRoute);
             },

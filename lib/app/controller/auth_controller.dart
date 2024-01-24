@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_plans/app/controller/provider/profile_provider.dart';
 import '../../core/route/app_route.dart';
 import '../models/user_model.dart';
 import '../pages/home_screen.dart';
@@ -79,5 +80,18 @@ class AuthController {
     final result =
     await authProvider.sendEmailVerification(context);
     Navigator.of(context).pop();
+  }
+  recoveryPassword(context,{required String password}) async{
+   ProfileProvider profileProvider = Provider.of<ProfileProvider>(context, listen: false);
+    if(password!=profileProvider.user.password){
+      String tempPassword= profileProvider.user.password;
+      profileProvider.user.password=password;
+    final result = await authProvider.recoveryPassword(context,user: profileProvider.user);
+    if(result['status'])
+      profileProvider.updateUser(user: profileProvider.user);
+    else
+      profileProvider.user.password=tempPassword;
+    }
+
   }
 }

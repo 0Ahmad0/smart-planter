@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:smart_plans/app/controller/profile_controller.dart';
 import 'package:smart_plans/core/utils/assets_manager.dart';
 
 import '../../core/utils/app_string.dart';
@@ -20,10 +21,12 @@ class VerifyEmailScreen extends StatefulWidget {
 
 class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
   late AuthController authController;
+  late ProfileController profileController;
 
   @override
   void initState() {
     authController = AuthController(context: context);
+    profileController = ProfileController(context: context);
     authController.sendEmailVerification(
       context,
     );
@@ -51,7 +54,18 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
             Text(AppString.verifyEmailDescription2,style: StylesManager.titleNormalTextStyle(
                 size: 20.sp
             ),textAlign: TextAlign.center,),
+            InkWell(
+              onTap:(){
+                authController.sendEmailVerification(
+                  context,
+                );
+              },
+              child: Text(AppString.resend,style: StylesManager.titleNormalTextStyle(
+                  size: 22.sp,color: Colors.blue
+              ),textAlign: TextAlign.center,),
+            ),
             const Spacer(),
+
           ],
         ),
       ),
