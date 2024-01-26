@@ -13,6 +13,9 @@ class AssetsManager {
   static const String cameraIMG = '$iconPath/camera.png';
   static const String seedBagIMG = '$iconPath/seed_bag.png';
   static const String waterDropIMG = '$iconPath/water_drop.png';
+  static const String thermometerIMG = '$iconPath/thermometer.png';
+  static const String sunIMG = '$iconPath/sun.png';
+
 
   ///=================<<Json>>=================///
   static const String loadingIMG = '$imagePath/leaf2.json';

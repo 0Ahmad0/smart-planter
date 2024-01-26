@@ -32,29 +32,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
         padding: const EdgeInsets.all(AppPadding.p16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            LinearPercentIndicator(
-              padding: EdgeInsets.zero,
-              lineHeight: 60.h,
-              percent: 0.6,
-              curve: Curves.easeInOut,
-              progressColor: ColorManager.progressColor,
-              barRadius: Radius.circular(100.r),
-              animation: true,
-              animateFromLastPercent: true,
-              addAutomaticKeepAlive: true,
-              backgroundColor: ColorManager.secondary.withOpacity(.7),
-              center: Text(
-                '${AppString.age} ${12} / ${50}',
-                style: StylesManager.titleBoldTextStyle(
-                  size: 20.sp,
-                  color: ColorManager.primary,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: AppSize.s20,
-            ),
             Container(
               alignment: Alignment.center,
               width: getWidth(context),

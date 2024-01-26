@@ -34,14 +34,15 @@ class AddNewPlant extends StatelessWidget {
             24.r,
           ),
         ),
-        child: InkWell(
-          onTap: (){
-            Get.toNamed(AppRoute.addPlantRoute);
-          },
-          child: Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              Column(
+        child: Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            InkWell(
+              borderRadius: BorderRadius.circular( 24.r),
+              onTap: (){
+                Get.toNamed(AppRoute.addPlantRoute);
+              },
+              child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -61,39 +62,39 @@ class AddNewPlant extends StatelessWidget {
                   )
                 ],
               ),
-              Positioned(
-                bottom: (getWidth(context) / 5) / 2,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: AppConstants.plantsDetailsList
-                      .map(
-                        (e) => DetailsPlantWidget(
-                          onTap: null,
-                          active: false,
-                          text: e.text,
-                          image: e.image,
-                        ),
-                      )
-                      .toList(),
+            ),
+            Positioned(
+              bottom: (getWidth(context) / 5) / 2,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: AppConstants.plantsDetailsList
+                    .map(
+                      (e) => DetailsPlantWidget(
+                        onTap: null,
+                        active: false,
+                        text: e.text,
+                        image: e.image,
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
+            Positioned(
+              top: 0,
+              right: 0,
+              child: IconButton(
+                onPressed: () {
+                  //showEmpty
+                  listController.listTemp.clear();
+                },
+                icon: Icon(
+                  Icons.close,
+                  color: ColorManager.secondary,
                 ),
               ),
-              Positioned(
-                top: 0,
-                right: 0,
-                child: IconButton(
-                  onPressed: () {
-                    //showEmpty
-                    listController.listTemp.clear();
-                  },
-                  icon: Icon(
-                    Icons.close,
-                    color: ColorManager.secondary,
-                  ),
-                ),
-              )
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );
