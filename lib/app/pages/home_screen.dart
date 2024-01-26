@@ -2,19 +2,16 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:smart_plans/app/controller/controller.dart';
-import 'package:smart_plans/app/widgets/add_new_plant.dart';
-import 'package:smart_plans/app/widgets/drawer_widget.dart';
-import 'package:smart_plans/app/widgets/my_plant_item.dart';
-import 'package:smart_plans/core/helper/sizer_media_query.dart';
-import 'package:smart_plans/core/route/app_route.dart';
-import 'package:smart_plans/core/utils/app_string.dart';
-import 'package:smart_plans/core/utils/assets_manager.dart';
-import 'package:smart_plans/core/utils/styles_manager.dart';
-import 'package:smart_plans/core/utils/values_manager.dart';
+import 'package:smart_plans/core/utils/color_manager.dart';
+import '../../core/route/app_route.dart';
+import '/app/controller/controller.dart';
+import '/app/widgets/add_new_plant.dart';
+import '/app/widgets/drawer_widget.dart';
+import '/app/widgets/my_plant_item.dart';
+import '/core/helper/sizer_media_query.dart';
+import '/core/utils/app_string.dart';
 
-import '../../core/utils/app_constant.dart';
-import '../../core/utils/color_manager.dart';
+import '../widgets/constans.dart';
 import '../widgets/empty_plants_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -26,7 +23,7 @@ class HomeScreen extends StatelessWidget {
     return Obx(() => Scaffold(
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              Get.toNamed(AppRoute.connectionWifiRoute);
+               Get.toNamed(AppRoute.connectionWifiRoute);
             },
             child: Icon(Icons.add),
           ),
@@ -47,26 +44,26 @@ class HomeScreen extends StatelessWidget {
           drawer: DrawerWidget(),
           body: listPlant.list.isNotEmpty
               ? Center(
-            child: CarouselSlider(
-              options: CarouselOptions(
-                height: getWidth(context),
-                viewportFraction: .9,
-                initialPage: 0,
-                enableInfiniteScroll: false,
-                reverse: false,
-                autoPlayCurve: Curves.fastOutSlowIn,
-                enlargeCenterPage: true,
-                enlargeFactor: 0.17,
-              ),
-              items: [1].map((i) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return MyPlantItem();
-                  },
-                );
-              }).toList(),
-            ),
-          )
+                  child: CarouselSlider(
+                    options: CarouselOptions(
+                      height: getWidth(context),
+                      viewportFraction: .9,
+                      initialPage: 0,
+                      enableInfiniteScroll: false,
+                      reverse: false,
+                      autoPlayCurve: Curves.fastOutSlowIn,
+                      enlargeCenterPage: true,
+                      enlargeFactor: 0.17,
+                    ),
+                    items: [1].map((i) {
+                      return Builder(
+                        builder: (BuildContext context) {
+                          return MyPlantItem();
+                        },
+                      );
+                    }).toList(),
+                  ),
+                )
               : (listPlant.listTemp.isNotEmpty)
                   ? AddNewPlant()
                   : EmptyPlantsWidget(),

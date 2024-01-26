@@ -42,7 +42,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   carousel_slider: ^4.2.1
   percent_indicator: ^4.2.3
-  intl: ^0.19.0
+  intl:
 #  esptouch_smartconfig: ^1.1.0
 #  flutter_blue: ^0.8.0
 
@@ -59,6 +59,7 @@ dependencies:
   firebase_auth: ^4.16.0
 #  firebase_storage: ^11.6.0
   cloud_firestore: ^4.14.0
+  flutter_styled_toast:
 
 
 

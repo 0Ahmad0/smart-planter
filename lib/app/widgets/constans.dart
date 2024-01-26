@@ -1,58 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:lottie/lottie.dart';
-import 'package:smart_plans/core/utils/color_manager.dart';
-
+import '../../core/utils/values_manager.dart';
+import '/core/utils/color_manager.dart';
 import '../../core/utils/assets_manager.dart';
 import '../models/enums/state_stream_enum.dart';
 
 class Const {
   static loading(context) {
     Get.dialog(
-      Center(
-        child: Container(
-          width: 80.w,
-          height: 80.w,
-          decoration: BoxDecoration(
-              color: ColorManager.primary,
-              borderRadius: BorderRadius.circular(8.r),
-              boxShadow: [
-                BoxShadow(
-                  color: ColorManager.black.withOpacity(.2),
-                  offset: const Offset(0, 4),
-                  blurRadius: 8.sp,
-                )
-              ]),
-          child: Center(
-              child: Lottie.asset(
-            AssetsManager.loadingIMG,
-          )),
+      WillPopScope(
+        onWillPop: () {
+          return Future(() => false);
+        },
+        child: Center(
+          child: Container(
+            width: 80.w,
+            height: 80.w,
+            decoration: BoxDecoration(
+                color: ColorManager.primary,
+                borderRadius: BorderRadius.circular(8.r),
+                boxShadow: [
+                  BoxShadow(
+                    color: ColorManager.black.withOpacity(.2),
+                    offset: const Offset(0, 4),
+                    blurRadius: 8.sp,
+                  )
+                ]),
+            child: Center(
+                child: Lottie.asset(
+              AssetsManager.loadingIMG,
+            )),
+          ),
         ),
       ),
       barrierDismissible: false,
-
-
     );
-    // Get.dialog(
-    //     Center(
-    //       child: Container(
-    //           alignment: Alignment.center,
-    //           width:  MediaQuery.sizeOf(context).width  * 0.2,
-    //           height: MediaQuery.sizeOf(context).width * 0.2,
-    //           decoration: BoxDecoration(
-    //               color: ColorManager.white,
-    //               borderRadius: BorderRadius.circular(8)),
-    //           child:
-    //           CircularProgressIndicator(
-    //             color: ColorManager.primary,
-    //           )
-    //       ),
-    //     ),
-    //     barrierDismissible: false
-    // );
   }
 
   static LOADING_DROPDOWN(
@@ -73,14 +59,46 @@ class Const {
     );
   }
 
-  static TOAST(BuildContext context, {String textToast = "This Is Toast"}) {
-    // showToast(
-    //     textToast,
-    //     context: context,
-    //     animation: StyledToastAnimation.fadeScale,
-    //     position: StyledToastPosition.top,
-    //     textStyle: getRegularStyle(color: ColorManager.white)
-    // );
+  static TOAST(
+    BuildContext context, {
+    String textToast = "This Is Toast",
+    backgroundColor = ColorManager.black,
+  }) {
+    showToastWidget(
+        Container(
+          padding: const EdgeInsets.all(AppPadding.p8),
+          decoration: BoxDecoration(
+            color: backgroundColor.withOpacity(.5),
+            borderRadius: BorderRadius.circular(14.r),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                textToast,
+              ),
+              const SizedBox(
+                width: AppSize.s10,
+              ),
+              Container(
+                padding: const EdgeInsets.all(AppPadding.p4),
+                width: 30.w,
+                height: 30.w,
+                decoration: BoxDecoration(
+                    color: ColorManager.white,
+                    borderRadius: BorderRadius.circular(12.r)),
+                child: Image.asset(
+                  AssetsManager.logoIMG,
+                ),
+              )
+            ],
+          ),
+        ),
+        isHideKeyboard: true,
+        context: context,
+        axis: Axis.horizontal,
+        position: StyledToastPosition.bottom);
   }
 
   static SHOWLOADINGINDECATOR() {
@@ -94,12 +112,15 @@ class Const {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(AssetsManager.emptyIMG),
+          Image.asset(
+            AssetsManager.emptyIMG,
+          ),
           Text(
             text,
             style: TextStyle(
-                fontSize: MediaQuery.of(context).size.width * 0.08,
-                fontWeight: FontWeight.bold),
+              fontSize: MediaQuery.of(context).size.width * 0.08,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ],
       ));

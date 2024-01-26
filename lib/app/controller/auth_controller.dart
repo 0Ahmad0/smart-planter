@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+
 import 'package:provider/provider.dart';
-import 'package:smart_plans/app/controller/provider/profile_provider.dart';
+import '/app/controller/provider/profile_provider.dart';
 import '../../core/route/app_route.dart';
 import '../models/user_model.dart';
-import '../pages/home_screen.dart';
+
 import '../widgets/constans.dart';
 import 'provider/auth_provider.dart';
 

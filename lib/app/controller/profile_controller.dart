@@ -1,10 +1,5 @@
-import 'dart:io';
-
-
-
 import 'package:provider/provider.dart';
-import 'package:path/path.dart';
-import 'package:smart_plans/app/controller/provider/profile_provider.dart';
+import '/app/controller/provider/profile_provider.dart';
 
 
 class ProfileController{
