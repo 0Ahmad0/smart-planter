@@ -33,7 +33,9 @@ class AddPlantItemGrid extends StatelessWidget {
             Align(
                 alignment: Alignment.centerLeft,
                 child: IconButton(
-                    onPressed: () {}, icon: Icon(Icons.add_circle_outline))),
+                    onPressed: () {
+
+                    }, icon: Icon(Icons.add_circle_outline))),
             Expanded(
               child: Image.asset(
                 'assets/images/strawberries.png',

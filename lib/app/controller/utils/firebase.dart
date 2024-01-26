@@ -10,6 +10,7 @@ import 'package:smart_plans/core/utils/app_string.dart';
 
 import '../../../core/utils/app_constant.dart';
 import '../../models/notification_model.dart';
+import '../../models/planet_model.dart';
 import '../../models/user_model.dart';
 
 
@@ -212,33 +213,41 @@ class FirebaseFun{
   }
 
 
-  // ///Medical
-  // static addMedical( {required model.Medical medical}) async {
-  //   final result= await FirebaseFirestore.instance.collection(AppConstants.collectionMedical).add(
-  //       medical.toJson()
-  //   ).then(onValueAddMedical).catchError(onError).timeout(timeOut,onTimeout: onTimeOut);
-  //   return result;
-  // }
-  // static updateMedical( {required model.Medical medical}) async {
-  //   final result= await FirebaseFirestore.instance.collection(AppConstants.collectionMedical).doc(
-  //       medical.id
-  //   ).update(medical.toJson()).then(onValueUpdateMedical).catchError(onError).timeout(timeOut,onTimeout: onTimeOut);
-  //   return result;
-  // }
-  // static deleteMedical( {required model.Medical medical}) async {
-  //   final result= await FirebaseFirestore.instance.collection(AppConstants.collectionMedical).doc(
-  //       medical.id
-  //   ).delete().then(onValueDeleteMedical).catchError(onError).timeout(timeOut,onTimeout: onTimeOut);
-  //   return result;
-  // }
-  // static fetchAllMedical()  async {
-  //   final result=await FirebaseFirestore.instance.collection(AppConstants.collectionMedical)
-  //       .get()
-  //       .then((onValueFetchMedicals))
-  //       .catchError(onError).timeout(timeOut,onTimeout: onTimeOut);
-  //   return result;
-  // }
-  //
+  ///planetModel
+  static addPlanetModel( {required PlanetModel planetModel}) async {
+    final result= await FirebaseFirestore.instance.collection(AppConstants.collectionPlant).add(
+        planetModel.toJson()
+    ).then(onValueAddPlanetModel).catchError(onError).timeout(timeOut,onTimeout: onTimeOut);
+    return result;
+  }
+  static updatePlanetModel( {required PlanetModel planetModel}) async {
+    final result= await FirebaseFirestore.instance.collection(AppConstants.collectionPlant).doc(
+        planetModel.id
+    ).update(planetModel.toJson()).then(onValueUpdatePlanetModel).catchError(onError).timeout(timeOut,onTimeout: onTimeOut);
+    return result;
+  }
+  static deletePlanetModel( {required PlanetModel planetModel}) async {
+    final result= await FirebaseFirestore.instance.collection(AppConstants.collectionPlant).doc(
+        planetModel.id
+    ).delete().then(onValueDeletePlanetModel).catchError(onError).timeout(timeOut,onTimeout: onTimeOut);
+    return result;
+  }
+  static fetchAllPlanetModel()  async {
+    final result=await FirebaseFirestore.instance.collection(AppConstants.collectionPlant)
+        .get()
+        .then((onValueFetchPlanetModels))
+        .catchError(onError).timeout(timeOut,onTimeout: onTimeOut);
+    return result;
+  }
+  static fetchPlanetModelsByUserID(String userId)  async {
+    final result=await FirebaseFirestore.instance.collection(AppConstants.collectionPlant)
+    .where('userId',isEqualTo: userId)
+        .get()
+        .then((onValueFetchPlanetModels))
+        .catchError(onError).timeout(timeOut,onTimeout: onTimeOut);
+    return result;
+  }
+
 
 
 
@@ -427,34 +436,34 @@ class FirebaseFun{
   }
 
 
-  static Future<Map<String,dynamic>>onValueAddMedical(value) async{
+  static Future<Map<String,dynamic>>onValueAddPlanetModel(value) async{
     return {
       'status':true,
-      'message':'Medical successfully add',
+      'message':'PlanetModel successfully add',
       'body':{}
     };
   }
-  static Future<Map<String,dynamic>>onValueUpdateMedical(value) async{
+  static Future<Map<String,dynamic>>onValueUpdatePlanetModel(value) async{
     return {
       'status':true,
-      'message':'Medical successfully update',
+      'message':'PlanetModel successfully update',
       'body':{}
     };
   }
-  static Future<Map<String,dynamic>>onValueDeleteMedical(value) async{
+  static Future<Map<String,dynamic>>onValueDeletePlanetModel(value) async{
     return {
       'status':true,
-      'message':'Medical successfully delete',
+      'message':'PlanetModel successfully delete',
       'body':{}
     };
   }
-  static Future<Map<String,dynamic>> onValueFetchMedicals(value) async{
+  static Future<Map<String,dynamic>> onValueFetchPlanetModels(value) async{
     // print(true);
     print("Wallets count : ${value.docs.length}");
 
     return {
       'status':true,
-      'message':'Medicals successfully fetch',
+      'message':'PlanetModels successfully fetch',
       'body':value.docs
     };
   }

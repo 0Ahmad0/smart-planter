@@ -10,6 +10,7 @@ import '/core/utils/theme_manager.dart';
 import '../core/route/app_route.dart';
 import 'controller/provider/auth_provider.dart';
 import 'controller/provider/notification_provider.dart';
+import 'controller/provider/plant_provider.dart';
 import 'controller/provider/profile_provider.dart';
 import 'pages/verify_email_screen.dart';
 
@@ -26,6 +27,7 @@ class SmartPlantsApp extends StatelessWidget {
                 Provider<AuthProvider>(create: (_) => AuthProvider()),
                 Provider<ProfileProvider>(create: (_) => ProfileProvider()),
                 Provider<NotificationProvider>(create: (_) => NotificationProvider()),
+                Provider<PlanetModelProvider>(create: (_) => PlanetModelProvider()),
               ],
               child: GetMaterialApp(
                 title: AppString.appName,

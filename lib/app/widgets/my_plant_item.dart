@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:smart_plans/app/models/planet_model.dart';
 import 'package:smart_plans/app/widgets/details_plant_widget.dart';
 import 'package:smart_plans/core/route/app_route.dart';
 import 'package:smart_plans/core/utils/app_constant.dart';
@@ -10,10 +11,11 @@ import '../../core/helper/sizer_media_query.dart';
 import '../../core/utils/color_manager.dart';
 
 class MyPlantItem extends StatelessWidget {
-  const MyPlantItem({
+   MyPlantItem({
     super.key,
+    required  this.planetModel
   });
-
+  PlanetModel planetModel;
   @override
   Widget build(BuildContext context) {
     return Container(

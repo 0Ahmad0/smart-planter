@@ -1,9 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_plans/app/models/planet_model.dart';
+import 'package:smart_plans/app/models/plant_model.dart';
 import 'package:smart_plans/core/utils/color_manager.dart';
 import '../../core/route/app_route.dart';
+import '../../core/utils/app_constant.dart';
+import '../controller/provider/profile_provider.dart';
 import '/app/controller/controller.dart';
 import '/app/widgets/add_new_plant.dart';
 import '/app/widgets/drawer_widget.dart';
@@ -14,13 +20,33 @@ import '/core/utils/app_string.dart';
 import '../widgets/constans.dart';
 import '../widgets/empty_plants_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  var getPlants;
+
+  DateTime selectDate=DateTime.now();
+  getPlantsFun()  {
+    getPlants = FirebaseFirestore.instance.collection(AppConstants.collectionPlant)
+        .where('userId',isEqualTo: context.read<ProfileProvider>().user.id)
+        .snapshots();
+    return getPlants;
+  }
+  @override
+  void initState() {
+    getPlantsFun();
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     final ListController listPlant = Get.put(ListController());
-    return Obx(() => Scaffold(
+    return
+        Scaffold(
           floatingActionButton: FloatingActionButton(
             onPressed: () {
                Get.toNamed(AppRoute.connectionWifiRoute);
@@ -42,7 +68,61 @@ class HomeScreen extends StatelessWidget {
             }),
           ),
           drawer: DrawerWidget(),
-          body: listPlant.list.isNotEmpty
+          body:
+          StreamBuilder<QuerySnapshot>(
+            //prints the messages to the screen0
+              stream: getPlants,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Const.SHOWLOADINGINDECATOR();
+                } else if (snapshot.connectionState == ConnectionState.active) {
+                  if (snapshot.hasError) {
+                    return const Text('Error');
+                  } else if (snapshot.hasData) {
+                    Const.SHOWLOADINGINDECATOR();
+                    List<PlanetModel> plants=[];
+                    if (snapshot.data!.docs!.length > 0) {
+                      plants= PlanetModels.fromJson(snapshot.data!.docs!).planetModels;
+                    }
+                    return
+                      plants.isNotEmpty?
+                      Center(
+                      child: CarouselSlider(
+                        options: CarouselOptions(
+                          height: getWidth(context),
+                          viewportFraction: .9,
+                          initialPage: 0,
+                          enableInfiniteScroll: false,
+                          reverse: false,
+                          autoPlayCurve: Curves.fastOutSlowIn,
+                          enlargeCenterPage: true,
+                          enlargeFactor: 0.17,
+                        ),
+                        items: plants.map((i) {
+                          return Builder(
+                            builder: (BuildContext context) {
+                              return MyPlantItem(planetModel:i ,);
+                            },
+                          );
+                        }).toList(),
+                      ),
+                    ): (listPlant.listTemp.isNotEmpty)
+                          ? AddNewPlant()
+                          : EmptyPlantsWidget();
+                  } else {
+                    return const Text('Empty data');
+                  }
+                } else {
+                  return Text('State: ${snapshot.connectionState}');
+                }
+              })
+
+        )
+    ;
+  }
+}
+/*
+ listPlant.list.isNotEmpty
               ? Center(
                   child: CarouselSlider(
                     options: CarouselOptions(
@@ -67,9 +147,4 @@ class HomeScreen extends StatelessWidget {
               : (listPlant.listTemp.isNotEmpty)
                   ? AddNewPlant()
                   : EmptyPlantsWidget(),
-        ));
-  }
-}
-/*
-
  */
