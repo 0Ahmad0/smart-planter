@@ -14,7 +14,7 @@ class Const {
     Get.dialog(
       WillPopScope(
         onWillPop: () {
-          return Future(() => false);
+          return Future(() => true);
         },
         child: Center(
           child: Container(

@@ -6,6 +6,7 @@ import 'package:smart_plans/app/pages/notificationa_screen.dart';
 import 'package:smart_plans/app/pages/setting_screen.dart';
 import 'package:smart_plans/app/pages/verify_email_screen.dart';
 
+import '../../app/pages/details/details_screen2.dart';
 import '../../app/pages/forget_passord_screen.dart';
 import '../../app/pages/home_screen.dart';
 import '../../app/pages/profile_screen.dart';
@@ -23,6 +24,7 @@ class AppRoute {
   static const homeRoute = '/home';
   static const addPlantRoute = '/addPlant';
   static const detailsRoute = '/details';
+  static const details2Route = '/details2';
   static const monitorDetailsRoute = '/monitorDetails';
   static const notificationRoute = '/notifications';
   static const connectionWifiRoute = '/connectionWifi';
@@ -42,6 +44,7 @@ class AppRoute {
     homeRoute: (context) => HomeScreen(),
     addPlantRoute: (context) => AddPlantScreen(),
     detailsRoute: (context) => DetailsScreen(),
+    details2Route: (context) => DetailsScreen2(),
     monitorDetailsRoute: (context) => MonitorDetailsScreen(),
     notificationRoute: (context) => NotificationScreen(),
     connectionWifiRoute: (context) => ConnectionWifiScreen(),

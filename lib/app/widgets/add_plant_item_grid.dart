@@ -7,11 +7,13 @@ import 'package:smart_plans/core/utils/values_manager.dart';
 
 import '../../core/utils/styles_manager.dart';
 import '../controller/controller.dart';
+import '../models/planet_model.dart';
 
 class AddPlantItemGrid extends StatelessWidget {
-  const AddPlantItemGrid({
-    super.key,
+   AddPlantItemGrid({
+    this.planetModel
   });
+  PlanetModel? planetModel;
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +39,13 @@ class AddPlantItemGrid extends StatelessWidget {
 
                     }, icon: Icon(Icons.add_circle_outline))),
             Expanded(
-              child: Image.asset(
-                'assets/images/strawberries.png',
-              ),
+              child:  planetModel?.url_image!=null?
+              Image.network(planetModel?.url_image??''):
+              Image.asset('assets/images/strawberries.png'),
             ),
             Text(
-              'Name',
+              planetModel?.name??
+                  'Name',
               style: StylesManager.titleNormalTextStyle(
                   color: ColorManager.black,
                   size: 24.sp

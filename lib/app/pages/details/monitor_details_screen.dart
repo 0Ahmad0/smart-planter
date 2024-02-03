@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_plans/app/models/plant_model.dart';
 import 'package:smart_plans/core/helper/sizer_media_query.dart';
 import 'package:smart_plans/core/utils/assets_manager.dart';
 import 'package:smart_plans/core/utils/color_manager.dart';
@@ -11,13 +13,16 @@ import 'package:smart_plans/core/utils/values_manager.dart';
 import '../../../core/utils/app_constant.dart';
 import '../../../core/utils/app_string.dart';
 import '../../../core/utils/styles_manager.dart';
+import '../../controller/provider/plant_provider.dart';
+import '../../models/planet_model.dart';
 import '../../widgets/details_plant_widget.dart';
 
 class MonitorDetailsScreen extends StatelessWidget {
-  const MonitorDetailsScreen({super.key});
+   MonitorDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    PlanetModel planetModel= context.read<PlanetModelProvider>().planetModel;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -39,7 +44,10 @@ class MonitorDetailsScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(
                       24.r,
                     )),
-                child: Image.asset('assets/images/strawberries.png'),
+                child:
+                planetModel.url_image!=null?
+                Image.network(planetModel.url_image??''):
+                Image.asset('assets/images/strawberries.png'),
               ),
               const SizedBox(
                 height: AppSize.s20,
@@ -72,7 +80,8 @@ class MonitorDetailsScreen extends StatelessWidget {
               // ),
 
               Text(
-                'The garden strawberry is a widely grown hybrid species of the genus Fragaria, collectively known as the strawberries, which are cultivated worldwide for their fruit.',
+                planetModel.description??'',
+               // 'The garden strawberry is a widely grown hybrid species of the genus Fragaria, collectively known as the strawberries, which are cultivated worldwide for their fruit.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16.sp,

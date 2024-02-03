@@ -12,6 +12,8 @@ import 'package:provider/provider.dart';
 import 'package:smart_plans/app/controller/provider/plant_provider.dart';
 import 'package:smart_plans/app/controller/provider/profile_provider.dart';
 import 'package:smart_plans/app/controller/utils/firebase.dart';
+import 'package:smart_plans/app/domain/services/api_service.dart';
+import 'package:smart_plans/app/domain/services/api_services_imp.dart';
 import 'package:smart_plans/app/models/planet_model.dart';
 
 
@@ -23,46 +25,26 @@ import '../widgets/constans.dart';
 
 class PlantController{
   late PlanetModelProvider planetModelProvider;
+
   var context;
   PlantController({required this.context}){
+
     planetModelProvider= Provider.of<PlanetModelProvider>(context,listen: false);
   }
 
   addPlant(context,  {
-    int?  plantId,
-    String? common_name,
-    String? urlIMG,
-    num? days_to_harvest,
-    String? description,
-    num? ph_maximum,
-    num? ph_minimum,
-    num? light,
-    num? minimum_temperature,
-    num? maximum_temperature,
-    num? soil_nutriments,
-    num? soil_humidity,
+    required PlanetModel planetModel
   }) async {
     ProfileProvider profileProvider= Provider.of<ProfileProvider>(context,listen: false);
+    planetModel.userId=profileProvider.user.id;
     Const.loading(context);
     var result;
        result=await planetModelProvider.addPlanetModel(context, planetModel:
-       PlanetModel(
-           id: '',
-           plantId: plantId,
-           common_name: common_name,
-           urlIMG: urlIMG,
-           days_to_harvest: days_to_harvest,
-           description: description,
-           ph_maximum: ph_maximum,
-           ph_minimum: ph_minimum,
-           light: light,
-           minimum_temperature: minimum_temperature,
-           maximum_temperature: maximum_temperature,
-           soil_nutriments: soil_nutriments,
-           soil_humidity: soil_humidity,
-           userId: profileProvider.user.id)
+       planetModel
        );
        if(result['status']){
+       planetModelProvider.planetModelsApi.planetModels.clear();
+       planetModelProvider..notifyListeners();
          Navigator.of(context).pop();
          Get.offAllNamed(AppRoute.homeRoute);
        }
@@ -70,6 +52,18 @@ class PlantController{
     Navigator.of(context).pop();
     return result;
   }
+
+  getPlants(context,) async {
+    Const.loading(context);
+    var result=await planetModelProvider.fetchAllPlanetModelFromApi(context);
+    Navigator.of(context).pop();
+    if(result['status']){
+      Get.offAllNamed(AppRoute.homeRoute);
+    }
+    Const.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()));
+    return result;
+  }
+
 
   updatePlanetModel(context,{ required PlanetModel planetModel}) async {
     Const.loading(context);
@@ -87,6 +81,18 @@ class PlantController{
     await planetModelProvider.deletePlanetModel(context,planetModel: planetModel);
     Navigator.of(context).pop();
     Navigator.of(context).pop();
+  }
+  List<String> getListRepeat(){
+    return[
+      "Every day",
+      "Every 3 days",
+      "Every week",
+      "Every 2 week",
+      "Every 3 week",
+      "Every month",
+      "Every 2 month",
+      "Every 3 month",
+    ];
   }
 
 }

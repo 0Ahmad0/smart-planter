@@ -222,13 +222,13 @@ class FirebaseFun{
   }
   static updatePlanetModel( {required PlanetModel planetModel}) async {
     final result= await FirebaseFirestore.instance.collection(AppConstants.collectionPlant).doc(
-        planetModel.id
+        planetModel.plantId
     ).update(planetModel.toJson()).then(onValueUpdatePlanetModel).catchError(onError).timeout(timeOut,onTimeout: onTimeOut);
     return result;
   }
   static deletePlanetModel( {required PlanetModel planetModel}) async {
     final result= await FirebaseFirestore.instance.collection(AppConstants.collectionPlant).doc(
-        planetModel.id
+        planetModel.plantId
     ).delete().then(onValueDeletePlanetModel).catchError(onError).timeout(timeOut,onTimeout: onTimeOut);
     return result;
   }

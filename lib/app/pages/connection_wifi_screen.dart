@@ -9,10 +9,23 @@ import 'package:smart_plans/core/utils/styles_manager.dart';
 import 'package:smart_plans/core/utils/values_manager.dart';
 
 import '../controller/controller.dart';
+import '../controller/plant_controller.dart';
 
-class ConnectionWifiScreen extends StatelessWidget {
+class ConnectionWifiScreen extends StatefulWidget {
   const ConnectionWifiScreen({super.key});
 
+  @override
+  State<ConnectionWifiScreen> createState() => _ConnectionWifiScreenState();
+}
+
+class _ConnectionWifiScreenState extends State<ConnectionWifiScreen> {
+  late PlantController plantController;
+
+  @override
+  void initState() {
+    plantController = PlantController(context: context);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final ListController listPlant = Get.put(ListController());
@@ -27,18 +40,20 @@ class ConnectionWifiScreen extends StatelessWidget {
             WifiConnectingWidget(
               wifiName: 'Wifi-1',
               onTap: () {
-                Get.dialog(Center(
-                  child: Container(width: 80,height: 80,decoration: BoxDecoration(
-                    color: ColorManager.white,
-                    borderRadius: BorderRadius.circular(8.r)
-
-                  ),child: Center(child: CircularProgressIndicator()),),
-                ),);
-                Future.delayed(Duration(seconds: 2),(){
-                  listPlant.addTemp();
-                  Get.back();
-                  Get.offAllNamed(AppRoute.homeRoute);
-                });
+                plantController.getPlants(context);
+                // Get.dialog(Center(
+                //   child: Container(width: 80,height: 80,decoration: BoxDecoration(
+                //     color: ColorManager.white,
+                //     borderRadius: BorderRadius.circular(8.r)
+                //
+                //   ),child: Center(child: CircularProgressIndicator()),),
+                // ),);
+                //
+                // Future.delayed(Duration(seconds: 2),(){
+                //   listPlant.addTemp();
+                //   Get.back();
+                //   Get.offAllNamed(AppRoute.homeRoute);
+                // });
               },
             ),
             const SizedBox(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:smart_plans/app/controller/controller.dart';
 import 'package:smart_plans/core/utils/app_string.dart';
 import 'package:smart_plans/core/utils/assets_manager.dart';
@@ -11,6 +12,7 @@ import '../../core/helper/sizer_media_query.dart';
 import '../../core/route/app_route.dart';
 import '../../core/utils/app_constant.dart';
 import '../../core/utils/color_manager.dart';
+import '../controller/provider/plant_provider.dart';
 import 'details_plant_widget.dart';
 
 class AddNewPlant extends StatelessWidget {
@@ -68,7 +70,8 @@ class AddNewPlant extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: AppConstants.plantsDetailsList
+                children:
+                 AppConstants.plantsDetailsList
                     .map(
                       (e) => DetailsPlantWidget(
                         onTap: null,
@@ -86,6 +89,8 @@ class AddNewPlant extends StatelessWidget {
               child: IconButton(
                 onPressed: () {
                   //showEmpty
+                  context.read<PlanetModelProvider>().planetModelsApi.planetModels.clear();
+                  context.read<PlanetModelProvider>().notifyListeners();
                   listController.listTemp.clear();
                 },
                 icon: Icon(

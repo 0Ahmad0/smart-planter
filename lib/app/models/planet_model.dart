@@ -2,36 +2,37 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PlanetModel {
-  int?  plantId;
-  String id;
-  String userId;
-  String? common_name;
-  String? urlIMG;
-  num? days_to_harvest;
+  int  id;
+  String? plantId;
+  String? userId;
+  String? name;
+  String? url_image;
   String? description;
-  num? ph_maximum;
-  num? ph_minimum;
-  num? light;
-  num? minimum_temperature;
-  num? maximum_temperature;
-  num? soil_nutriments;
-  num? soil_humidity;
+  String? repeat_fertilizing;
+  String? repeat_watering;
+  MinMaxModel soil_ph;
+  MinMaxModel sunlight;
+  MinMaxModel soil_moister;
+  MinMaxModel temperature;
+  QuantityModel fertilizer_quantity;
+  QuantityModel water_quantity;
 
   PlanetModel({
     required this.id,
     required this.plantId,
-    required this.common_name,
-    required this.urlIMG,
-    required this.days_to_harvest,
     required this.description,
-    required this.ph_maximum,
-    required this.ph_minimum,
-    required this.light,
-    required this.minimum_temperature,
-    required this.maximum_temperature,
-    required this.soil_nutriments,
-    required this.soil_humidity,
     required this.userId,
+    required this.name,
+    required this.fertilizer_quantity,
+    required this.repeat_fertilizing,
+    required this.repeat_watering,
+    required this.soil_moister,
+    required this.soil_ph,
+    required this.sunlight,
+    required this.temperature,
+    required this.url_image,
+    required this.water_quantity,
+
   });
 
   factory PlanetModel.fromJson(json) {
@@ -40,38 +41,42 @@ class PlanetModel {
       id: json['id'],
       plantId : json["plantId"],
       userId : json["userId"],
-    common_name : json["common_name"],
-    urlIMG: json["urlIMG"],
-    days_to_harvest: json["days_to_harvest"],
     description: json["description"],
-    ph_maximum : json["ph_maximum"],
-    ph_minimum: json["ph_minimum"],
-    light : json["light"],
-    minimum_temperature: json["minimum_temperature"],
-    maximum_temperature: json["maximum_temperature"],
-    soil_nutriments: json["soil_nutriments"],
-      soil_humidity: json["soil_humidity"],
+    name: json["name"],
+      repeat_fertilizing: json["repeat_fertilizing"],
+      repeat_watering: json["repeat_watering"],
+      url_image: json["url_image"],
+    sunlight: MinMaxModel.fromJson(json["sunlight "]??json["sunlight"]),
+    soil_ph: MinMaxModel.fromJson(json["soil_ph"]),
+    soil_moister: MinMaxModel.fromJson(json["soil_moister"]),
+      temperature: MinMaxModel.fromJson(json["temperature"]),
+    water_quantity: QuantityModel.fromJson(json["water_quantity"]),
+    fertilizer_quantity: QuantityModel.fromJson(json["fertilizer_quantity"]),
+
+
+
     );
   }
   factory PlanetModel.init(){
-    return PlanetModel(id: '', common_name: '', urlIMG: null, days_to_harvest: 0, description: '', ph_maximum: 0, ph_minimum: 0, light: 0, minimum_temperature: 0, maximum_temperature: 0, soil_nutriments: 0, soil_humidity: 0, plantId: 0, userId: '');
+    return PlanetModel(id: 0, plantId: '', description: '', userId: '', name: '', fertilizer_quantity: QuantityModel.init(), repeat_fertilizing: '', repeat_watering: '', soil_moister: MinMaxModel.init(), soil_ph: MinMaxModel.init(), sunlight: MinMaxModel.init(), temperature: MinMaxModel.init(), url_image: '', water_quantity: QuantityModel.init());
   }
 
   Map<String, dynamic> toJson() => {
     'id': id,
     'plantId': plantId,
     'userId': userId,
-    'common_name': common_name,
-    'urlIMG': urlIMG,
-    'days_to_harvest': days_to_harvest,
     'description': description,
-    'ph_maximum': ph_maximum,
-    'ph_minimum': ph_minimum,
-    'light': light,
-    'minimum_temperature': minimum_temperature,
-    'maximum_temperature': maximum_temperature,
-    'soil_nutriments': soil_nutriments,
-    'soil_humidity': soil_humidity,
+    'url_image':url_image ,
+    'repeat_watering': repeat_watering,
+    'repeat_fertilizing': repeat_fertilizing,
+    'name':name ,
+    'water_quantity':water_quantity.toJson() ,
+    'fertilizer_quantity':fertilizer_quantity.toJson() ,
+    'temperature': temperature.toJson(),
+    'soil_moister': soil_moister.toJson(),
+    'soil_ph': soil_ph.toJson(),
+    'sunlight ': sunlight.toJson(),
+
   };
 }
 //PlanetModels
@@ -87,7 +92,9 @@ class PlanetModels {
 
     for (int i = 0; i < json.length; i++) {
       PlanetModel tempUserModel = PlanetModel.fromJson(json[i]);
-      tempUserModel.id = json[i].id;
+      if(json[i] is Map);
+      else
+      tempUserModel.plantId = json[i]?.id;
       tempModels.add(tempUserModel);
     }
     return PlanetModels(planetModels: tempModels);
@@ -104,4 +111,70 @@ class PlanetModels {
   }
 
 
+}
+
+
+
+
+
+
+
+class MinMaxModel {
+  num?  minimum;
+  num?  degree;
+  num? maximum;
+
+
+  MinMaxModel({
+    required this.minimum,
+    required this.maximum,
+    required this.degree,
+  });
+
+  factory MinMaxModel.fromJson(json) {
+    ;
+    return MinMaxModel(
+      minimum: json['minimum'],
+      degree: json['degree'],
+      maximum : json["maximum"],
+
+    );
+  }
+  factory MinMaxModel.init(){
+    return MinMaxModel(minimum: 0, maximum: 0, degree: null);
+  }
+
+  Map<String, dynamic> toJson() => {
+    'minimum': minimum,
+    'maximum': maximum,
+    'degree': degree,
+  };
+}
+
+class QuantityModel {
+  int?  value;
+  String? type;
+
+
+  QuantityModel({
+    required this.value,
+    required this.type,
+  });
+
+  factory QuantityModel.fromJson(json) {
+    ;
+    return QuantityModel(
+      value: json['value'],
+      type : json["type"],
+
+    );
+  }
+  factory QuantityModel.init(){
+    return QuantityModel(value: 0, type: '');
+  }
+
+  Map<String, dynamic> toJson() => {
+    'type': type,
+    'value': value,
+  };
 }

@@ -9,6 +9,7 @@ import 'package:smart_plans/app/models/plant_model.dart';
 import 'package:smart_plans/core/utils/color_manager.dart';
 import '../../core/route/app_route.dart';
 import '../../core/utils/app_constant.dart';
+import '../controller/provider/plant_provider.dart';
 import '../controller/provider/profile_provider.dart';
 import '/app/controller/controller.dart';
 import '/app/widgets/add_new_plant.dart';
@@ -85,7 +86,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       plants= PlanetModels.fromJson(snapshot.data!.docs!).planetModels;
                     }
                     return
+
+                      ChangeNotifierProvider<PlanetModelProvider>.value(
+                          value: Provider.of<PlanetModelProvider>(context),
+                          child: Consumer<PlanetModelProvider>(
+                          builder: (context, planetModelProvider, child) =>
                       plants.isNotEmpty?
+
                       Center(
                       child: CarouselSlider(
                         options: CarouselOptions(
@@ -101,14 +108,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         items: plants.map((i) {
                           return Builder(
                             builder: (BuildContext context) {
+
                               return MyPlantItem(planetModel:i ,);
                             },
                           );
                         }).toList(),
                       ),
-                    ): (listPlant.listTemp.isNotEmpty)
+                  //  ): (listPlant.listTemp.isNotEmpty)
+                    ): (planetModelProvider.planetModelsApi.planetModels.isNotEmpty)
                           ? AddNewPlant()
-                          : EmptyPlantsWidget();
+                          : EmptyPlantsWidget()));
                   } else {
                     return const Text('Empty data');
                   }

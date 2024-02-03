@@ -11,10 +11,11 @@ import '../../core/utils/styles_manager.dart';
 import '../controller/controller.dart';
 
 class AddPlantItemList extends StatefulWidget {
-  const AddPlantItemList({
+   AddPlantItemList({
     super.key,
+  required this.planetModel
   });
-
+  PlanetModel planetModel;
   @override
   State<AddPlantItemList> createState() => _AddPlantItemListState();
 }
@@ -32,20 +33,10 @@ class _AddPlantItemListState extends State<AddPlantItemList> {
     final ListController listController = Get.find();
     return InkWell(
       onTap: () async {
-       // await plantController.addPlant(context,
-       //    plantId: 0,
-       //    common_name: "Evergreen oak",
-       //    urlIMG: "https://d2seqvvyy3b8p2.cloudfront.net/40ab8e7cdddbe3e78a581b84efa4e893.jpg",
-       //    days_to_harvest: 8,
-       //    description: "Quercus rotundifolia",
-       //    ph_minimum: 5000,
-       //    ph_maximum: 6800,
-       //    light: 10,
-       //    soil_humidity: 10,
-       //    soil_nutriments: 10,
-       //    maximum_temperature: 40,
-       //    minimum_temperature: 20,
-       //  );
+
+       await plantController.addPlant(context, planetModel: widget.planetModel,
+
+        );
          listController.add();
          Get.offAllNamed(AppRoute.homeRoute);
       },
@@ -66,11 +57,15 @@ class _AddPlantItemListState extends State<AddPlantItemList> {
                 borderRadius: BorderRadius.circular(8.r),
                 color: ColorManager.primary.withOpacity(.5),
               ),
-              child: Image.asset('assets/images/strawberries.png'),
+              child:
+              widget.planetModel?.url_image!=null?
+              Image.network(widget.planetModel?.url_image??''):
+              Image.asset('assets/images/strawberries.png'),
             ),
             Expanded(
               child: ListTile(
                 title: Text(
+                  widget.planetModel?.name??
                   'Name',
                   style: StylesManager.titleNormalTextStyle(
                     color: ColorManager.black,

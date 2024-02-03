@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:smart_plans/app/domain/services/api_services_imp.dart';
 
 import '../../../../../core/utils/app_constant.dart';
 import '../../models/planet_model.dart';
@@ -12,7 +14,23 @@ import '../utils/firebase.dart';
 class PlanetModelProvider with ChangeNotifier{
   PlanetModel planetModel=PlanetModel.init();
   PlanetModels planetModels=PlanetModels(planetModels: []);
+  PlanetModels planetModelsApi=PlanetModels(planetModels: []);
+  var arguments={};
 
+
+  fetchAllPlanetModelFromApi(BuildContext context) async {
+    var result;
+    result= await ApiServicesImp(Dio()).get('/plants');
+    if(result['status']){
+
+      planetModelsApi=PlanetModels.fromJson(result['data']);
+      print(planetModelsApi.planetModels.length);
+
+
+    }
+    return result;
+
+  }
 
  fetchAllPlanetModel(BuildContext context) async {
    var result;

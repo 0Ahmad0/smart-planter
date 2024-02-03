@@ -16,20 +16,21 @@ import 'package:smart_plans/core/utils/values_manager.dart';
 import '../../../core/utils/color_manager.dart';
 import '../../controller/plant_controller.dart';
 import '../../controller/provider/plant_provider.dart';
+import 'details_screen.dart';
 
-class DetailsScreen extends StatefulWidget {
-  const DetailsScreen({super.key});
+class DetailsScreen2 extends StatefulWidget {
+  const DetailsScreen2({super.key});
 
   @override
-  State<DetailsScreen> createState() => _DetailsScreenState();
+  State<DetailsScreen2> createState() => _DetailsScreen2State();
 }
 
-class _DetailsScreenState extends State<DetailsScreen> {
+class _DetailsScreen2State extends State<DetailsScreen2> {
   bool isPumpOn = false;
 
-    @override
-    Widget build(BuildContext context) {
-    PlanetModel planetModel= context.read<PlanetModelProvider>().planetModel;
+  @override
+  Widget build(BuildContext context) {
+    PlanetModel planetModel=context.read<PlanetModelProvider>().planetModel;
     var arguments= context.read<PlanetModelProvider>().arguments;
     return Scaffold(
       appBar: AppBar(
@@ -84,15 +85,15 @@ class _DetailsScreenState extends State<DetailsScreen> {
               children: [
                 Expanded(
                     child: DetailsContainer(
-                  value:'${planetModel.temperature.degree??planetModel.temperature.minimum??0}' //'10',
+                  value:'${planetModel.sunlight.degree??planetModel.sunlight.minimum??0}' //'10',
                 )),
                 const SizedBox(
                   width: AppSize.s10,
                 ),
                 DetailsButton(icon: Icons.add,onPressed: (){
 
-                  if(planetModel.temperature.maximum==null||(planetModel.temperature.degree??planetModel.temperature.minimum??0)<(planetModel.temperature.maximum!))
-                  planetModel.temperature.degree=(planetModel.temperature.degree??planetModel.temperature.minimum??0)+1;
+                  if(planetModel.sunlight.maximum==null||(planetModel.sunlight.degree??planetModel.sunlight.minimum??0)<(planetModel.sunlight.maximum!))
+                  planetModel.sunlight.degree=(planetModel.sunlight.degree??planetModel.sunlight.minimum??0)+1;
                   setState(() {
 
                   });
@@ -102,8 +103,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 ),
                 DetailsButton(icon: Icons.remove,onPressed: (){
 
-                  if(planetModel.temperature.minimum==null||(planetModel.temperature.degree??planetModel.temperature.minimum??0)>(planetModel.temperature.minimum!))
-                    planetModel.temperature.degree=(planetModel.temperature.degree??planetModel.temperature.minimum??0)-1;
+                  if(planetModel.sunlight.minimum==null||(planetModel.sunlight.degree??planetModel.sunlight.minimum??0)>(planetModel.sunlight.minimum!))
+                    planetModel.sunlight.degree=(planetModel.sunlight.degree??planetModel.sunlight.minimum??0)-1;
                   setState(() {
 
                   });
@@ -124,15 +125,15 @@ class _DetailsScreenState extends State<DetailsScreen> {
             Row(
               children: [
                 Expanded(
-                    child: DetailsContainer(   value:'${planetModel.soil_ph.degree??planetModel.soil_ph.minimum??0}' //'10',
+                    child: DetailsContainer(   value:'${planetModel.soil_moister.degree??planetModel.soil_moister.minimum??0}' //'10',
                     )),
                 const SizedBox(
                   width: AppSize.s10,
                 ),
                 DetailsButton(icon: Icons.add,onPressed: (){
 
-                  if(planetModel.soil_ph.maximum==null||(planetModel.soil_ph.degree??planetModel.soil_ph.minimum??0)<(planetModel.soil_ph.maximum!))
-                    planetModel.soil_ph.degree=(planetModel.soil_ph.degree??planetModel.soil_ph.minimum??0)+1;
+                  if(planetModel.soil_moister.maximum==null||(planetModel.soil_moister.degree??planetModel.soil_moister.minimum??0)<(planetModel.soil_moister.maximum!))
+                    planetModel.soil_moister.degree=(planetModel.soil_moister.degree??planetModel.soil_moister.minimum??0)+1;
                   setState(() {
 
                   });
@@ -141,8 +142,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   width: AppSize.s10,
                 ),
                 DetailsButton(icon: Icons.remove,onPressed: (){
-                  if(planetModel.soil_ph.minimum==null||(planetModel.soil_ph.degree??planetModel.soil_ph.minimum??0)>(planetModel.soil_ph.minimum!))
-                    planetModel.soil_ph.degree=(planetModel.soil_ph.degree??planetModel.soil_ph.minimum??0)-1;
+                  if(planetModel.soil_moister.minimum==null||(planetModel.soil_moister.degree??planetModel.soil_moister.minimum??0)>(planetModel.soil_moister.minimum!))
+                    planetModel.soil_moister.degree=(planetModel.soil_moister.degree??planetModel.soil_moister.minimum??0)-1;
                   setState(() {
 
                   });
@@ -163,7 +164,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               ),
             ),
             DropdownButtonFormField(
-              value: planetModel.repeat_watering,
+              value: planetModel.repeat_fertilizing,
                 icon: Icon(
                   Icons.keyboard_arrow_down,
                   color: ColorManager.primary,
@@ -187,7 +188,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         ))
                     .toList(),
                 onChanged: (value) {
-                  planetModel.repeat_watering=value;
+                  planetModel.repeat_fertilizing=value;
                 }),
 
             const Spacer(),
@@ -206,57 +207,3 @@ class _DetailsScreenState extends State<DetailsScreen> {
   }
 }
 
-class DetailsButton extends StatelessWidget {
-  const DetailsButton({
-    super.key,
-    required this.icon,
-    this.onPressed,
-  });
-
-  final IconData icon;
-  final VoidCallback? onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      style: TextButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.r),
-        ),
-        minimumSize: Size(50.w, 50.w),
-        backgroundColor: ColorManager.secondary,
-      ),
-      onPressed: onPressed,
-      child: Icon(
-        icon,
-        color: ColorManager.primary,
-      ),
-    );
-  }
-}
-
-class DetailsContainer extends StatelessWidget {
-  const DetailsContainer({
-    super.key,
-    required this.value,
-  });
-
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      style: StylesManager.titleNormalTextStyle(
-          size: 20.sp, color: ColorManager.primary),
-      textAlign: TextAlign.center,
-      controller: TextEditingController(text: value),
-      onTap: null,
-      readOnly: true,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(horizontal: AppSize.s12),
-          border: OutlineInputBorder(),
-          filled: true,
-          fillColor: ColorManager.secondary),
-    );
-  }
-}

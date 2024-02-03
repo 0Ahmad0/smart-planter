@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:smart_plans/app/widgets/add_plant_item_list.dart';
 import 'package:smart_plans/core/utils/app_string.dart';
 import 'package:smart_plans/core/utils/values_manager.dart';
 
+import '../controller/provider/plant_provider.dart';
 import '../widgets/add_plant_item_grid.dart';
 
 class AddPlantScreen extends StatefulWidget {
@@ -32,16 +34,19 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
       ),
       body: isGrid
           ? GridView.builder(
+        itemCount: context.read<PlanetModelProvider>().planetModelsApi.planetModels.length,
               padding: const EdgeInsets.all(AppPadding.p10),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+
                   crossAxisCount: 2,
                   crossAxisSpacing: AppSize.s10,
                   mainAxisSpacing: AppSize.s10),
-              itemBuilder: (context, index) => AddPlantItemGrid(),
+              itemBuilder: (context, index) => AddPlantItemGrid(planetModel: context.read<PlanetModelProvider>().planetModelsApi.planetModels[index],),
             )
           : ListView.builder(
+        itemCount:   context.read<PlanetModelProvider>().planetModelsApi.planetModels.length,
               padding: const EdgeInsets.all(AppPadding.p10),
-              itemBuilder: (context, index) => AddPlantItemList(),
+              itemBuilder: (context, index) => AddPlantItemList(planetModel: context.read<PlanetModelProvider>().planetModelsApi.planetModels[index],),
             ),
     );
   }
