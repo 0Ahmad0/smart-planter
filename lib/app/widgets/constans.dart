@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
@@ -15,24 +16,26 @@ class Const {
         onWillPop: () {
           return Future(() => true);
         },
-        child: Center(
-          child: Container(
-            width: 80.w,
-            height: 80.w,
-            decoration: BoxDecoration(
-                color: ColorManager.primary,
-                borderRadius: BorderRadius.circular(8.r),
-                boxShadow: [
-                  BoxShadow(
-                    color: ColorManager.black.withOpacity(.2),
-                    offset: const Offset(0, 4),
-                    blurRadius: 8.sp,
-                  )
-                ]),
-            child: Center(
-                child: Lottie.asset(
-              AssetsManager.loadingIMG,
-            )),
+        child: SlideInUp(
+          child: Center(
+            child: Container(
+              width: 80.w,
+              height: 80.w,
+              decoration: BoxDecoration(
+                  color: ColorManager.primary,
+                  borderRadius: BorderRadius.circular(8.r),
+                  boxShadow: [
+                    BoxShadow(
+                      color: ColorManager.black.withOpacity(.2),
+                      offset: const Offset(0, 4),
+                      blurRadius: 8.sp,
+                    )
+                  ]),
+              child: Center(
+                  child: Lottie.asset(
+                AssetsManager.loadingIMG,
+              )),
+            ),
           ),
         ),
       ),

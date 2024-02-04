@@ -43,21 +43,18 @@ dependencies:
   carousel_slider: ^4.2.1
   percent_indicator: ^4.2.3
   intl:
+  animate_do: 
 #  esptouch_smartconfig: ^1.1.0
 #  flutter_blue: ^0.8.0
 
   #firebase:
   firebase_core:
-#  firebase_auth:
-#  firebase_storage:
-#  cloud_firestore:
   #flutter_state_management:
   provider:
   #local_db:
   get_storage:
   lottie: ^2.3.2
   firebase_auth: ^4.16.0
-#  firebase_storage: ^11.6.0
   cloud_firestore: ^4.14.0
   flutter_styled_toast:
   ## network

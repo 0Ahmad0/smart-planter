@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:get_storage/get_storage.dart';
 
 
 import 'api_service.dart';
