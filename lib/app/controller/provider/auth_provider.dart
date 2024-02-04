@@ -47,7 +47,7 @@ class AuthProvider with ChangeNotifier {
           await AppStorage.storageWrite(
               key: AppConstants.uidKEY, value: user.uid);
           await AppStorage.storageWrite(
-              key: AppConstants.tokenKEY, value: "resultUser['token']");
+              key: AppConstants.tokenKEY, value:await FirebaseFun.auth.currentUser?.getIdToken());
           AdvanceModel.rememberMe = true;
           user = UserModel.fromJson(result['body']);
           profileProvider.updateUser(user: UserModel.fromJson(result['body']));
@@ -120,7 +120,7 @@ class AuthProvider with ChangeNotifier {
         await AppStorage.storageWrite(
             key: AppConstants.rememberMe, value: AdvanceModel.rememberMe);
         await AppStorage.storageWrite(
-            key: AppConstants.tokenKEY, value: "resultUser['token']");
+            key: AppConstants.tokenKEY, value: await FirebaseFun.auth.currentUser?.getIdToken());
         AdvanceModel.token = user.uid;
         AdvanceModel.uid = user.uid;
         email.clear();
@@ -177,10 +177,11 @@ class AuthProvider with ChangeNotifier {
   }
 
   sendEmailVerification(
-    context,
+   BuildContext context,
   ) async {
     var result = await FirebaseFun.sendEmailVerification();
     print(result);
+    if(context.mounted)
     Const.TOAST(context,
         textToast: FirebaseFun.findTextToast(result['message'].toString()));
     return result;
@@ -195,6 +196,8 @@ class AuthProvider with ChangeNotifier {
         textToast: FirebaseFun.findTextToast(result['message'].toString()));
     return result;
   }
+
+
 
   onError(error) {
     print(false);

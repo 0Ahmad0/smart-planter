@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:provider/provider.dart';
+import 'package:smart_plans/app/controller/utils/firebase.dart';
 import 'package:smart_plans/core/utils/app_constant.dart';
+import '../../core/local/storage.dart';
 import '/app/controller/provider/profile_provider.dart';
 import '../../core/route/app_route.dart';
 import '../models/user_model.dart';
@@ -59,6 +63,7 @@ class AuthController {
     Navigator.of(context).pop();
     if (result['status']) {
       Get.offNamed(AppRoute.verifyEmail);
+
      await sendEmailVerification(context);
       Navigator.of(context).pop();
 
@@ -82,11 +87,48 @@ class AuthController {
     Get.offNamed(AppRoute.verifyEmail);
   }
 
+  Future _checkVerifyEmail(
+      BuildContext context, time) async {
+
+    var response =
+    await  FirebaseFun.auth.signInWithCustomToken( (await AppStorage.storageRead(key: AppConstants.tokenKEY))??'').then((value) => value.user).onError((error, stackTrace) => null);
+    bool isEmailVerification=authProvider.isEmailVerification();
+
+    if(isEmailVerification){
+      time.cancel();
+      Get.offNamed(AppRoute.homeRoute);
+    }
+    else if(response==null){
+      // time.cancel();
+      // AppStorage.depose();
+      // Get.offNamed(AppRoute.loginRoute);
+    }
+    return response;
+  }
+
+  Future<void> retCheckVerifyEmail(
+      BuildContext context,
+      ) async {
+    int retRequestTime = 30; //1 minute
+    int countRetRequest = 5;
+    int i = 1;
+    final Timer timer =
+    await Timer.periodic(Duration(seconds: retRequestTime), (time) async {
+      if (i > countRetRequest) time.cancel();
+      await _checkVerifyEmail(context, time);
+      i++;
+    });
+    //timer.cancel();
+    AppStorage.depose();
+    Get.offNamed(AppRoute.loginRoute);
+  }
+
   sendEmailVerification(BuildContext context,) async {
     Const.loading(context);
     final result = await authProvider.sendEmailVerification(context);
     Navigator.of(context).pop();
   }
+
 
   recoveryPassword(context, {required String password}) async {
     ProfileProvider profileProvider =

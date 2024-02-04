@@ -54,6 +54,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen>{
 
   @override
   void dispose() {
+
     timer.cancel();
     super.dispose();
   }
@@ -62,6 +63,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen>{
   @override
   void initState() {
     authController = AuthController(context: context);
+    authController.retCheckVerifyEmail(context);
     startTimer();
     super.initState();
 
