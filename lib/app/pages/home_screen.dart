@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_plans/app/controller/plant_controller.dart';
 import '/app/models/planet_model.dart';
 import '../../core/route/app_route.dart';
 import '../../core/utils/app_constant.dart';
@@ -28,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   var getPlants;
 
   DateTime selectDate=DateTime.now();
+  late PlantController plantController;
   getPlantsFun()  {
     getPlants = FirebaseFirestore.instance.collection(AppConstants.collectionPlant)
         .where('userId',isEqualTo: context.read<ProfileProvider>().user.id)
@@ -36,6 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   @override
   void initState() {
+    plantController=PlantController(context: context);
     getPlantsFun();
     super.initState();
   }
@@ -78,6 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     List<PlanetModel> plants=[];
                     if (snapshot.data!.docs!.length > 0) {
                       plants= PlanetModels.fromJson(snapshot.data!.docs!).planetModels;
+                      plantController.processPlants(context,plants:plants);
                     }
                     return
 

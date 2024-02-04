@@ -12,16 +12,17 @@ class NotificationProvider extends ChangeNotifier{
 
   addNotification(context,{ required NotificationModel notification}) async {
     var result;
+
     result =await FirebaseFun.addNotification(notification: notification);
     //print(result);
-     Const.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()));
+    // Const.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()));
        return result;
   }
   updateNotification(context,{ required NotificationModel notification}) async {
     var result;
     result =await FirebaseFun.updateNotification(notification: notification);
 
-    Const.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()));
+    // Const.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()));
     return result;
   }
   deleteNotification(context,{ required NotificationModel notification}) async {

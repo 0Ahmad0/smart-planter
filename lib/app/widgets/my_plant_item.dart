@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import '../../core/utils/values_manager.dart';
+import '../controller/plant_controller.dart';
 import '/app/models/planet_model.dart';
 import '/app/widgets/details_plant_widget.dart';
 import '/core/route/app_route.dart';
@@ -32,9 +34,22 @@ class MyPlantItem extends StatelessWidget {
         alignment: Alignment.bottomCenter,
         children: [
           Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
+            //ToDo: look to the mainAxisSize and mainAxisAlignment
+          //  mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child:IconButton(
+                      onPressed: () async {
+                         await PlantController(context: context).deletePlanetModel(context, planetModel: planetModel);
+
+                      }, icon:
+                  RotationTransition(
+                    turns: new AlwaysStoppedAnimation(45 / 360),
+                    child:  Icon(Icons.add_circle_outline,color: ColorManager.primary,size: getWidth(context)/12 ,),
+                  ))
+                 ),
               Flexible(child:
       planetModel.url_image!=null?
               Image.network(planetModel.url_image??''):
@@ -61,10 +76,10 @@ class MyPlantItem extends StatelessWidget {
                           context.read<PlanetModelProvider>().arguments={
                                 'text': e.text,
                                 'details':{
-                                'pump':'${planetModel.fertilizer_quantity.value} ${planetModel.fertilizer_quantity.type}',//'e.pumb',
-                                'quantity':'e.quantity',
-                                'soil':'e.soil',
-                                'repeat':'e.repeat',
+                                'pump':'Mineral',//'e.pumb',
+                                'quantity':'Fertilize Quantity',
+                                'soil':'Ph',
+                                'repeat':'Repeat',
                                 }};
                           Get.toNamed(
                             AppRoute.details2Route,
@@ -75,10 +90,10 @@ class MyPlantItem extends StatelessWidget {
                           context.read<PlanetModelProvider>().arguments={
                             'text': e.text,
                             'details':{
-                              'pump':'${planetModel.water_quantity.value} ${planetModel.water_quantity.type}',//'e.pumb',
-                              'quantity':'e.quantity',
-                              'soil':'e.soil',
-                              'repeat':'e.repeat',
+                              'pump':'Water',//'e.pumb',
+                              'quantity':'Water Quantity',
+                              'soil':'Soil Moisture',
+                              'repeat':'Repeat',
                             },
 
                           };

@@ -1,6 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_plans/app/models/notification_model.dart';
+import '../../core/utils/app_constant.dart';
+import '../controller/provider/notification_provider.dart';
+import '../controller/provider/profile_provider.dart';
+import '../widgets/constans.dart';
 import '/core/utils/app_string.dart';
 import '/core/utils/color_manager.dart';
 import '/core/utils/styles_manager.dart';
@@ -39,32 +46,76 @@ class _NotificationScreenState extends State<NotificationScreen> {
     }
   ];
 
+  var getNotifications;
+  late NotificationProvider notificationProvider;
+  getNotificationsFun()  {
+    String idUser=context.read<ProfileProvider>().user.id;
+    getNotifications = FirebaseFirestore.instance.collection(AppConstants.collectionNotification)
+        .where('idUser',isEqualTo:idUser).snapshots();
+    return getNotifications;
+  }
+  @override
+  void initState() {
+    notificationProvider=  Provider.of<NotificationProvider>(context,listen: false);;
+    getNotificationsFun();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppString.notifications),
       ),
-      body: ListView.builder(
-          itemCount: list.length,
-          itemBuilder: (_, index) {
-            bool isSameDate = true;
-            final String dateString = list[index]['time'];
-            final DateTime date = DateTime.parse(dateString);
-            final item = list[index];
-            if (index == 0) {
-              isSameDate = false;
+      body:
+      StreamBuilder<QuerySnapshot>(
+        //prints the messages to the screen0
+          stream: getNotifications,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Const.SHOWLOADINGINDECATOR();
+            } else if (snapshot.connectionState == ConnectionState.active) {
+              if (snapshot.hasError) {
+                return const Text('Error');
+              } else if (snapshot.hasData) {
+                Const.SHOWLOADINGINDECATOR();
+                notificationProvider.notifications.listNotificationModel.clear();
+                if (snapshot.data!.docs!.length > 0) {
+                  notificationProvider.notifications = NotificationModels.fromJson(snapshot.data!.docs!);
+                }
+                List<NotificationModel> listNotifications=notificationProvider.notifications.listNotificationModel;
+                return
+                  listNotifications.isEmpty?
+                  Const.emptyWidget(context,text: "No Notification Yet")
+                      :
+                  ListView.builder(
+                      itemCount:listNotifications.length,
+                      itemBuilder: (_, index) {
+                        bool isSameDate = true;
+                        final String dateString = list[0]['time'];
+                        final DateTime date = listNotifications[index].dateTime;//DateTime.parse(dateString);
+                        final item = listNotifications[index];
+                        if (index == 0) {
+                          isSameDate = false;
+                        } else {
+                          //final String prevDateString = list[index - 1]['time'];
+                          final DateTime prevDate = listNotifications[index-1].dateTime; //DateTime.parse(prevDateString);
+                          isSameDate = date.isSameDate(prevDate);
+                        }
+                        if (index == 0 || !(isSameDate)) {
+                          return NotificationWidget(date: date,index: index,notificationModel: item,);
+                        } else {
+                          return NotificationItem(index: index, notificationModel: item,);
+                        }
+                      })
+                ;
+              } else {
+                return const Text('Empty data');
+              }
             } else {
-              final String prevDateString = list[index - 1]['time'];
-              final DateTime prevDate = DateTime.parse(prevDateString);
-              isSameDate = date.isSameDate(prevDate);
+              return Text('State: ${snapshot.connectionState}');
             }
-            if (index == 0 || !(isSameDate)) {
-              return NotificationWidget(date: date,index: index,);
-            } else {
-              return NotificationItem(index: index,);
-            }
-          }),
+          })
+      ,
     );
   }
 }
@@ -72,32 +123,41 @@ class _NotificationScreenState extends State<NotificationScreen> {
 class NotificationItem extends StatelessWidget {
   const NotificationItem({
     super.key, required this.index,
+    required this.notificationModel,
   });
 
   final int index;
+  final NotificationModel notificationModel;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(
-          horizontal: AppMargin.m14, vertical: AppMargin.m4),
-      decoration: BoxDecoration(
-        color: index.isEven?ColorManager.secondary:ColorManager.white,
-        borderRadius: BorderRadius.circular(6.r),
-      ),
-      child: ListTile(
-        title: Text(
-          'item $index',
-          style: StylesManager.titleBoldTextStyle(
-            size: 20.sp,
-            color: ColorManager.primary,
+    return InkWell(
+      onTap: (){
+        notificationModel.checkRec=true;
+        context.read<NotificationProvider>().updateNotification(context, notification: notificationModel);
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(
+            horizontal: AppMargin.m14, vertical: AppMargin.m4),
+        decoration: BoxDecoration(
+          color: !notificationModel.checkRec
+              ?ColorManager.secondary:ColorManager.white,
+          borderRadius: BorderRadius.circular(6.r),
+        ),
+        child: ListTile(
+          title: Text(
+            notificationModel.title+' $index',
+            style: StylesManager.titleBoldTextStyle(
+              size: 20.sp,
+              color: ColorManager.primary,
+            ),
           ),
+          subtitle: Text(
+            notificationModel.subtitle,
+            style: TextStyle().copyWith(color: ColorManager.black),
+          ),
+          trailing: Icon(!notificationModel.checkRec?null:Icons.check),
         ),
-        subtitle: Text(
-          'item $index item item item item item item',
-          style: TextStyle().copyWith(color: ColorManager.black),
-        ),
-        trailing: Icon(index.isEven?null:Icons.check),
       ),
     );
   }
@@ -106,11 +166,12 @@ class NotificationItem extends StatelessWidget {
 class NotificationWidget extends StatelessWidget {
   const NotificationWidget({
     super.key,
-    required this.date, required this.index,
+    required this.date, required this.index, required this.notificationModel,
   });
 
   final DateTime date;
   final int index;
+  final NotificationModel notificationModel;
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +195,7 @@ class NotificationWidget extends StatelessWidget {
               Expanded(child: Divider(color: Colors.white,))
             ],
           ),
-          NotificationItem(index: index,)
+          NotificationItem(index: index,notificationModel: notificationModel,)
         ]);
   }
 }

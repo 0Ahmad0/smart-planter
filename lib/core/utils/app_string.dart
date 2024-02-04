@@ -65,5 +65,20 @@ class AppString {
   static const message_account_not_active= "Account not Active";
   static const message_unable_connection= "Unable connection";
 
+  ///<Message Notification>//
+  static const notify_new_plant_title= "New Plant";
+  static const notify_delete_plant_title= "Delete Plant";
+  static const notify_change_plant_title= "Change Info Plant";
+  static const notify_new_plant_subtitle= "A new plant has been added";
+  static const notify_delete_plant_subtitle= "The plant has been deleted";
+  static const notify_change_plant_subtitle= "Plant information has been changed";
+  static const notify_change_temperature_plant_subtitle= "The temperature of the plant has been changed";
+  static const notify_change_water_quantity_plant_subtitle= "The water quantity of the plant has been changed";
+  static const notify_change_sunlight_plant_subtitle= "The sunlight of the plant has been changed";
+  static const notify_change_soil_ph_plant_subtitle= "The soil ph of the plant has been changed";
+  static const notify_change_soil_moister_plant_subtitle= "The soil moister of the plant has been changed";
+  static const notify_change_fertilizer_quantity_plant_subtitle= "The fertilizer quantity of the plant has been changed";
+  static const notify_change_repeat_plant_subtitle= "The repeat of the plant has been changed";
+
 
 }

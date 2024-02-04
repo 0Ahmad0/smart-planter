@@ -18,7 +18,7 @@ class MonitorDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    PlanetModel planetModel= context.read<PlanetModelProvider>().planetModel;
+    // PlanetModel planetModel= context.read<PlanetModelProvider>().planetModel;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -26,7 +26,14 @@ class MonitorDetailsScreen extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-        child: Padding(
+        child:
+        ChangeNotifierProvider<PlanetModelProvider>.value(
+        value: Provider.of<PlanetModelProvider>(context),
+    child: Consumer<PlanetModelProvider>(
+    builder: (context, planetModelProvider, child) {
+    PlanetModel planetModel = planetModelProvider.planetModel;
+    return
+        Padding(
           padding: const EdgeInsets.all(AppPadding.p16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -113,13 +120,13 @@ class MonitorDetailsScreen extends StatelessWidget {
                   DetailsPlantWidget(
                     onTap: null,
                     active: false,
-                    text: 'e.text',
+                    text: '${planetModel.soil_moister.degree??planetModel.soil_moister.minimum??0} g',
                     image: AssetsManager.seedBagIMG,
                   ),
                   DetailsPlantWidget(
                     onTap: null,
                     active: false,
-                    text: 'e.text',
+                    text: '${planetModel.soil_ph.degree??planetModel.soil_ph.minimum??0} inch',
                     image: AssetsManager.waterDropIMG,
                   ),
                 ],
@@ -131,13 +138,13 @@ class MonitorDetailsScreen extends StatelessWidget {
                   DetailsPlantWidget(
                     onTap: null,
                     active: false,
-                    text: 'e.text',
+                    text: '${planetModel.temperature.degree??planetModel.temperature.minimum??0} c',
                     image: AssetsManager.thermometerIMG,
                   ),
                   DetailsPlantWidget(
                     onTap: null,
                     active: false,
-                    text: 'e.text',
+                    text: '${planetModel.sunlight.degree??planetModel.sunlight.minimum??0}',
                     image: AssetsManager.sunIMG,
                   ),
 
@@ -145,7 +152,7 @@ class MonitorDetailsScreen extends StatelessWidget {
               )
             ],
           ),
-        ),
+        ) ;})),
       ),
     );
   }

@@ -9,6 +9,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_plans/app/controller/provider/notification_provider.dart';
+import 'package:smart_plans/app/models/notification_model.dart';
+import 'package:smart_plans/core/utils/app_string.dart';
 import '/app/controller/provider/plant_provider.dart';
 import '/app/controller/provider/profile_provider.dart';
 import '/app/controller/utils/firebase.dart';
@@ -30,7 +33,7 @@ class PlantController{
     planetModelProvider= Provider.of<PlanetModelProvider>(context,listen: false);
   }
 
-  addPlant(context,  {
+  addPlant(BuildContext context,  {
     required PlanetModel planetModel
   }) async {
     ProfileProvider profileProvider= Provider.of<ProfileProvider>(context,listen: false);
@@ -40,14 +43,17 @@ class PlantController{
        result=await planetModelProvider.addPlanetModel(context, planetModel:
        planetModel
        );
+    Navigator.of(context).pop();
        if(result['status']){
        planetModelProvider.planetModelsApi.planetModels.clear();
        planetModelProvider..notifyListeners();
-         Navigator.of(context).pop();
+       NotificationProvider().addNotification(context,
+           notification: NotificationModel(idUser:context.read<ProfileProvider>().user.id, subtitle:AppString.notify_new_plant_subtitle+ ' ${planetModel.name}', dateTime: DateTime.now(), title:AppString.notify_new_plant_title, message: ''));
+
          Get.offAllNamed(AppRoute.homeRoute);
        }
        Const.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()));
-    Navigator.of(context).pop();
+
     return result;
   }
 
@@ -56,29 +62,148 @@ class PlantController{
     var result=await planetModelProvider.fetchAllPlanetModelFromApi(context);
     Navigator.of(context).pop();
     if(result['status']){
+
       Get.offAllNamed(AppRoute.homeRoute);
     }
     Const.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()));
     return result;
   }
 
+  processPlants(BuildContext context,{required List<PlanetModel> plants})  {
+    for(PlanetModel planetModel in plants){
+      PlanetModel? oldPlanetModel=getPlantByIdFromList(plantId: planetModel.plantId,plants: planetModelProvider.planetModels.planetModels);
+      addNotifyPlantChanged(context,oldPlanetModel,planetModel);
+    }
+    planetModelProvider.planetModels.planetModels=plants;
 
-  updatePlanetModel(context,{ required PlanetModel planetModel}) async {
+    //change current plant
+    PlanetModel? newPlanetModel=getPlantByIdFromList(plantId:planetModelProvider.planetModel?.plantId,plants: plants);
+    if(newPlanetModel!=null){
+      planetModelProvider.updateLocalPlant(planetModel:newPlanetModel);;
+      //planetModelProvider.planetModel=newPlanetModel;
+      //planetModelProvider..notifyListeners();
+    }
+  }
+  PlanetModel ?getPlantByIdFromList({required String? plantId,required List<PlanetModel> plants}){
+    for(PlanetModel planetModel in plants)
+      if(planetModel.plantId==plantId)
+        return planetModel;
+  }
+
+   addNotifyPlantChanged(BuildContext context,PlanetModel? oldPlanetModel,PlanetModel planetModel2){
+    String idUser=context.read<ProfileProvider>().user.id;
+    if(oldPlanetModel==null);
+      // NotificationProvider().addNotification(context,
+      //     notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_new_plant_subtitle+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_new_plant_title, message: ''));
+
+    else if(oldPlanetModel!.plantId!=planetModel2.plantId||oldPlanetModel.description!=planetModel2.description)
+       NotificationProvider().addNotification(context,
+           notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_change_plant_subtitle+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_title , message: ''));
+
+     else if(
+    oldPlanetModel.temperature.minimum!=planetModel2.temperature.minimum
+        ||oldPlanetModel.temperature.maximum!=planetModel2.temperature.maximum
+        ||oldPlanetModel.temperature.degree!=planetModel2.temperature.degree)
+      NotificationProvider().addNotification(context,
+          notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_change_temperature_plant_subtitle+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_title , message: ''));
+
+
+    else if(oldPlanetModel.sunlight.minimum!=planetModel2.sunlight.minimum
+        ||oldPlanetModel.sunlight.maximum!=planetModel2.sunlight.maximum
+        ||oldPlanetModel.sunlight.degree!=planetModel2.sunlight.degree)
+      NotificationProvider().addNotification(context,
+          notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_change_sunlight_plant_subtitle+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_title , message: ''));
+
+
+    else if(oldPlanetModel.soil_ph.minimum!=planetModel2.soil_ph.minimum
+        ||oldPlanetModel.soil_ph.maximum!=planetModel2.soil_ph.maximum
+        ||oldPlanetModel.soil_ph.degree!=planetModel2.soil_ph.degree)
+      NotificationProvider().addNotification(context,
+          notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_change_soil_ph_plant_subtitle+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_title , message: ''));
+
+
+    else if(oldPlanetModel.soil_moister.minimum!=planetModel2.soil_moister.minimum
+        ||oldPlanetModel.soil_moister.maximum!=planetModel2.soil_moister.maximum
+        ||oldPlanetModel.soil_moister.degree!=planetModel2.soil_moister.degree)
+      NotificationProvider().addNotification(context,
+          notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_change_soil_moister_plant_subtitle+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_title , message: ''));
+
+
+    else if(oldPlanetModel.water_quantity.type!=planetModel2.water_quantity.type
+        ||oldPlanetModel.water_quantity.value!=planetModel2.water_quantity.value)
+      NotificationProvider().addNotification(context,
+          notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_change_water_quantity_plant_subtitle+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_title , message: ''));
+
+
+    else if(oldPlanetModel.fertilizer_quantity.type!=planetModel2.fertilizer_quantity.type
+        ||oldPlanetModel.fertilizer_quantity.value!=planetModel2.fertilizer_quantity.value)
+      NotificationProvider().addNotification(context,
+          notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_change_fertilizer_quantity_plant_subtitle+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_title , message: ''));
+
+
+    else if(oldPlanetModel.repeat_fertilizing!=planetModel2.repeat_fertilizing
+        ||oldPlanetModel.repeat_watering!=planetModel2.repeat_watering)
+      NotificationProvider().addNotification(context,
+          notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_change_repeat_plant_subtitle+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_title , message: ''));
+
+   }
+
+  bool isPlantSimilar(PlanetModel planetModel1,PlanetModel planetModel2){
+    if(planetModel1.plantId!=planetModel2.plantId
+    ||planetModel1.temperature.minimum!=planetModel2.temperature.minimum
+    ||planetModel1.temperature.maximum!=planetModel2.temperature.maximum
+    ||planetModel1.temperature.degree!=planetModel2.temperature.degree
+
+        ||planetModel1.sunlight.minimum!=planetModel2.sunlight.minimum
+        ||planetModel1.sunlight.maximum!=planetModel2.sunlight.maximum
+        ||planetModel1.sunlight.degree!=planetModel2.sunlight.degree
+
+        ||planetModel1.soil_ph.minimum!=planetModel2.soil_ph.minimum
+        ||planetModel1.soil_ph.maximum!=planetModel2.soil_ph.maximum
+        ||planetModel1.soil_ph.degree!=planetModel2.soil_ph.degree
+
+        ||planetModel1.soil_moister.minimum!=planetModel2.soil_moister.minimum
+        ||planetModel1.soil_moister.maximum!=planetModel2.soil_moister.maximum
+        ||planetModel1.soil_moister.degree!=planetModel2.soil_moister.degree
+
+    ||planetModel1.water_quantity.type!=planetModel2.water_quantity.type
+    ||planetModel1.water_quantity.value!=planetModel2.water_quantity.value
+
+        ||planetModel1.fertilizer_quantity.type!=planetModel2.fertilizer_quantity.type
+        ||planetModel1.fertilizer_quantity.value!=planetModel2.fertilizer_quantity.value
+
+        ||planetModel1.repeat_fertilizing!=planetModel2.repeat_fertilizing
+        ||planetModel1.repeat_watering!=planetModel2.repeat_watering
+    )
+      return false;
+    return true;
+  }
+
+
+  updatePlanetModel(BuildContext context,{ required PlanetModel planetModel}) async {
     Const.loading(context);
     var result=await planetModelProvider.updatePlanetModel(context,planetModel: planetModel);
     Navigator.of(context).pop();
     if(result['status']){
+      // NotificationProvider().addNotification(context,
+      //     notification: NotificationModel(idUser:context.read<ProfileProvider>().user.id, subtitle:AppString.notify_change_plant_subtitle+ ' ${planetModel.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_title , message: ''));
+
       Navigator.of(context).pop();
     }
     Const.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()));
     return result;
   }
 
-  deletePlanetModel(context,{ required PlanetModel planetModel}) async {
-    Const.loading(context);
-    await planetModelProvider.deletePlanetModel(context,planetModel: planetModel);
-    Navigator.of(context).pop();
-    Navigator.of(context).pop();
+  deletePlanetModel(BuildContext context,{ required PlanetModel planetModel}) async {
+    //Const.loading(context);
+    String idUser=context.read<ProfileProvider>().user.id;
+    final result = await planetModelProvider.deletePlanetModel(context,planetModel: planetModel);
+     if(result['status'])
+       NotificationProvider().addNotification(context,
+           notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_delete_plant_subtitle+ ' ${planetModel.name}', dateTime: DateTime.now(), title:AppString.notify_delete_plant_title , message: ''));
+
+       //Navigator.of(context).pop();
+   // Navigator.of(context).pop();
   }
   List<String> getListRepeat(){
     return[

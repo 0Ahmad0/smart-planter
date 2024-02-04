@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import '../../core/utils/app_constant.dart';
+import '../models/notification_model.dart';
 import '/core/route/app_route.dart';
 import '/core/utils/app_string.dart';
 import '/core/utils/color_manager.dart';
@@ -18,6 +21,19 @@ class DrawerWidget extends StatefulWidget {
 }
 
 class _DrawerWidgetState extends State<DrawerWidget> {
+  var getNotifications;
+
+  getNotificationsFun()  {
+    String idUser=context.read<ProfileProvider>().user.id;
+    getNotifications = FirebaseFirestore.instance.collection(AppConstants.collectionNotification)
+        .where('idUser',isEqualTo:idUser).snapshots();
+    return getNotifications;
+  }
+  @override
+  void initState() {
+  getNotificationsFun();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -74,12 +90,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           ListTileDrawerItem(
             text: AppString.notifications,
             icon: Icons.notifications,
-            trailing: Badge(
-              backgroundColor: ColorManager.primary,
-              smallSize: 24.sp,
-              largeSize: 30.sp,
-              label: Text('100'),
-            ),
+            trailing: buildCountNotifications(),
             onTap: () {
               Get.back();
               Get.toNamed(AppRoute.notificationRoute);
@@ -98,5 +109,44 @@ class _DrawerWidgetState extends State<DrawerWidget> {
         ],
       ),
     );
+  }
+
+Widget  buildCountNotifications(){
+return StreamBuilder<QuerySnapshot>(
+
+    stream: getNotifications,
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return   SizedBox.shrink();
+      } else if (snapshot.connectionState == ConnectionState.active) {
+        if (snapshot.hasError) {
+          return   SizedBox.shrink();
+        } else if (snapshot.hasData) {
+
+       int countUnRead=0;
+          if (snapshot.data!.docs!.length > 0) {
+            List<NotificationModel> listNotifications = NotificationModels.fromJson(snapshot.data!.docs!).listNotificationModel;
+            for(NotificationModel notificationModel in listNotifications)
+              if(!notificationModel.checkRec)
+                countUnRead++;
+
+          }
+          return
+            countUnRead==0?
+            SizedBox.shrink()
+                :
+             Badge(
+                backgroundColor: ColorManager.primary,
+                smallSize: 24.sp,
+                largeSize: 30.sp,
+                label: Text('${countUnRead}'),
+            );
+        } else {
+          return   SizedBox.shrink();
+        }
+      } else {
+        return   SizedBox.shrink();
+      }
+    });
   }
 }

@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:smart_plans/app/domain/services/api_services_imp.dart';
@@ -31,6 +33,7 @@ class PlanetModelProvider with ChangeNotifier {
     return result;
   }
 
+
   fetchPlanetModelsByUserID(BuildContext context,
       {required String userId}) async {
     var result;
@@ -56,11 +59,18 @@ class PlanetModelProvider with ChangeNotifier {
     return result;
   }
 
-  deletePlanetModel(context, {required PlanetModel planetModel}) async {
+  updateLocalPlant(
+      {required PlanetModel planetModel}) async {
+    this.planetModel=planetModel;
+    Timer(Duration(seconds: 1), () {  notifyListeners();});
+
+  }
+
+  deletePlanetModel(BuildContext context, {required PlanetModel planetModel}) async {
     var result;
     result = await FirebaseFun.deletePlanetModel(planetModel: planetModel);
-    Const.TOAST(context,
-        textToast: FirebaseFun.findTextToast(result['message'].toString()));
+    if(context.mounted)
+    Const.TOAST(context, textToast: FirebaseFun.findTextToast(result['message'].toString()));
     return result;
   }
 }

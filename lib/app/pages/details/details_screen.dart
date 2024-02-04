@@ -23,13 +23,19 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    PlanetModel planetModel = context.read<PlanetModelProvider>().planetModel;
+
     var arguments = context.read<PlanetModelProvider>().arguments;
     return Scaffold(
       appBar: AppBar(
         title: Text(arguments['text']),
       ),
-      body: Padding(
+      body:
+      ChangeNotifierProvider<PlanetModelProvider>.value(
+          value: Provider.of<PlanetModelProvider>(context),
+          child: Consumer<PlanetModelProvider>(
+          builder: (context, planetModelProvider, child) {
+            PlanetModel planetModel = planetModelProvider.planetModel;
+     return Padding(
         padding: const EdgeInsets.all(AppPadding.p16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +85,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 Expanded(
                     child: DetailsContainer(
                         value:
-                            '${planetModel.temperature.degree ?? planetModel.temperature.minimum ?? 0}' //'10',
+                            '${planetModel.temperature.degree ?? planetModel.temperature.minimum ?? 0} inch' //'10',
                         )),
                 const SizedBox(
                   width: AppSize.s10,
@@ -137,7 +143,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 Expanded(
                     child: DetailsContainer(
                         value:
-                            '${planetModel.soil_ph.degree ?? planetModel.soil_ph.minimum ?? 0}' //'10',
+                            '${planetModel.soil_ph.degree ?? planetModel.soil_ph.minimum ?? 0} inch' //'10',
                         )),
                 const SizedBox(
                   width: AppSize.s10,
@@ -231,7 +237,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
             )
           ],
         ),
-      ),
+      );})),
     );
   }
 }
