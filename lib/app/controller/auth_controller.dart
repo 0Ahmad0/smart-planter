@@ -14,9 +14,11 @@ import 'provider/auth_provider.dart';
 class AuthController {
   late AuthProvider authProvider;
   var context;
+
   AuthController({required this.context}) {
     authProvider = Provider.of<AuthProvider>(context, listen: false);
   }
+
   login(
     BuildContext context, {
     String? filed,
@@ -24,14 +26,13 @@ class AuthController {
     required String password,
   }) async {
     Const.loading(context);
-    authProvider.user.email = email ?? filed??'';
+    authProvider.user.email = email ?? filed ?? '';
     authProvider.user.password = password;
     final result = await authProvider.login(context);
     Navigator.of(context).pop();
     if (result['status']) {
       isEmailVerification(context);
       Get.offNamed(AppRoute.homeRoute);
-
     }
   }
 
@@ -41,12 +42,13 @@ class AuthController {
       required String password,
       required String typeUser}) async {
     authProvider.user = UserModel(
-        id: '',
-        uid: '',
-        name: name,
-        email: email,
-        password: password,
-        typeUser: typeUser,);
+      id: '',
+      uid: '',
+      name: name,
+      email: email,
+      password: password,
+      typeUser: typeUser,
+    );
     final result = await signUpByUser(context);
     return result;
   }
@@ -57,6 +59,9 @@ class AuthController {
     Navigator.of(context).pop();
     if (result['status']) {
       Get.offNamed(AppRoute.verifyEmail);
+     await sendEmailVerification(context);
+      Navigator.of(context).pop();
+
     }
     return result;
   }
@@ -70,30 +75,31 @@ class AuthController {
       Navigator.of(context).pop();
     }
   }
-  isEmailVerification(BuildContext context)  {
-    bool result =authProvider.isEmailVerification();
+
+  Future<void> isEmailVerification(BuildContext context) async {
+    bool result = await authProvider.isEmailVerification();
     if (result)
-      AppConstants.navigatorKey.currentState?.pushReplacementNamed(AppRoute.addPlantRoute);
-      // Get.offNamed(AppRoute.addPlantRoute);
-    }
+    Get.offNamed(AppRoute.addPlantRoute);
+  }
 
   sendEmailVerification(BuildContext context,) async {
     Const.loading(context);
-    final result =
-    await authProvider.sendEmailVerification(context);
+    final result = await authProvider.sendEmailVerification(context);
     Navigator.of(context).pop();
   }
-  recoveryPassword(context,{required String password}) async{
-   ProfileProvider profileProvider = Provider.of<ProfileProvider>(context, listen: false);
-    if(password!=profileProvider.user.password){
-      String tempPassword= profileProvider.user.password;
-      profileProvider.user.password=password;
-    final result = await authProvider.recoveryPassword(context,user: profileProvider.user);
-    if(result['status'])
-      profileProvider.updateUser(user: profileProvider.user);
-    else
-      profileProvider.user.password=tempPassword;
-    }
 
+  recoveryPassword(context, {required String password}) async {
+    ProfileProvider profileProvider =
+        Provider.of<ProfileProvider>(context, listen: false);
+    if (password != profileProvider.user.password) {
+      String tempPassword = profileProvider.user.password;
+      profileProvider.user.password = password;
+      final result = await authProvider.recoveryPassword(context,
+          user: profileProvider.user);
+      if (result['status'])
+        profileProvider.updateUser(user: profileProvider.user);
+      else
+        profileProvider.user.password = tempPassword;
+    }
   }
 }

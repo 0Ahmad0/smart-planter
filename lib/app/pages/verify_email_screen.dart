@@ -18,7 +18,7 @@ class VerifyEmailScreen extends StatefulWidget {
   State<VerifyEmailScreen> createState() => _VerifyEmailScreenState();
 }
 
-class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
+class _VerifyEmailScreenState extends State<VerifyEmailScreen>{
   late AuthController authController;
   int seconds = 60;
   bool isButtonDisabled = false;
@@ -58,14 +58,16 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
     super.dispose();
   }
 
+
   @override
   void initState() {
     authController = AuthController(context: context);
-    // Uncomment the line below when you're ready to send email verification in production
-    // authController.sendEmailVerification(context);
     startTimer();
     super.initState();
+
   }
+
+
 
   @override
   Widget build(BuildContext context) {
