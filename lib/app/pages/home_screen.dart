@@ -66,7 +66,6 @@ class _HomeScreenState extends State<HomeScreen> {
           drawer: DrawerWidget(),
           body:
           StreamBuilder<QuerySnapshot>(
-            //prints the messages to the screen0
               stream: getPlants,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {

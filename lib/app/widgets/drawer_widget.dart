@@ -36,7 +36,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         ),
                         otherAccountsPictures: [
                           IconButton(
-                              onPressed: () {
+                              onPressed: () async {
+                                await AppStorage.depose();
                                 Get.back();
                                 Get.offAllNamed(AppRoute.loginRoute);
                               },

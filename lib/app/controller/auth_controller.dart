@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:provider/provider.dart';
+import 'package:smart_plans/core/utils/app_constant.dart';
 import '/app/controller/provider/profile_provider.dart';
 import '../../core/route/app_route.dart';
 import '../models/user_model.dart';
@@ -72,7 +73,8 @@ class AuthController {
   isEmailVerification(BuildContext context)  {
     bool result =authProvider.isEmailVerification();
     if (result)
-      Get.offNamed(AppRoute.addPlantRoute);
+      AppConstants.navigatorKey.currentState?.pushReplacementNamed(AppRoute.addPlantRoute);
+      // Get.offNamed(AppRoute.addPlantRoute);
     }
 
   sendEmailVerification(BuildContext context,) async {

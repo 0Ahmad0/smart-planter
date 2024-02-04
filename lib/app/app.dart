@@ -29,6 +29,7 @@ class SmartPlantsApp extends StatelessWidget {
                 Provider<PlanetModelProvider>(create: (_) => PlanetModelProvider()),
               ],
               child: GetMaterialApp(
+                navigatorKey: AppConstants.navigatorKey,
                 title: AppString.appName,
                 debugShowCheckedModeBanner: false,
                 theme: ThemeManager.myTheme,
