@@ -1,12 +1,9 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smart_plans/core/utils/app_string.dart';
+import '/core/utils/app_string.dart';
 
 import '../../core/utils/color_manager.dart';
 import '../../core/utils/styles_manager.dart';
-import '../../core/utils/values_manager.dart';
 
 class TextFiledApp extends StatefulWidget {
   TextFiledApp(
@@ -56,7 +53,6 @@ class _TextFiledAppState extends State<TextFiledApp> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-
       maxLines: widget.maxLine,
       minLines: widget.minLine,
       readOnly: widget.readOnly,
@@ -75,8 +71,10 @@ class _TextFiledAppState extends State<TextFiledApp> {
       cursorColor: ColorManager.secondary,
       decoration: InputDecoration(
         border: StylesManager.borderTextFiled(),
-        focusedErrorBorder: StylesManager.borderTextFiled(color: ColorManager.secondary,width: 4),
-        errorBorder: StylesManager.borderTextFiled(color: ColorManager.secondary,width: 4),
+        focusedErrorBorder: StylesManager.borderTextFiled(
+            color: ColorManager.secondary, width: 4),
+        errorBorder: StylesManager.borderTextFiled(
+            color: ColorManager.secondary, width: 4),
         enabledBorder: StylesManager.borderTextFiled(),
         focusedBorder: StylesManager.borderTextFiled(width: 4),
         hintStyle: TextStyle(color: ColorManager.secondary.withOpacity(.75)),

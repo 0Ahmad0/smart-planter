@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:smart_plans/core/route/app_route.dart';
-import 'package:smart_plans/core/utils/app_constant.dart';
-import 'package:smart_plans/core/utils/app_string.dart';
-import 'package:smart_plans/core/utils/color_manager.dart';
-import 'package:smart_plans/core/utils/styles_manager.dart';
-import 'package:smart_plans/core/utils/values_manager.dart';
-
-import '../controller/controller.dart';
+import '/core/utils/app_string.dart';
+import '/core/utils/color_manager.dart';
+import '/core/utils/styles_manager.dart';
+import '/core/utils/values_manager.dart';
 import '../controller/plant_controller.dart';
 
 class ConnectionWifiScreen extends StatefulWidget {
@@ -28,7 +24,6 @@ class _ConnectionWifiScreenState extends State<ConnectionWifiScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    final ListController listPlant = Get.put(ListController());
     return Scaffold(
       appBar: AppBar(
         title: Text(AppString.connectionWifi),
@@ -41,19 +36,6 @@ class _ConnectionWifiScreenState extends State<ConnectionWifiScreen> {
               wifiName: 'Wifi-1',
               onTap: () {
                 plantController.getPlants(context);
-                // Get.dialog(Center(
-                //   child: Container(width: 80,height: 80,decoration: BoxDecoration(
-                //     color: ColorManager.white,
-                //     borderRadius: BorderRadius.circular(8.r)
-                //
-                //   ),child: Center(child: CircularProgressIndicator()),),
-                // ),);
-                //
-                // Future.delayed(Duration(seconds: 2),(){
-                //   listPlant.addTemp();
-                //   Get.back();
-                //   Get.offAllNamed(AppRoute.homeRoute);
-                // });
               },
             ),
             const SizedBox(

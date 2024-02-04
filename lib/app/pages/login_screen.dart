@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:smart_plans/app/widgets/textfield_app.dart';
-import 'package:smart_plans/core/helper/sizer_media_query.dart';
-import 'package:smart_plans/core/route/app_route.dart';
-import 'package:smart_plans/core/utils/app_string.dart';
-import 'package:smart_plans/core/utils/assets_manager.dart';
-import 'package:smart_plans/core/utils/color_manager.dart';
-import 'package:smart_plans/core/utils/styles_manager.dart';
-import 'package:smart_plans/core/utils/values_manager.dart';
+import '/app/widgets/textfield_app.dart';
+import '/core/helper/sizer_media_query.dart';
+import '/core/route/app_route.dart';
+import '/core/utils/app_string.dart';
+import '/core/utils/assets_manager.dart';
+import '/core/utils/color_manager.dart';
+import '/core/utils/styles_manager.dart';
+import '/core/utils/values_manager.dart';
 
 import '../../core/helper/validator.dart';
 import '../controller/auth_controller.dart';

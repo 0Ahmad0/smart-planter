@@ -4,20 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_plans/app/models/planet_model.dart';
-import 'package:smart_plans/app/models/plant_model.dart';
-import 'package:smart_plans/core/utils/color_manager.dart';
+import '/app/models/planet_model.dart';
 import '../../core/route/app_route.dart';
 import '../../core/utils/app_constant.dart';
 import '../controller/provider/plant_provider.dart';
 import '../controller/provider/profile_provider.dart';
-import '/app/controller/controller.dart';
 import '/app/widgets/add_new_plant.dart';
 import '/app/widgets/drawer_widget.dart';
 import '/app/widgets/my_plant_item.dart';
 import '/core/helper/sizer_media_query.dart';
 import '/core/utils/app_string.dart';
-
 import '../widgets/constans.dart';
 import '../widgets/empty_plants_widget.dart';
 
@@ -45,7 +41,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    final ListController listPlant = Get.put(ListController());
     return
         Scaffold(
           floatingActionButton: FloatingActionButton(
@@ -130,30 +125,3 @@ class _HomeScreenState extends State<HomeScreen> {
     ;
   }
 }
-/*
- listPlant.list.isNotEmpty
-              ? Center(
-                  child: CarouselSlider(
-                    options: CarouselOptions(
-                      height: getWidth(context),
-                      viewportFraction: .9,
-                      initialPage: 0,
-                      enableInfiniteScroll: false,
-                      reverse: false,
-                      autoPlayCurve: Curves.fastOutSlowIn,
-                      enlargeCenterPage: true,
-                      enlargeFactor: 0.17,
-                    ),
-                    items: [1].map((i) {
-                      return Builder(
-                        builder: (BuildContext context) {
-                          return MyPlantItem();
-                        },
-                      );
-                    }).toList(),
-                  ),
-                )
-              : (listPlant.listTemp.isNotEmpty)
-                  ? AddNewPlant()
-                  : EmptyPlantsWidget(),
- */

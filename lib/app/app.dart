@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_plans/app/pages/verify_email_screen.dart';
 import '/core/utils/app_constant.dart';
 import '/core/utils/app_string.dart';
 import '/core/utils/theme_manager.dart';

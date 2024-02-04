@@ -9,12 +9,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_plans/app/controller/provider/plant_provider.dart';
-import 'package:smart_plans/app/controller/provider/profile_provider.dart';
-import 'package:smart_plans/app/controller/utils/firebase.dart';
-import 'package:smart_plans/app/domain/services/api_service.dart';
-import 'package:smart_plans/app/domain/services/api_services_imp.dart';
-import 'package:smart_plans/app/models/planet_model.dart';
+import '/app/controller/provider/plant_provider.dart';
+import '/app/controller/provider/profile_provider.dart';
+import '/app/controller/utils/firebase.dart';
+import '/app/models/planet_model.dart';
 
 
 import '../../../core/utils/app_constant.dart';

@@ -8,6 +8,7 @@ class NotificationModel {
   DateTime dateTime;
   String subtitle;
   String title;
+
   String message;
   bool checkSend;
   bool checkRec;

@@ -1,6 +1,5 @@
-import 'package:smart_plans/app/models/plant_model.dart';
-import 'package:smart_plans/core/route/app_route.dart';
-import 'package:smart_plans/core/utils/assets_manager.dart';
+import '/app/models/plant_model.dart';
+import '/core/utils/assets_manager.dart';
 
 class AppConstants {
   static int splashDelay = 3;

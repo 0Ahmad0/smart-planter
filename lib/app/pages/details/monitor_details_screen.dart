@@ -1,16 +1,12 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_plans/app/models/plant_model.dart';
-import 'package:smart_plans/core/helper/sizer_media_query.dart';
-import 'package:smart_plans/core/utils/assets_manager.dart';
-import 'package:smart_plans/core/utils/color_manager.dart';
-import 'package:smart_plans/core/utils/values_manager.dart';
-
-import '../../../core/utils/app_constant.dart';
+import '/core/helper/sizer_media_query.dart';
+import '/core/utils/assets_manager.dart';
+import '/core/utils/color_manager.dart';
+import '/core/utils/values_manager.dart';
 import '../../../core/utils/app_string.dart';
 import '../../../core/utils/styles_manager.dart';
 import '../../controller/provider/plant_provider.dart';

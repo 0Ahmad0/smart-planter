@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_plans/app/controller/controller.dart';
-import 'package:smart_plans/core/utils/app_string.dart';
-import 'package:smart_plans/core/utils/assets_manager.dart';
-import 'package:smart_plans/core/utils/styles_manager.dart';
-import 'package:smart_plans/core/utils/values_manager.dart';
-
+import '/core/utils/app_string.dart';
+import '/core/utils/assets_manager.dart';
+import '/core/utils/styles_manager.dart';
+import '/core/utils/values_manager.dart';
 import '../../core/helper/sizer_media_query.dart';
 import '../../core/route/app_route.dart';
 import '../../core/utils/app_constant.dart';
@@ -22,7 +20,6 @@ class AddNewPlant extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ListController listController = Get.find();
     return Center(
       child: Container(
         margin: EdgeInsets.all(AppMargin.m16),
@@ -40,8 +37,8 @@ class AddNewPlant extends StatelessWidget {
           alignment: Alignment.bottomCenter,
           children: [
             InkWell(
-              borderRadius: BorderRadius.circular( 24.r),
-              onTap: (){
+              borderRadius: BorderRadius.circular(24.r),
+              onTap: () {
                 Get.toNamed(AppRoute.addPlantRoute);
               },
               child: Column(
@@ -70,8 +67,7 @@ class AddNewPlant extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children:
-                 AppConstants.plantsDetailsList
+                children: AppConstants.plantsDetailsList
                     .map(
                       (e) => DetailsPlantWidget(
                         onTap: null,
@@ -89,9 +85,12 @@ class AddNewPlant extends StatelessWidget {
               child: IconButton(
                 onPressed: () {
                   //showEmpty
-                  context.read<PlanetModelProvider>().planetModelsApi.planetModels.clear();
+                  context
+                      .read<PlanetModelProvider>()
+                      .planetModelsApi
+                      .planetModels
+                      .clear();
                   context.read<PlanetModelProvider>().notifyListeners();
-                  listController.listTemp.clear();
                 },
                 icon: Icon(
                   Icons.close,

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:lottie/lottie.dart';
 import '../../core/utils/values_manager.dart';
 import '/core/utils/color_manager.dart';
@@ -67,6 +66,7 @@ class Const {
     showToastWidget(
         Container(
           padding: const EdgeInsets.all(AppPadding.p8),
+          margin: const EdgeInsets.symmetric(horizontal: AppMargin.m8),
           decoration: BoxDecoration(
             color: backgroundColor.withOpacity(.5),
             borderRadius: BorderRadius.circular(14.r),
@@ -75,8 +75,13 @@ class Const {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                textToast,
+              Flexible(
+                child: Text(
+                  textToast,
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
               const SizedBox(
                 width: AppSize.s10,

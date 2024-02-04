@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:get/get.dart';
 import 'package:smart_plans/core/helper/sizer_media_query.dart';
-import 'package:smart_plans/core/route/app_route.dart';
-import 'package:smart_plans/core/utils/app_constant.dart';
-import 'package:smart_plans/core/utils/app_string.dart';
-import 'package:smart_plans/core/utils/assets_manager.dart';
-import 'package:smart_plans/core/utils/color_manager.dart';
-import 'package:smart_plans/core/utils/styles_manager.dart';
-import 'package:smart_plans/core/utils/values_manager.dart';
+import '/core/utils/app_constant.dart';
+import '/core/utils/app_string.dart';
+import '/core/utils/assets_manager.dart';
+import '/core/utils/color_manager.dart';
+import '/core/utils/styles_manager.dart';
+import '/core/utils/values_manager.dart';
 
 import '../controller/splashController.dart';
 
@@ -42,7 +38,6 @@ class _SplashScreenState extends State<SplashScreen> {
     _goNextScreen();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,9 +55,8 @@ class _SplashScreenState extends State<SplashScreen> {
             children: [
               Text(
                 AppString.appName,
-                style: StylesManager.titleBoldTextStyle(
-                  color: ColorManager.white
-                ),
+                style:
+                    StylesManager.titleBoldTextStyle(color: ColorManager.white),
               ),
               const SizedBox(
                 height: AppSize.s20,

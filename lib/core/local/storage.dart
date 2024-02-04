@@ -1,22 +1,15 @@
 import 'dart:math';
 
-
 import 'package:flutter/cupertino.dart';
 import 'package:get_storage/get_storage.dart';
 
 import '../../app/models/advance_model.dart';
 import '../utils/app_constant.dart';
 
-
-
-
 class AppStorage {
   static GetStorage _storage = GetStorage();
 
-
   static init(BuildContext context) async {
-
-
     if (!_storage.hasData(AppConstants.rememberMe)) {
       storageWrite(key: AppConstants.rememberMe, value: false);
     } else {
@@ -38,7 +31,6 @@ class AppStorage {
     } else {
       AdvanceModel.token = await storageRead(key: AppConstants.tokenKEY);
     }
-
   }
 
   static Future<void> storageWrite({key, value}) async =>
@@ -46,12 +38,14 @@ class AppStorage {
 
   static Future<dynamic> storageRead({key}) async => await _storage.read(key);
 
-  static Future<void> storageDelete({key}) async => await _storage.remove(key).then((value) => print("delete key successful"));
-static depose() async {
-  await _storage.remove(AppConstants.idKEY);
-  await _storage.remove(AppConstants.uidKEY);
-  await _storage.remove(AppConstants.tokenKEY);
-  await _storage.write(AppConstants.rememberMe, false);
-}
+  static Future<void> storageDelete({key}) async => await _storage
+      .remove(key)
+      .then((value) => print("delete key successful"));
 
+  static depose() async {
+    await _storage.remove(AppConstants.idKEY);
+    await _storage.remove(AppConstants.uidKEY);
+    await _storage.remove(AppConstants.tokenKEY);
+    await _storage.write(AppConstants.rememberMe, false);
+  }
 }

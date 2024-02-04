@@ -1,6 +1,3 @@
-//UserModel
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class UserModel {
   String id;
   String uid;
@@ -18,6 +15,7 @@ class UserModel {
     required this.typeUser,
   });
 
+  // when get data from dataBase
   factory UserModel.fromJson(json) {
     var data;
 
@@ -35,10 +33,9 @@ class UserModel {
 
     );
   }
-  factory UserModel.init(){
-    return UserModel(id: "", uid: '', name: '', email: '', password: '', typeUser: '');
-  }
 
+
+  // when post (send) data to dataBase
   Map<String, dynamic> toJson() => {
     'id': id,
     'uid': uid,
@@ -47,7 +44,14 @@ class UserModel {
     'password': password,
     'typeUser': typeUser,
   };
+
+  factory UserModel.init(){
+    return UserModel(id: "", uid: '', name: '', email: '', password: '', typeUser: '');
+  }
+
 }
+
+
 //UserModels
 class UserModels {
   List<UserModel> userModels;

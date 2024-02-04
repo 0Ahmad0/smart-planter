@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_plans/app/widgets/add_plant_item_list.dart';
-import 'package:smart_plans/core/utils/app_string.dart';
-import 'package:smart_plans/core/utils/values_manager.dart';
+import '/app/widgets/add_plant_item_list.dart';
+import '/core/utils/app_string.dart';
+import '/core/utils/values_manager.dart';
 
 import '../controller/provider/plant_provider.dart';
 import '../widgets/add_plant_item_grid.dart';

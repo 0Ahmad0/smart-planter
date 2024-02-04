@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:smart_plans/app/controller/plant_controller.dart';
-import 'package:smart_plans/app/models/planet_model.dart';
-import 'package:smart_plans/core/utils/color_manager.dart';
-import 'package:smart_plans/core/utils/values_manager.dart';
+import '/app/controller/plant_controller.dart';
+import '/app/models/planet_model.dart';
+import '/core/utils/color_manager.dart';
+import '/core/utils/values_manager.dart';
 
 import '../../core/route/app_route.dart';
 import '../../core/utils/styles_manager.dart';
-import '../controller/controller.dart';
 
 class AddPlantItemList extends StatefulWidget {
    AddPlantItemList({
@@ -30,14 +29,12 @@ class _AddPlantItemListState extends State<AddPlantItemList> {
   }
   @override
   Widget build(BuildContext context) {
-    final ListController listController = Get.find();
     return InkWell(
       onTap: () async {
 
        await plantController.addPlant(context, planetModel: widget.planetModel,
 
         );
-         listController.add();
          Get.offAllNamed(AppRoute.homeRoute);
       },
       child: Container(

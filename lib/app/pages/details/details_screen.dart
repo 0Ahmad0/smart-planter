@@ -1,18 +1,12 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_plans/app/models/planet_model.dart';
-import 'package:smart_plans/app/models/plant_model.dart';
-import 'package:smart_plans/app/widgets/button_app.dart';
-import 'package:smart_plans/app/widgets/textfield_app.dart';
-import 'package:smart_plans/core/helper/sizer_media_query.dart';
-import 'package:smart_plans/core/utils/app_string.dart';
-import 'package:smart_plans/core/utils/styles_manager.dart';
-import 'package:smart_plans/core/utils/values_manager.dart';
-
+import '/app/models/planet_model.dart';
+import '/app/widgets/button_app.dart';
+import '/core/helper/sizer_media_query.dart';
+import '/core/utils/app_string.dart';
+import '/core/utils/styles_manager.dart';
+import '/core/utils/values_manager.dart';
 import '../../../core/utils/color_manager.dart';
 import '../../controller/plant_controller.dart';
 import '../../controller/provider/plant_provider.dart';
@@ -27,10 +21,10 @@ class DetailsScreen extends StatefulWidget {
 class _DetailsScreenState extends State<DetailsScreen> {
   bool isPumpOn = false;
 
-    @override
-    Widget build(BuildContext context) {
-    PlanetModel planetModel= context.read<PlanetModelProvider>().planetModel;
-    var arguments= context.read<PlanetModelProvider>().arguments;
+  @override
+  Widget build(BuildContext context) {
+    PlanetModel planetModel = context.read<PlanetModelProvider>().planetModel;
+    var arguments = context.read<PlanetModelProvider>().arguments;
     return Scaffold(
       appBar: AppBar(
         title: Text(arguments['text']),
@@ -84,30 +78,47 @@ class _DetailsScreenState extends State<DetailsScreen> {
               children: [
                 Expanded(
                     child: DetailsContainer(
-                  value:'${planetModel.temperature.degree??planetModel.temperature.minimum??0}' //'10',
-                )),
+                        value:
+                            '${planetModel.temperature.degree ?? planetModel.temperature.minimum ?? 0}' //'10',
+                        )),
                 const SizedBox(
                   width: AppSize.s10,
                 ),
-                DetailsButton(icon: Icons.add,onPressed: (){
-
-                  if(planetModel.temperature.maximum==null||(planetModel.temperature.degree??planetModel.temperature.minimum??0)<(planetModel.temperature.maximum!))
-                  planetModel.temperature.degree=(planetModel.temperature.degree??planetModel.temperature.minimum??0)+1;
-                  setState(() {
-
-                  });
-                },),
+                DetailsButton(
+                  icon: Icons.add,
+                  onPressed: () {
+                    if (planetModel.temperature.maximum == null ||
+                        (planetModel.temperature.degree ??
+                                planetModel.temperature.minimum ??
+                                0) <
+                            (planetModel.temperature.maximum!))
+                      planetModel.temperature.degree =
+                          (planetModel.temperature.degree ??
+                                  planetModel.temperature.minimum ??
+                                  0) +
+                              1;
+                    setState(() {});
+                  },
+                ),
                 const SizedBox(
                   width: AppSize.s10,
                 ),
-                DetailsButton(icon: Icons.remove,onPressed: (){
-
-                  if(planetModel.temperature.minimum==null||(planetModel.temperature.degree??planetModel.temperature.minimum??0)>(planetModel.temperature.minimum!))
-                    planetModel.temperature.degree=(planetModel.temperature.degree??planetModel.temperature.minimum??0)-1;
-                  setState(() {
-
-                  });
-                  },),
+                DetailsButton(
+                  icon: Icons.remove,
+                  onPressed: () {
+                    if (planetModel.temperature.minimum == null ||
+                        (planetModel.temperature.degree ??
+                                planetModel.temperature.minimum ??
+                                0) >
+                            (planetModel.temperature.minimum!))
+                      planetModel.temperature.degree =
+                          (planetModel.temperature.degree ??
+                                  planetModel.temperature.minimum ??
+                                  0) -
+                              1;
+                    setState(() {});
+                  },
+                ),
               ],
             ),
 
@@ -124,30 +135,48 @@ class _DetailsScreenState extends State<DetailsScreen> {
             Row(
               children: [
                 Expanded(
-                    child: DetailsContainer(   value:'${planetModel.soil_ph.degree??planetModel.soil_ph.minimum??0}' //'10',
-                    )),
+                    child: DetailsContainer(
+                        value:
+                            '${planetModel.soil_ph.degree ?? planetModel.soil_ph.minimum ?? 0}' //'10',
+                        )),
                 const SizedBox(
                   width: AppSize.s10,
                 ),
-                DetailsButton(icon: Icons.add,onPressed: (){
-
-                  if(planetModel.soil_ph.maximum==null||(planetModel.soil_ph.degree??planetModel.soil_ph.minimum??0)<(planetModel.soil_ph.maximum!))
-                    planetModel.soil_ph.degree=(planetModel.soil_ph.degree??planetModel.soil_ph.minimum??0)+1;
-                  setState(() {
-
-                  });
-                },),
+                DetailsButton(
+                  icon: Icons.add,
+                  onPressed: () {
+                    if (planetModel.soil_ph.maximum == null ||
+                        (planetModel.soil_ph.degree ??
+                                planetModel.soil_ph.minimum ??
+                                0) <
+                            (planetModel.soil_ph.maximum!))
+                      planetModel.soil_ph.degree =
+                          (planetModel.soil_ph.degree ??
+                                  planetModel.soil_ph.minimum ??
+                                  0) +
+                              1;
+                    setState(() {});
+                  },
+                ),
                 const SizedBox(
                   width: AppSize.s10,
                 ),
-                DetailsButton(icon: Icons.remove,onPressed: (){
-                  if(planetModel.soil_ph.minimum==null||(planetModel.soil_ph.degree??planetModel.soil_ph.minimum??0)>(planetModel.soil_ph.minimum!))
-                    planetModel.soil_ph.degree=(planetModel.soil_ph.degree??planetModel.soil_ph.minimum??0)-1;
-                  setState(() {
-
-                  });
-                },),
-
+                DetailsButton(
+                  icon: Icons.remove,
+                  onPressed: () {
+                    if (planetModel.soil_ph.minimum == null ||
+                        (planetModel.soil_ph.degree ??
+                                planetModel.soil_ph.minimum ??
+                                0) >
+                            (planetModel.soil_ph.minimum!))
+                      planetModel.soil_ph.degree =
+                          (planetModel.soil_ph.degree ??
+                                  planetModel.soil_ph.minimum ??
+                                  0) -
+                              1;
+                    setState(() {});
+                  },
+                ),
               ],
             ),
 
@@ -163,20 +192,20 @@ class _DetailsScreenState extends State<DetailsScreen> {
               ),
             ),
             DropdownButtonFormField(
-              value: planetModel.repeat_watering,
+                value: planetModel.repeat_watering,
                 icon: Icon(
                   Icons.keyboard_arrow_down,
                   color: ColorManager.primary,
                 ),
                 decoration: InputDecoration(
-
                     filled: true,
                     fillColor: ColorManager.secondary,
                     contentPadding:
                         EdgeInsets.symmetric(horizontal: AppSize.s12),
                     border: OutlineInputBorder(),
                     hintText: 'value'),
-                items: PlantController( context: context).getListRepeat()
+                items: PlantController(context: context)
+                    .getListRepeat()
                     .map((e) => DropdownMenuItem(
                           child: Text(
                             e.toString(),
@@ -187,13 +216,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         ))
                     .toList(),
                 onChanged: (value) {
-                  planetModel.repeat_watering=value;
+                  planetModel.repeat_watering = value;
                 }),
 
             const Spacer(),
             ButtonApp(
-              onPressed: (){
-                PlantController(context: context).updatePlanetModel(context, planetModel: planetModel);
+              onPressed: () {
+                PlantController(context: context)
+                    .updatePlanetModel(context, planetModel: planetModel);
               },
               text: AppString.apply,
               backgroundColor: ColorManager.secondary,

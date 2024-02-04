@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_plans/app/models/planet_model.dart';
-import 'package:smart_plans/app/widgets/details_plant_widget.dart';
-import 'package:smart_plans/core/route/app_route.dart';
-import 'package:smart_plans/core/utils/app_constant.dart';
-import 'package:smart_plans/core/utils/assets_manager.dart';
+import '/app/models/planet_model.dart';
+import '/app/widgets/details_plant_widget.dart';
+import '/core/route/app_route.dart';
+import '/core/utils/app_constant.dart';
 
 import '../../core/helper/sizer_media_query.dart';
 import '../../core/utils/color_manager.dart';

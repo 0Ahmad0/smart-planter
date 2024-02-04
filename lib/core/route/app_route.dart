@@ -1,15 +1,13 @@
-import 'package:smart_plans/app/pages/add_plant_screen.dart';
-import 'package:smart_plans/app/pages/connection_wifi_screen.dart';
-import 'package:smart_plans/app/pages/details/details_screen.dart';
-import 'package:smart_plans/app/pages/details/monitor_details_screen.dart';
-import 'package:smart_plans/app/pages/notificationa_screen.dart';
-import 'package:smart_plans/app/pages/setting_screen.dart';
-import 'package:smart_plans/app/pages/verify_email_screen.dart';
-
+import '/app/pages/add_plant_screen.dart';
+import '/app/pages/connection_wifi_screen.dart';
+import '/app/pages/details/details_screen.dart';
+import '/app/pages/details/monitor_details_screen.dart';
+import '/app/pages/notificationa_screen.dart';
+import '/app/pages/setting_screen.dart';
+import '/app/pages/verify_email_screen.dart';
 import '../../app/pages/details/details_screen2.dart';
 import '../../app/pages/forget_passord_screen.dart';
 import '../../app/pages/home_screen.dart';
-import '../../app/pages/profile_screen.dart';
 import '../../app/pages/signup_screen.dart';
 import '../../app/pages/login_screen.dart';
 import '../../app/pages/splash_screen.dart';
@@ -29,7 +27,6 @@ class AppRoute {
   static const notificationRoute = '/notifications';
   static const connectionWifiRoute = '/connectionWifi';
   static const settingRoute = '/setting';
-  static const userProfileRoute = '/userProfile';
 
 
 
@@ -49,6 +46,5 @@ class AppRoute {
     notificationRoute: (context) => NotificationScreen(),
     connectionWifiRoute: (context) => ConnectionWifiScreen(),
     settingRoute: (context) => SettingScreen(),
-    userProfileRoute: (context) => UserProfileScreen(),
   };
 }

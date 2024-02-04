@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:smart_plans/core/utils/app_string.dart';
-import 'package:smart_plans/core/utils/color_manager.dart';
-import 'package:smart_plans/core/utils/styles_manager.dart';
-import 'package:smart_plans/core/utils/values_manager.dart';
+import '/core/utils/app_string.dart';
+import '/core/utils/color_manager.dart';
+import '/core/utils/styles_manager.dart';
+import '/core/utils/values_manager.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
-import '../../core/route/app_route.dart';
 import '../../core/utils/app_string.dart';
 import '../../core/utils/color_manager.dart';
 import '../../core/utils/styles_manager.dart';

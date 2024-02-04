@@ -1,14 +1,10 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_plans/app/controller/auth_controller.dart';
-import 'package:smart_plans/core/route/app_route.dart';
-import 'package:smart_plans/core/utils/app_string.dart';
-import 'package:smart_plans/core/utils/color_manager.dart';
-import 'package:smart_plans/core/utils/styles_manager.dart';
+import '/core/route/app_route.dart';
+import '/core/utils/app_string.dart';
+import '/core/utils/color_manager.dart';
 
 import '../../core/local/storage.dart';
 import '../controller/provider/profile_provider.dart';
@@ -22,41 +18,44 @@ class DrawerWidget extends StatefulWidget {
 }
 
 class _DrawerWidgetState extends State<DrawerWidget> {
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: Column(
         children: [
-      ChangeNotifierProvider<ProfileProvider>.value(
-      value: Provider.of<ProfileProvider>(context),
-      child: Consumer<ProfileProvider>(
-        builder: (context, profileProvider, child) =>
-          UserAccountsDrawerHeader(
-            accountName: Text(  '${profileProvider.user.name}',),
-            accountEmail: Text(  '${profileProvider.user.email}',),
-            otherAccountsPictures: [
-              IconButton(
-                  onPressed: () {
-                    Get.back();
-                    Get.offAllNamed(AppRoute.loginRoute);
-                  },
-                  icon: Icon(
-                    Icons.logout,
-                    color: ColorManager.secondary,
-                  ))
-            ],
-            currentAccountPicture: CircleAvatar(
-              backgroundColor: ColorManager.secondary,
-            ),
-            decoration: BoxDecoration(
-              color: ColorManager.primary,
-            ),
-          ))),
+          ChangeNotifierProvider<ProfileProvider>.value(
+              value: Provider.of<ProfileProvider>(context),
+              child: Consumer<ProfileProvider>(
+                  builder: (context, profileProvider, child) =>
+                      UserAccountsDrawerHeader(
+                        accountName: Text(
+                          '${profileProvider.user.name}',
+                        ),
+                        accountEmail: Text(
+                          '${profileProvider.user.email}',
+                        ),
+                        otherAccountsPictures: [
+                          IconButton(
+                              onPressed: () {
+                                Get.back();
+                                Get.offAllNamed(AppRoute.loginRoute);
+                              },
+                              icon: Icon(
+                                Icons.logout,
+                                color: ColorManager.secondary,
+                              ))
+                        ],
+                        currentAccountPicture: CircleAvatar(
+                          backgroundColor: ColorManager.secondary,
+                        ),
+                        decoration: BoxDecoration(
+                          color: ColorManager.primary,
+                        ),
+                      ))),
           ListTileDrawerItem(
             text: AppString.connectionWifi,
             icon: Icons.wifi,
-            onTap: (){
+            onTap: () {
               Get.back();
               Get.toNamed(AppRoute.connectionWifiRoute);
             },
@@ -65,7 +64,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           ListTileDrawerItem(
             text: AppString.setting,
             icon: Icons.settings,
-            onTap: (){
+            onTap: () {
               Get.back();
               Get.toNamed(AppRoute.settingRoute);
             },
@@ -80,7 +79,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               largeSize: 30.sp,
               label: Text('100'),
             ),
-            onTap: (){
+            onTap: () {
               Get.back();
               Get.toNamed(AppRoute.notificationRoute);
             },
@@ -100,4 +99,3 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     );
   }
 }
-

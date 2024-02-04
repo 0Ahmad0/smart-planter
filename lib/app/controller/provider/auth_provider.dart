@@ -1,10 +1,6 @@
-
-
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
-import 'package:smart_plans/app/controller/provider/profile_provider.dart';
-import 'package:smart_plans/app/models/advance_model.dart';
+import '/app/controller/provider/profile_provider.dart';
+import '/app/models/advance_model.dart';
 import '../../../../core/utils/app_constant.dart';
 import 'package:provider/provider.dart';
 import '../../../core/local/storage.dart';

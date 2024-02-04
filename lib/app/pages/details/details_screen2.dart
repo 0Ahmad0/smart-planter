@@ -1,18 +1,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_plans/app/models/planet_model.dart';
-import 'package:smart_plans/app/models/plant_model.dart';
-import 'package:smart_plans/app/widgets/button_app.dart';
-import 'package:smart_plans/app/widgets/textfield_app.dart';
-import 'package:smart_plans/core/helper/sizer_media_query.dart';
-import 'package:smart_plans/core/utils/app_string.dart';
-import 'package:smart_plans/core/utils/styles_manager.dart';
-import 'package:smart_plans/core/utils/values_manager.dart';
-
+import '/app/models/planet_model.dart';
+import '/app/widgets/button_app.dart';
+import '/core/helper/sizer_media_query.dart';
+import '/core/utils/app_string.dart';
+import '/core/utils/styles_manager.dart';
+import '/core/utils/values_manager.dart';
 import '../../../core/utils/color_manager.dart';
 import '../../controller/plant_controller.dart';
 import '../../controller/provider/plant_provider.dart';
