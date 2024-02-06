@@ -7,6 +7,7 @@ class PlanetModel {
   String? userId;
   String? name;
   String? url_image;
+  num? age;
   String? description;
   String? repeat_fertilizing;
   String? repeat_watering;
@@ -23,6 +24,7 @@ class PlanetModel {
     required this.description,
     required this.userId,
     required this.name,
+    required this.age,
     required this.fertilizer_quantity,
     required this.repeat_fertilizing,
     required this.repeat_watering,
@@ -41,6 +43,7 @@ class PlanetModel {
       userId: json["userId"],
       description: json["description"],
       name: json["name"],
+      age: json["age"],
       repeat_fertilizing: json["repeat_fertilizing"],
       repeat_watering: json["repeat_watering"],
       url_image: json["url_image"],
@@ -63,6 +66,7 @@ class PlanetModel {
         fertilizer_quantity: QuantityModel.init(),
         repeat_fertilizing: '',
         repeat_watering: '',
+        age: 0,
         soil_moister: MinMaxModel.init(),
         soil_ph: MinMaxModel.init(),
         sunlight: MinMaxModel.init(),
@@ -80,6 +84,7 @@ class PlanetModel {
         'repeat_watering': repeat_watering,
         'repeat_fertilizing': repeat_fertilizing,
         'name': name,
+        'age': age,
         'water_quantity': water_quantity.toJson(),
         'fertilizer_quantity': fertilizer_quantity.toJson(),
         'temperature': temperature.toJson(),

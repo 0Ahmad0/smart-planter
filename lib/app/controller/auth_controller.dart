@@ -114,13 +114,15 @@ class AuthController {
     int i = 1;
     final Timer timer =
     await Timer.periodic(Duration(seconds: retRequestTime), (time) async {
-      if (i > countRetRequest) time.cancel();
+      if (i > countRetRequest) {
+        AppStorage.depose();
+        Get.offNamed(AppRoute.loginRoute);
+      };
       await _checkVerifyEmail(context, time);
       i++;
     });
     //timer.cancel();
-    AppStorage.depose();
-    Get.offNamed(AppRoute.loginRoute);
+
   }
 
   sendEmailVerification(BuildContext context,) async {

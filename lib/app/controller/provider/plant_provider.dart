@@ -16,7 +16,7 @@ class PlanetModelProvider with ChangeNotifier {
 
   fetchAllPlanetModelFromApi(BuildContext context) async {
     var result;
-    result = await ApiServicesImp(Dio()).get('/plants');
+    result = await ApiServicesImp(Dio()).get('/api/plants');
     if (result['status']) {
       planetModelsApi = PlanetModels.fromJson(result['data']);
       print(planetModelsApi.planetModels.length);

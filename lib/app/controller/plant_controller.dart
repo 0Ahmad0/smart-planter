@@ -47,8 +47,8 @@ class PlantController{
        if(result['status']){
        planetModelProvider.planetModelsApi.planetModels.clear();
        planetModelProvider..notifyListeners();
-       NotificationProvider().addNotification(context,
-           notification: NotificationModel(idUser:context.read<ProfileProvider>().user.id, subtitle:AppString.notify_new_plant_subtitle+ ' ${planetModel.name}', dateTime: DateTime.now(), title:AppString.notify_new_plant_title, message: ''));
+       // NotificationProvider().addNotification(context,
+       //     notification: NotificationModel(idUser:context.read<ProfileProvider>().user.id, subtitle:AppString.notify_new_plant_subtitle+ ' ${planetModel.name}', dateTime: DateTime.now(), title:AppString.notify_new_plant_title, message: ''));
 
          Get.offAllNamed(AppRoute.homeRoute);
        }
@@ -96,56 +96,86 @@ class PlantController{
       // NotificationProvider().addNotification(context,
       //     notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_new_plant_subtitle+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_new_plant_title, message: ''));
 
-    else if(oldPlanetModel!.plantId!=planetModel2.plantId||oldPlanetModel.description!=planetModel2.description)
-       NotificationProvider().addNotification(context,
-           notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_change_plant_subtitle+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_title , message: ''));
+    // else if(oldPlanetModel!.plantId!=planetModel2.plantId||oldPlanetModel.description!=planetModel2.description)
+    //    NotificationProvider().addNotification(context,
+    //        notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_change_plant_subtitle+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_title , message: ''));
 
      else if(
     oldPlanetModel.temperature.minimum!=planetModel2.temperature.minimum
         ||oldPlanetModel.temperature.maximum!=planetModel2.temperature.maximum
-        ||oldPlanetModel.temperature.degree!=planetModel2.temperature.degree)
-      NotificationProvider().addNotification(context,
-          notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_change_temperature_plant_subtitle+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_title , message: ''));
+        ||oldPlanetModel.temperature.degree!=planetModel2.temperature.degree){
+      if(compareNumber(planetModel2.temperature.degree,planetModel2.temperature.maximum)==1)
+        NotificationProvider().addNotification(context,
+            notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_max_temperature_plant+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_warning , message: ''));
+      else if(compareNumber(planetModel2.temperature.degree,planetModel2.temperature.minimum)==-1)
+        NotificationProvider().addNotification(context,
+            notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_min_temperature_plant+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_warning , message: ''));
+
+    }
 
 
     else if(oldPlanetModel.sunlight.minimum!=planetModel2.sunlight.minimum
         ||oldPlanetModel.sunlight.maximum!=planetModel2.sunlight.maximum
-        ||oldPlanetModel.sunlight.degree!=planetModel2.sunlight.degree)
-      NotificationProvider().addNotification(context,
-          notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_change_sunlight_plant_subtitle+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_title , message: ''));
+        ||oldPlanetModel.sunlight.degree!=planetModel2.sunlight.degree) {
+      if(compareNumber(planetModel2.sunlight.degree,planetModel2.sunlight.maximum)==1)
+        NotificationProvider().addNotification(context,
+            notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_max_sunlight_plant+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_warning , message: ''));
+      else if(compareNumber(planetModel2.sunlight.degree,planetModel2.sunlight.minimum)==-1)
+        NotificationProvider().addNotification(context,
+            notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_min_sunlight_plant+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_warning , message: ''));
 
+    }
 
     else if(oldPlanetModel.soil_ph.minimum!=planetModel2.soil_ph.minimum
         ||oldPlanetModel.soil_ph.maximum!=planetModel2.soil_ph.maximum
-        ||oldPlanetModel.soil_ph.degree!=planetModel2.soil_ph.degree)
-      NotificationProvider().addNotification(context,
-          notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_change_soil_ph_plant_subtitle+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_title , message: ''));
+        ||oldPlanetModel.soil_ph.degree!=planetModel2.soil_ph.degree) {
+      if(compareNumber(planetModel2.soil_ph.degree,planetModel2.soil_ph.maximum)==1)
+        NotificationProvider().addNotification(context,
+            notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_max_soil_ph_plant+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_warning , message: ''));
+      else if(compareNumber(planetModel2.soil_ph.degree,planetModel2.soil_ph.minimum)==-1)
+        NotificationProvider().addNotification(context,
+            notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_min_soil_ph_plant+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_warning , message: ''));
 
+    }
 
     else if(oldPlanetModel.soil_moister.minimum!=planetModel2.soil_moister.minimum
         ||oldPlanetModel.soil_moister.maximum!=planetModel2.soil_moister.maximum
-        ||oldPlanetModel.soil_moister.degree!=planetModel2.soil_moister.degree)
-      NotificationProvider().addNotification(context,
-          notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_change_soil_moister_plant_subtitle+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_title , message: ''));
+        ||oldPlanetModel.soil_moister.degree!=planetModel2.soil_moister.degree){
+      if(compareNumber(planetModel2.soil_moister.degree,planetModel2.soil_moister.maximum)==1)
+        NotificationProvider().addNotification(context,
+            notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_max_soil_moister_plant+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_warning , message: ''));
+      else if(compareNumber(planetModel2.soil_moister.degree,planetModel2.soil_moister.minimum)==-1)
+        NotificationProvider().addNotification(context,
+            notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_min_soil_moister_plant+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_warning , message: ''));
+
+    }
 
 
-    else if(oldPlanetModel.water_quantity.type!=planetModel2.water_quantity.type
-        ||oldPlanetModel.water_quantity.value!=planetModel2.water_quantity.value)
-      NotificationProvider().addNotification(context,
-          notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_change_water_quantity_plant_subtitle+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_title , message: ''));
+    // else if(oldPlanetModel.water_quantity.type!=planetModel2.water_quantity.type
+    //     ||oldPlanetModel.water_quantity.value!=planetModel2.water_quantity.value)
+    //   NotificationProvider().addNotification(context,
+    //       notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_change_water_quantity_plant_subtitle+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_title , message: ''));
+    //
+    //
+    // else if(oldPlanetModel.fertilizer_quantity.type!=planetModel2.fertilizer_quantity.type
+    //     ||oldPlanetModel.fertilizer_quantity.value!=planetModel2.fertilizer_quantity.value)
+    //   NotificationProvider().addNotification(context,
+    //       notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_change_fertilizer_quantity_plant_subtitle+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_title , message: ''));
+    //
 
+    // else if(oldPlanetModel.repeat_fertilizing!=planetModel2.repeat_fertilizing
+    //     ||oldPlanetModel.repeat_watering!=planetModel2.repeat_watering)
+    //   NotificationProvider().addNotification(context,
+    //       notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_change_repeat_plant_subtitle+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_title , message: ''));
 
-    else if(oldPlanetModel.fertilizer_quantity.type!=planetModel2.fertilizer_quantity.type
-        ||oldPlanetModel.fertilizer_quantity.value!=planetModel2.fertilizer_quantity.value)
-      NotificationProvider().addNotification(context,
-          notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_change_fertilizer_quantity_plant_subtitle+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_title , message: ''));
-
-
-    else if(oldPlanetModel.repeat_fertilizing!=planetModel2.repeat_fertilizing
-        ||oldPlanetModel.repeat_watering!=planetModel2.repeat_watering)
-      NotificationProvider().addNotification(context,
-          notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_change_repeat_plant_subtitle+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_title , message: ''));
-
+   }
+   compareNumber( num? number1, num? number2){
+     if((number1??number2??0)>(number2??number1??0))
+          return 1;
+     else if((number1??number2??0)<(number2??number1??0))
+       return -1;
+     else
+       return 0;
    }
 
   bool isPlantSimilar(PlanetModel planetModel1,PlanetModel planetModel2){
@@ -198,9 +228,9 @@ class PlantController{
     //Const.loading(context);
     String idUser=context.read<ProfileProvider>().user.id;
     final result = await planetModelProvider.deletePlanetModel(context,planetModel: planetModel);
-     if(result['status'])
-       NotificationProvider().addNotification(context,
-           notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_delete_plant_subtitle+ ' ${planetModel.name}', dateTime: DateTime.now(), title:AppString.notify_delete_plant_title , message: ''));
+     if(result['status']);
+       // NotificationProvider().addNotification(context,
+       //     notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_delete_plant_subtitle+ ' ${planetModel.name}', dateTime: DateTime.now(), title:AppString.notify_delete_plant_title , message: ''));
 
        //Navigator.of(context).pop();
    // Navigator.of(context).pop();

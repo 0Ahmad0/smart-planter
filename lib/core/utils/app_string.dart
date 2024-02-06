@@ -80,5 +80,16 @@ class AppString {
   static const notify_change_fertilizer_quantity_plant_subtitle= "The fertilizer quantity of the plant has been changed";
   static const notify_change_repeat_plant_subtitle= "The repeat of the plant has been changed";
 
+  static const notify_change_plant_warning= "Plant change warning";
+  static const notify_max_temperature_plant= "The plant temperature has risen above the maximum";
+  static const notify_min_temperature_plant= "The plant temperature fell below the minimum";
+  static const notify_max_sunlight_plant= "The plant sunlight has risen above the maximum";
+  static const notify_min_sunlight_plant= "The plant sunlight fell below the minimum";
+  static const notify_max_soil_ph_plant= "The plant soil ph has risen above the maximum";
+  static const notify_min_soil_ph_plant= "The plant soil ph fell below the minimum";
+  static const notify_max_soil_moister_plant= "The plant soil moister has risen above the maximum";
+  static const notify_min_soil_moister_plant= "The plant soil moister fell below the minimum";
+
+
 
 }

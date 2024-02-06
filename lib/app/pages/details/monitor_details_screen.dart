@@ -95,7 +95,7 @@ class MonitorDetailsScreen extends StatelessWidget {
               LinearPercentIndicator(
                 padding: EdgeInsets.zero,
                 lineHeight: 60.h,
-                percent: 0.6,
+                percent:(planetModel.age??0)>50?1: (planetModel.age??0)/50,
                 curve: Curves.easeInOut,
                 progressColor: ColorManager.progressColor,
                 barRadius: Radius.circular(100.r),
@@ -104,7 +104,7 @@ class MonitorDetailsScreen extends StatelessWidget {
                 addAutomaticKeepAlive: true,
                 backgroundColor: ColorManager.secondary.withOpacity(.7),
                 center: Text(
-                  '${AppString.age} ${12} / ${50}',
+                  '${AppString.age} ${planetModel.age??0} / ${50}',
                   style: StylesManager.titleBoldTextStyle(
                     size: 20.sp,
                     color: ColorManager.primary,
