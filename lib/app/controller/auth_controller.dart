@@ -65,7 +65,7 @@ class AuthController {
       Get.offNamed(AppRoute.verifyEmail);
 
      await sendEmailVerification(context);
-      Navigator.of(context).pop();
+      // Navigator.of(context).pop();
 
     }
     return result;
@@ -83,8 +83,8 @@ class AuthController {
 
   Future<void> isEmailVerification(BuildContext context) async {
     bool result = await authProvider.isEmailVerification();
-    if (!result)
-    Get.offNamed(AppRoute.verifyEmail);
+    if (!result);
+    // Get.offNamed(AppRoute.verifyEmail);
   }
 
   Future _checkVerifyEmail(
@@ -109,8 +109,8 @@ class AuthController {
   Future<void> retCheckVerifyEmail(
       BuildContext context,
       ) async {
-    int retRequestTime = 30; //1 minute
-    int countRetRequest = 5;
+    int retRequestTime = 20; //1 minute
+    int countRetRequest = 6;
     int i = 1;
     final Timer timer =
     await Timer.periodic(Duration(seconds: retRequestTime), (time) async {

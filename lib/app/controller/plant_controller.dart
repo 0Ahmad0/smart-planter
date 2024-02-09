@@ -40,7 +40,7 @@ class PlantController{
     planetModel.userId=profileProvider.user.id;
     Const.loading(context);
     var result;
-       result=await planetModelProvider.addPlanetModel(context, planetModel:
+       result=await planetModelProvider.addPlanetModelReal(context, planetModel:
        planetModel
        );
     Navigator.of(context).pop();
@@ -71,22 +71,37 @@ class PlantController{
 
   processPlants(BuildContext context,{required List<PlanetModel> plants})  {
     for(PlanetModel planetModel in plants){
-      PlanetModel? oldPlanetModel=getPlantByIdFromList(plantId: planetModel.plantId,plants: planetModelProvider.planetModels.planetModels);
+      PlanetModel? oldPlanetModel=getPlantByIdPlantFromList(id: planetModel.id,plants: planetModelProvider.planetModels.planetModels);
       addNotifyPlantChanged(context,oldPlanetModel,planetModel);
     }
     planetModelProvider.planetModels.planetModels=plants;
 
     //change current plant
-    PlanetModel? newPlanetModel=getPlantByIdFromList(plantId:planetModelProvider.planetModel?.plantId,plants: plants);
+    PlanetModel? newPlanetModel=getPlantByIdPlantFromList(id:planetModelProvider.planetModel?.id,plants: plants);
     if(newPlanetModel!=null){
       planetModelProvider.updateLocalPlant(planetModel:newPlanetModel);;
       //planetModelProvider.planetModel=newPlanetModel;
       //planetModelProvider..notifyListeners();
     }
   }
+
+  processDefaultPlants(BuildContext context,{required List<PlanetModel> plants})  {
+    for(PlanetModel planetModel in plants){
+      PlanetModel? oldPlanetModel=getPlantByIdPlantFromList(id: planetModel.id,plants: planetModelProvider.planetModels.planetModels);
+      if(oldPlanetModel!=null)
+        planetModel.isAdd=true;
+    }
+    planetModelProvider.planetModelsApi.planetModels=plants;
+return plants;
+  }
   PlanetModel ?getPlantByIdFromList({required String? plantId,required List<PlanetModel> plants}){
     for(PlanetModel planetModel in plants)
       if(planetModel.plantId==plantId)
+        return planetModel;
+  }
+  PlanetModel ?getPlantByIdPlantFromList({required int? id,required List<PlanetModel> plants}){
+    for(PlanetModel planetModel in plants)
+      if(planetModel.id==id)
         return planetModel;
   }
 
@@ -170,9 +185,10 @@ class PlantController{
 
    }
    compareNumber( num? number1, num? number2){
-     if((number1??number2??0)>(number2??number1??0))
+
+     if((number1??number2??0)>(number2??50))
           return 1;
-     else if((number1??number2??0)<(number2??number1??0))
+     else if((number1??number2??0)<(number2??10))
        return -1;
      else
        return 0;
@@ -212,7 +228,7 @@ class PlantController{
 
   updatePlanetModel(BuildContext context,{ required PlanetModel planetModel}) async {
     Const.loading(context);
-    var result=await planetModelProvider.updatePlanetModel(context,planetModel: planetModel);
+    var result=await planetModelProvider.updatePlanetModelReal(context,planetModel: planetModel);
     Navigator.of(context).pop();
     if(result['status']){
       // NotificationProvider().addNotification(context,
@@ -227,7 +243,7 @@ class PlantController{
   deletePlanetModel(BuildContext context,{ required PlanetModel planetModel}) async {
     //Const.loading(context);
     String idUser=context.read<ProfileProvider>().user.id;
-    final result = await planetModelProvider.deletePlanetModel(context,planetModel: planetModel);
+    final result = await planetModelProvider.deletePlanetModelReal(context,planetModel: planetModel);
      if(result['status']);
        // NotificationProvider().addNotification(context,
        //     notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_delete_plant_subtitle+ ' ${planetModel.name}', dateTime: DateTime.now(), title:AppString.notify_delete_plant_title , message: ''));

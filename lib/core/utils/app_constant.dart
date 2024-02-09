@@ -29,4 +29,5 @@ class AppConstants {
   static String collectionUser = "User";
   static String collectionNotification = "Notification";
   static String collectionPlant = "Plant";
+  static String collectionDefaultPlanet = "Default Planet";
 }

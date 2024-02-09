@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 import '/core/utils/app_string.dart';
 
@@ -13,6 +14,8 @@ import '../../models/user_model.dart';
 class FirebaseFun {
   static var rest;
   static FirebaseAuth auth = FirebaseAuth.instance;
+  static final database= FirebaseDatabase.instance.ref();
+
   static Duration timeOut = Duration(seconds: 60);
 
   static signup({required String email, required String password}) async {
@@ -284,6 +287,16 @@ class FirebaseFun {
         .timeout(timeOut, onTimeout: onTimeOut);
     return result;
   }
+  ///plants default
+  static addDefaultPlanet({required PlanetModel planetModel}) async {
+    final result = await FirebaseFirestore.instance
+        .collection(AppConstants.collectionDefaultPlanet)
+        .add(planetModel.toJson())
+        .then(onValueAddPlanetModel)
+        .catchError(onError)
+        .timeout(timeOut, onTimeout: onTimeOut);
+    return result;
+  }
 
   static updatePlanetModel({required PlanetModel planetModel}) async {
     final result = await FirebaseFirestore.instance
@@ -321,6 +334,47 @@ class FirebaseFun {
     final result = await FirebaseFirestore.instance
         .collection(AppConstants.collectionPlant)
         .where('userId', isEqualTo: userId)
+        .get()
+        .then((onValueFetchPlanetModels))
+        .catchError(onError)
+        .timeout(timeOut, onTimeout: onTimeOut);
+    return result;
+  }
+
+  ///plants real
+  static addPlanetReal({required String userId ,required PlanetModel planetModel}) async {
+    final result = await database.child(AppConstants.collectionUser).child(userId).child('${planetModel.id}')
+    // set({'${planetModel.id}': planetModel.toJson()})
+    .set( planetModel.toJsonReal())
+        .then(onValueAddPlanetModel)
+        .catchError(onError)
+        .timeout(timeOut, onTimeout: onTimeOut);
+    return result;
+  }
+
+  static updatePlanetReal({required String userId,required PlanetModel planetModel}) async {
+
+    final result = await database.child(AppConstants.collectionUser).child(userId).child('${planetModel.id}')
+    // set({'${planetModel.id}': planetModel.toJson()})
+        .update( planetModel.toJsonReal())
+        .then(onValueUpdatePlanetModel)
+        .catchError(onError)
+        .timeout(timeOut, onTimeout: onTimeOut);
+    return result;
+  }
+
+  static deletePlanetReal({required String userId,required PlanetModel planetModel}) async {
+
+    final result = await database.child(AppConstants.collectionUser).child(userId).child('${planetModel.id}')
+        .remove()
+        .then(onValueDeletePlanetModel)
+        .catchError(onError)
+        .timeout(timeOut, onTimeout: onTimeOut);
+    return result;
+  }
+
+  static fetchAllPlanetReal({required String userId}) async {
+    final result = await database.child(AppConstants.collectionUser).child(userId)
         .get()
         .then((onValueFetchPlanetModels))
         .catchError(onError)

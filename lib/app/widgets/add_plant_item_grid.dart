@@ -19,6 +19,7 @@ class AddPlantItemGrid extends StatelessWidget {
 
     return InkWell(
       onTap: () async {
+        if(!planetModel.isAdd)
         await PlantController(context: context).addPlant(context, planetModel: planetModel);
 
        // Get.offAllNamed(AppRoute.homeRoute);
@@ -35,9 +36,14 @@ class AddPlantItemGrid extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: IconButton(
                     onPressed: () async {
+                      if(!planetModel.isAdd)
                       await PlantController(context: context).addPlant(context, planetModel: planetModel);
 
-                      }, icon: Icon(Icons.add_circle_outline))),
+                      }, icon:
+                planetModel.isAdd?
+                Icon(Icons.check_circle_outline):
+                Icon(Icons.add_circle_outline)
+                )),
             Expanded(
               child:  planetModel?.url_image!=null?
               Image.network(planetModel?.url_image??''):

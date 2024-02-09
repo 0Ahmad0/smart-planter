@@ -3,6 +3,8 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_plans/app/controller/provider/profile_provider.dart';
 import 'package:smart_plans/app/domain/services/api_services_imp.dart';
 import '../../models/planet_model.dart';
 import '../../widgets/constans.dart';
@@ -43,11 +45,26 @@ class PlanetModelProvider with ChangeNotifier {
     }
     return result;
   }
+  fetchPlanetModelsByUserIDReal(BuildContext context,
+      {required String userId}) async {
+    var result;
+    result = await FirebaseFun.fetchAllPlanetReal(userId: userId);
+    if (result['status']) {
+      planetModels = PlanetModels.fromJsonReal(result['body']);
+    }
+    return result;
+  }
 
   addPlanetModel(BuildContext context,
       {required PlanetModel planetModel}) async {
     var result;
     result = await FirebaseFun.addPlanetModel(planetModel: planetModel);
+    return result;
+  }
+  addPlanetModelReal(BuildContext context,
+      {required PlanetModel planetModel}) async {
+    var result;
+    result = await FirebaseFun.addPlanetReal(userId:context.read<ProfileProvider>().user.id,planetModel: planetModel);
     return result;
   }
 
@@ -56,6 +73,12 @@ class PlanetModelProvider with ChangeNotifier {
     var result;
 
     result = await FirebaseFun.updatePlanetModel(planetModel: planetModel);
+    return result;
+  } updatePlanetModelReal(BuildContext context,
+      {required PlanetModel planetModel}) async {
+    var result;
+
+    result = await FirebaseFun.updatePlanetReal(userId:context.read<ProfileProvider>().user.id,planetModel: planetModel);
     return result;
   }
 
@@ -69,6 +92,13 @@ class PlanetModelProvider with ChangeNotifier {
   deletePlanetModel(BuildContext context, {required PlanetModel planetModel}) async {
     var result;
     result = await FirebaseFun.deletePlanetModel(planetModel: planetModel);
+    if(context.mounted)
+    Const.TOAST(context, textToast: FirebaseFun.findTextToast(result['message'].toString()));
+    return result;
+  }
+  deletePlanetModelReal(BuildContext context, {required PlanetModel planetModel}) async {
+    var result;
+    result = await FirebaseFun.deletePlanetReal(userId:context.read<ProfileProvider>().user.id,planetModel: planetModel);
     if(context.mounted)
     Const.TOAST(context, textToast: FirebaseFun.findTextToast(result['message'].toString()));
     return result;

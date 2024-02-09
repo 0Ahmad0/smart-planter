@@ -31,7 +31,7 @@ class _AddPlantItemListState extends State<AddPlantItemList> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-
+        if(!widget.planetModel.isAdd)
        await plantController.addPlant(context, planetModel: widget.planetModel,
 
         );
@@ -70,6 +70,8 @@ class _AddPlantItemListState extends State<AddPlantItemList> {
                   ),
                 ),
                 trailing:
+                    widget.planetModel.isAdd?
+                   Icon(Icons.check_circle_outline):
                    Icon(Icons.add_circle_outline),
 
               ),

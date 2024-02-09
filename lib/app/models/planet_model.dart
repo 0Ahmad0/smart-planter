@@ -1,5 +1,6 @@
 //UserModel
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class PlanetModel {
   int id;
@@ -8,6 +9,7 @@ class PlanetModel {
   String? name;
   String? url_image;
   num? age;
+  bool isAdd;
   String? description;
   String? repeat_fertilizing;
   String? repeat_watering;
@@ -20,9 +22,9 @@ class PlanetModel {
 
   PlanetModel({
     required this.id,
-    required this.plantId,
+     this.plantId,
     required this.description,
-    required this.userId,
+     this.userId,
     required this.name,
     required this.age,
     required this.fertilizer_quantity,
@@ -34,6 +36,7 @@ class PlanetModel {
     required this.temperature,
     required this.url_image,
     required this.water_quantity,
+    required this.isAdd,
   });
 
   factory PlanetModel.fromJson(json) {
@@ -52,10 +55,26 @@ class PlanetModel {
       soil_moister: MinMaxModel.fromJson(json["soil_moister"]),
       temperature: MinMaxModel.fromJson(json["temperature"]),
       water_quantity: QuantityModel.fromJson(json["water_quantity"]),
-      fertilizer_quantity: QuantityModel.fromJson(json["fertilizer_quantity"]),
+      fertilizer_quantity: QuantityModel.fromJson(json["fertilizer_quantity"]), isAdd: false,
     );
   }
-
+  factory PlanetModel.fromJsonReal(json) {
+    return PlanetModel(
+      id: json['id'],
+      description: json["description"],
+      name: json["name"],
+      age: json["age"],
+      repeat_fertilizing: json["repeat_fertilizing"],
+      repeat_watering: json["repeat_watering"],
+      url_image: json["url_image"],
+      sunlight: MinMaxModel(minimum: null, maximum: null, degree: json["sunlight "]),
+      soil_ph:  MinMaxModel(minimum: null, maximum: null, degree: json["soil_ph "]),
+      soil_moister:  MinMaxModel(minimum: null, maximum: null, degree: json["soil_moister "]),
+      temperature: MinMaxModel(minimum: null, maximum: null, degree: json["temperature "]),
+      water_quantity: QuantityModel(value: json["water_quantity"], type: null),
+      fertilizer_quantity: QuantityModel(value: json["fertilizer_quantity"], type: null), isAdd: false,
+    );
+  }
   factory PlanetModel.init() {
     return PlanetModel(
         id: 0,
@@ -72,6 +91,7 @@ class PlanetModel {
         sunlight: MinMaxModel.init(),
         temperature: MinMaxModel.init(),
         url_image: '',
+        isAdd: false,
         water_quantity: QuantityModel.init());
   }
 
@@ -85,6 +105,7 @@ class PlanetModel {
         'repeat_fertilizing': repeat_fertilizing,
         'name': name,
         'age': age,
+        'isAdd': isAdd,
         'water_quantity': water_quantity.toJson(),
         'fertilizer_quantity': fertilizer_quantity.toJson(),
         'temperature': temperature.toJson(),
@@ -92,6 +113,21 @@ class PlanetModel {
         'soil_ph': soil_ph.toJson(),
         'sunlight ': sunlight.toJson(),
       };
+  Map<String, dynamic> toJsonReal() => {
+    'id': id,
+    'description': description,
+    'url_image': url_image,
+    'repeat_watering': repeat_watering,
+    'repeat_fertilizing': repeat_fertilizing,
+    'name': name,
+    'age': age,
+    'water_quantity': water_quantity.value,
+    'fertilizer_quantity': fertilizer_quantity.value,
+    'temperature': temperature.degree,
+    'soil_moister': soil_moister.degree,
+    'soil_ph': soil_ph.degree,
+    'sunlight ': sunlight.degree,
+  };
 }
 
 //PlanetModels
@@ -111,6 +147,16 @@ class PlanetModels {
         ;
       else
         tempUserModel.plantId = json[i]?.id;
+      tempModels.add(tempUserModel);
+    }
+    return PlanetModels(planetModels: tempModels);
+  }
+
+  factory PlanetModels.fromJsonReal(Iterable<DataSnapshot> json) {
+    List<PlanetModel> tempModels = [];
+
+    for (int i = 0; i < json.length; i++) {
+      PlanetModel tempUserModel = PlanetModel.fromJsonReal(json.elementAt(i).value);
       tempModels.add(tempUserModel);
     }
     return PlanetModels(planetModels: tempModels);
