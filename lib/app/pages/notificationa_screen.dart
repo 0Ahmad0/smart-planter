@@ -7,6 +7,7 @@ import 'package:smart_plans/app/models/notification_model.dart';
 import '../../core/utils/app_constant.dart';
 import '../controller/provider/notification_provider.dart';
 import '../controller/provider/profile_provider.dart';
+import '../controller/splashController.dart';
 import '../widgets/constans.dart';
 import '/core/utils/app_string.dart';
 import '/core/utils/color_manager.dart';

@@ -56,7 +56,10 @@ dependencies:
   lottie: ^2.3.2
   firebase_auth: ^4.16.0
   cloud_firestore: ^4.14.0
+  firebase_messaging:
+  flutter_local_notifications:
   flutter_styled_toast:
+
   ## network
   dio:
 

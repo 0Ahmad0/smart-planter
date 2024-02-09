@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_plans/core/route/app_route.dart';
 import '/app/controller/auth_controller.dart';
 import '/app/controller/provider/auth_provider.dart';
 import '/app/controller/provider/profile_provider.dart';
@@ -11,6 +13,14 @@ import '../pages/home_screen.dart';
 import '../pages/login_screen.dart';
 
 class SplashController {
+
+  initUser(BuildContext context) async {
+    await AppStorage.init(null);
+    if (AdvanceModel.rememberMe && AdvanceModel.token != "") {
+
+    }
+  }
+
   init(BuildContext context) async {
     AuthProvider authProvider =
         Provider.of<AuthProvider>(context, listen: false);

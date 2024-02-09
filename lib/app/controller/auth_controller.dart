@@ -115,8 +115,8 @@ class AuthController {
     final Timer timer =
     await Timer.periodic(Duration(seconds: retRequestTime), (time) async {
       if (i > countRetRequest) {
-        AppStorage.depose();
-        Get.offNamed(AppRoute.loginRoute);
+      AppStorage.depose();
+      Get.offNamed(AppRoute.loginRoute);
       };
       await _checkVerifyEmail(context, time);
       i++;

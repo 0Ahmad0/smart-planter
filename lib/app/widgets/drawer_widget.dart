@@ -69,15 +69,15 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           color: ColorManager.primary,
                         ),
                       ))),
-          ListTileDrawerItem(
-            text: AppString.connectionWifi,
-            icon: Icons.wifi,
-            onTap: () {
-              Get.back();
-              Get.toNamed(AppRoute.connectionWifiRoute);
-            },
-          ),
-          Divider(),
+          // ListTileDrawerItem(
+          //   text: AppString.connectionWifi,
+          //   icon: Icons.wifi,
+          //   onTap: () {
+          //     Get.back();
+          //     Get.toNamed(AppRoute.connectionWifiRoute);
+          //   },
+          // ),
+          // Divider(),
           ListTileDrawerItem(
             text: AppString.setting,
             icon: Icons.settings,

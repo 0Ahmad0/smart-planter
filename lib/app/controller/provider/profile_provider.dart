@@ -15,7 +15,7 @@ class ProfileProvider with ChangeNotifier{
 
   bool nameIgnor = true;
   bool emailIgnor = true;
-  UserModel user= UserModel(id: "id",uid: "uid", name: "name", email: "email", password: "password",typeUser: "typeUser");
+  UserModel user= UserModel(id: "",uid: "uid", name: "name", email: "email", password: "password",typeUser: "typeUser");
   updateUser({ required UserModel user}){
 
     this.user=user;

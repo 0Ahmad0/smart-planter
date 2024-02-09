@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:smart_plans/core/route/app_route.dart';
 import '/core/utils/assets_manager.dart';
 import '../../core/utils/app_string.dart';
 import '../../core/utils/color_manager.dart';
@@ -63,7 +65,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen>{
   @override
   void initState() {
     authController = AuthController(context: context);
-    authController.retCheckVerifyEmail(context);
+    // authController.retCheckVerifyEmail(context);
     startTimer();
     super.initState();
 
@@ -74,6 +76,16 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios,color: ColorManager.secondary,),
+          onPressed: (){
+            Get.offAllNamed(AppRoute.loginRoute);
+          },
+        ),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(AppPadding.p16),

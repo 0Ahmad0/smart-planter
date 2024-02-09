@@ -116,20 +116,22 @@ class Const {
   }
 
   static emptyWidget(context, {text = 'Not Data Yet!'}) =>
-      SingleChildScrollView(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            AssetsManager.emptyIMG,
-          ),
-          Text(
-            text,
-            style: TextStyle(
-              fontSize: MediaQuery.of(context).size.width * 0.08,
-              fontWeight: FontWeight.bold,
+      Center(
+        child: SingleChildScrollView(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              AssetsManager.emptyIMG,
             ),
-          ),
-        ],
-      ));
+            Text(
+              text,
+              style: TextStyle(
+                fontSize: MediaQuery.of(context).size.width * 0.08,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        )),
+      );
 }

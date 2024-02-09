@@ -9,7 +9,7 @@ import '../utils/app_constant.dart';
 class AppStorage {
   static GetStorage _storage = GetStorage();
 
-  static init(BuildContext context) async {
+  static init(BuildContext? context) async {
     if (!_storage.hasData(AppConstants.rememberMe)) {
       storageWrite(key: AppConstants.rememberMe, value: false);
     } else {
