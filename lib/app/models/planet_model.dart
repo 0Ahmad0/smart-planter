@@ -11,8 +11,8 @@ class PlanetModel {
   num? age;
   bool isAdd;
   String? description;
-  String? repeat_fertilizing;
-  String? repeat_watering;
+  num? repeat_fertilizing;
+  num? repeat_watering;
   MinMaxModel soil_ph;
   MinMaxModel sunlight;
   MinMaxModel soil_moister;
@@ -67,10 +67,10 @@ class PlanetModel {
       repeat_fertilizing: json["repeat_fertilizing"],
       repeat_watering: json["repeat_watering"],
       url_image: json["url_image"],
-      sunlight: MinMaxModel(minimum: null, maximum: null, degree: json["sunlight "]),
-      soil_ph:  MinMaxModel(minimum: null, maximum: null, degree: json["soil_ph "]),
-      soil_moister:  MinMaxModel(minimum: null, maximum: null, degree: json["soil_moister "]),
-      temperature: MinMaxModel(minimum: null, maximum: null, degree: json["temperature "]),
+      sunlight: MinMaxModel(minimum: null, maximum: null, degree: json["sunlight"]),
+      soil_ph:  MinMaxModel(minimum: null, maximum: null, degree: json["soil_ph"]),
+      soil_moister:  MinMaxModel(minimum: null, maximum: null, degree: json["soil_moister"]),
+      temperature: MinMaxModel(minimum: null, maximum: null, degree: json["temperature"]),
       water_quantity: QuantityModel(value: json["water_quantity"], type: null),
       fertilizer_quantity: QuantityModel(value: json["fertilizer_quantity"], type: null), isAdd: false,
     );
@@ -83,8 +83,8 @@ class PlanetModel {
         userId: '',
         name: '',
         fertilizer_quantity: QuantityModel.init(),
-        repeat_fertilizing: '',
-        repeat_watering: '',
+        repeat_fertilizing: 0,
+        repeat_watering: 0,
         age: 0,
         soil_moister: MinMaxModel.init(),
         soil_ph: MinMaxModel.init(),
@@ -126,7 +126,7 @@ class PlanetModel {
     'temperature': temperature.degree,
     'soil_moister': soil_moister.degree,
     'soil_ph': soil_ph.degree,
-    'sunlight ': sunlight.degree,
+    'sunlight': sunlight.degree,
   };
 }
 
@@ -156,6 +156,7 @@ class PlanetModels {
     List<PlanetModel> tempModels = [];
 
     for (int i = 0; i < json.length; i++) {
+
       PlanetModel tempUserModel = PlanetModel.fromJsonReal(json.elementAt(i).value);
       tempModels.add(tempUserModel);
     }

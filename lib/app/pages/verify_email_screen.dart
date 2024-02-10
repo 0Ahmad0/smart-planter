@@ -65,7 +65,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen>{
   @override
   void initState() {
     authController = AuthController(context: context);
-    // authController.retCheckVerifyEmail(context);
+     authController.retCheckVerifyEmail(context);
     startTimer();
     super.initState();
 

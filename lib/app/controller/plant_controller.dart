@@ -36,6 +36,15 @@ class PlantController{
   addPlant(BuildContext context,  {
     required PlanetModel planetModel
   }) async {
+
+    if(planetModel.temperature.degree==null)
+      planetModel.temperature.degree = planetModel.temperature.minimum;
+    if(planetModel.soil_ph.degree==null)
+      planetModel.soil_ph.degree = planetModel.soil_ph.minimum;
+    if(planetModel.soil_moister.degree==null)
+      planetModel.soil_moister.degree = planetModel.soil_moister.minimum;
+    if(planetModel.sunlight.degree==null)
+      planetModel.sunlight.degree = planetModel.sunlight.minimum;
     ProfileProvider profileProvider= Provider.of<ProfileProvider>(context,listen: false);
     planetModel.userId=profileProvider.user.id;
     Const.loading(context);
@@ -73,6 +82,7 @@ class PlantController{
     for(PlanetModel planetModel in plants){
       PlanetModel? oldPlanetModel=getPlantByIdPlantFromList(id: planetModel.id,plants: planetModelProvider.planetModels.planetModels);
       addNotifyPlantChanged(context,oldPlanetModel,planetModel);
+
     }
     planetModelProvider.planetModels.planetModels=plants;
 
@@ -251,17 +261,30 @@ return plants;
        //Navigator.of(context).pop();
    // Navigator.of(context).pop();
   }
-  List<String> getListRepeat(){
+  List<int> getListRepeat(){
+
     return[
-      "Every day",
-      "Every 3 days",
-      "Every week",
-      "Every 2 week",
-      "Every 3 week",
-      "Every month",
-      "Every 2 month",
-      "Every 3 month",
+      60*24,
+      60*24*3,
+      60*24*7,
+      60*24*14,
+      60*24*21,
+      60*24*30,
+      60*24*30*2,
+      60*24*30*3,
+      60*24*30*12,
+
     ];
+    // return[
+    //   "Every day",
+    //   "Every 3 days",
+    //   "Every week",
+    //   "Every 2 week",
+    //   "Every 3 week",
+    //   "Every month",
+    //   "Every 2 month",
+    //   "Every 3 month",
+    // ];
   }
 
 }

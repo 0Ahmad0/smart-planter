@@ -99,6 +99,8 @@ class PlanetModelProvider with ChangeNotifier {
   deletePlanetModelReal(BuildContext context, {required PlanetModel planetModel}) async {
     var result;
     result = await FirebaseFun.deletePlanetReal(userId:context.read<ProfileProvider>().user.id,planetModel: planetModel);
+    if(result['status'])
+      planetModels.planetModels.removeWhere((element) =>planetModel.id==element.id );
     if(context.mounted)
     Const.TOAST(context, textToast: FirebaseFun.findTextToast(result['message'].toString()));
     return result;

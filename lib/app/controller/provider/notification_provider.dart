@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import '../../models/notification_model.dart';
 import '../../widgets/constans.dart';
+import '../service/fcm_controller.dart';
 import '../utils/firebase.dart';
 
 
@@ -14,6 +15,7 @@ class NotificationProvider extends ChangeNotifier{
     var result;
 
     result =await FirebaseFun.addNotification(notification: notification);
+    FCMService().showLocalNotification(title: notification.title, description: notification.subtitle);
     //print(result);
     // Const.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()));
        return result;

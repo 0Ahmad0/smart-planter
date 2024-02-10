@@ -63,6 +63,7 @@ dependencies:
   ## network
   dio:
   firebase_database: ^10.4.0
+  awesome_notifications: ^0.8.2
 
 
 

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import '../../controller/utils/function_helper_view_provider.dart';
 import '/app/models/planet_model.dart';
 import '/app/widgets/button_app.dart';
 import '/core/helper/sizer_media_query.dart';
@@ -181,7 +182,7 @@ class _DetailsScreen2State extends State<DetailsScreen2> {
                 items: PlantController( context: context).getListRepeat()
                     .map((e) => DropdownMenuItem(
                           child: Text(
-                            e.toString(),
+                            'Every ${convertMinutesToTime(e)}',
                             style: StylesManager.titleBoldTextStyle(
                                 size: 20.sp, color: ColorManager.primary),
                           ),

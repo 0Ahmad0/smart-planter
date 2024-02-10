@@ -56,8 +56,8 @@ class _HomeScreenState extends State<HomeScreen> {
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
                // Get.toNamed(AppRoute.connectionWifiRoute);
-               // Get.toNamed(AppRoute.addPlantRoute);
-              FCMService().showLocalNotification(title: 'title', description: 'description');
+                Get.toNamed(AppRoute.addPlantRoute);
+             // FCMService().showLocalNotification(title: 'title', description: 'description');
             },
             child: Icon(Icons.add),
           ),
