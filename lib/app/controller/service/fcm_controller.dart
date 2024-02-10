@@ -20,8 +20,6 @@ class FCMService {
         announcement: true,
         badge: true,
         carPlay: false,
-        criticalAlert: false,
-        provisional: false,
         sound: true);
 
     // Get the token
@@ -106,6 +104,38 @@ class FCMService {
       body,
       notificationDetails,
       payload: payload,
+    );
+  }
+
+  Future<void> showLocalNotification({required String title,required String description}) async {
+    // Initialize settings for Android and iOS
+    const AndroidInitializationSettings initializationSettingsAndroid =
+    AndroidInitializationSettings('mipmap/launcher_icon');
+    final InitializationSettings initializationSettings = InitializationSettings(
+      android: initializationSettingsAndroid,
+    );
+    await _flutterLocaleNotificationPlugin.initialize(initializationSettings);
+
+    // Set notification details
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+    AndroidNotificationDetails(
+      'smart_plants_id', // Change this to your channel ID
+      'alert', // Change this to your channel name
+      importance: Importance.max,
+      priority: Priority.max,
+      playSound: true,
+      enableVibration: true,
+
+    );
+    const NotificationDetails platformChannelSpecifics =
+    NotificationDetails(android: androidPlatformChannelSpecifics);
+
+    // Display the notification
+    await _flutterLocaleNotificationPlugin.show(
+      0, // Change this to a unique ID for each notification
+      '${title}', // Change this to your notification title
+      '${description}', // Change this to your notification body
+      platformChannelSpecifics,
     );
   }
 }

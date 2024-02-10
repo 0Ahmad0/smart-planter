@@ -23,7 +23,8 @@ class AppString {
   static const resend = 'Resend';
   static const myPlants = 'My Plants';
   static const empty= 'Empty';
-  static const establishConnection = 'Go to settings to establish a connection';
+  // static const establishConnection = 'Go to settings to establish a connection';
+  static const establishConnection = 'Add New Plant';
   static const addPlant = 'Add Plant';
   static const age = 'Age : ';
   static const pump = 'Pump : ';

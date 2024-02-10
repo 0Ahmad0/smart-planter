@@ -22,4 +22,5 @@ class AssetsManager {
   static const String emailSentIMG = '$imagePath/email_sent.json';
 
 
+
 }

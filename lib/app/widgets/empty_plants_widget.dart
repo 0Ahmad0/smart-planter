@@ -27,7 +27,7 @@ class EmptyPlantsWidget extends StatelessWidget {
           ),
           TextButton(
               onPressed: () {
-                Get.toNamed(AppRoute.connectionWifiRoute);
+                Get.toNamed(AppRoute.addPlantRoute);
               },
               child: Text(
                 AppString.establishConnection,
