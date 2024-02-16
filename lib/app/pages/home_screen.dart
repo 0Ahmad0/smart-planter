@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:smart_plans/app/controller/plant_controller.dart';
 import 'package:smart_plans/app/controller/service/fcm_controller.dart';
 import 'package:smart_plans/app/controller/utils/firebase.dart';
+import 'package:smart_plans/app/models/dummy/plant_dummy.dart';
 import '/app/models/planet_model.dart';
 import '../../core/route/app_route.dart';
 import '../../core/utils/app_constant.dart';
@@ -55,6 +56,8 @@ class _HomeScreenState extends State<HomeScreen> {
         Scaffold(
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
+
+
                // Get.toNamed(AppRoute.connectionWifiRoute);
                 Get.toNamed(AppRoute.addPlantRoute);
              // FCMService().showLocalNotification(title: 'title', description: 'description');

@@ -13,6 +13,8 @@ class PlanetModel {
   String? description;
   num? repeat_fertilizing;
   num? repeat_watering;
+  bool pump_fertilizing=false;
+  bool pump_watering=false;
   MinMaxModel soil_ph;
   MinMaxModel sunlight;
   MinMaxModel soil_moister;
@@ -25,6 +27,8 @@ class PlanetModel {
      this.plantId,
     required this.description,
      this.userId,
+     this.pump_watering=false,
+     this.pump_fertilizing=false,
     required this.name,
     required this.age,
     required this.fertilizer_quantity,
@@ -67,6 +71,8 @@ class PlanetModel {
       repeat_fertilizing: json["repeat_fertilizing"],
       repeat_watering: json["repeat_watering"],
       url_image: json["url_image"],
+      pump_watering: json["pump_watering"],
+      pump_fertilizing: json["pump_fertilizing"],
       sunlight: MinMaxModel(minimum: null, maximum: null, degree: json["sunlight"]),
       soil_ph:  MinMaxModel(minimum: null, maximum: null, degree: json["soil_ph"]),
       soil_moister:  MinMaxModel(minimum: null, maximum: null, degree: json["soil_moister"]),
@@ -106,6 +112,8 @@ class PlanetModel {
         'name': name,
         'age': age,
         'isAdd': isAdd,
+        'pump_watering': pump_watering,
+        'pump_fertilizing': pump_fertilizing,
         'water_quantity': water_quantity.toJson(),
         'fertilizer_quantity': fertilizer_quantity.toJson(),
         'temperature': temperature.toJson(),
@@ -121,6 +129,8 @@ class PlanetModel {
     'repeat_fertilizing': repeat_fertilizing,
     'name': name,
     'age': age,
+    'pump_watering': pump_watering,
+    'pump_fertilizing': pump_fertilizing,
     'water_quantity': water_quantity.value,
     'fertilizer_quantity': fertilizer_quantity.value,
     'temperature': temperature.degree,

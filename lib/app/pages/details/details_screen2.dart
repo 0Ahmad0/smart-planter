@@ -55,6 +55,7 @@ class _DetailsScreen2State extends State<DetailsScreen2> {
                 return ListTile(
                   onTap: () {
                     isPumpOn = !isPumpOn;
+                    planetModel.pump_fertilizing=isPumpOn;
                     pumpState(() {});
                   },
                   title: Text(
@@ -65,9 +66,10 @@ class _DetailsScreen2State extends State<DetailsScreen2> {
                   trailing: Switch(
                     thumbColor: MaterialStateProperty.all(ColorManager.primary),
                     activeTrackColor: ColorManager.primary.withOpacity(.5),
-                    value: isPumpOn,
+                    value:   planetModel.pump_fertilizing,
                     onChanged: (bool value) {
                       isPumpOn = value;
+                      planetModel.pump_fertilizing=isPumpOn;
                       pumpState(() {});
                     },
                   ),
@@ -166,7 +168,7 @@ class _DetailsScreen2State extends State<DetailsScreen2> {
               ),
             ),
             DropdownButtonFormField(
-              value: planetModel.repeat_fertilizing,
+              value:43200,// planetModel.repeat_fertilizing,
                 icon: Icon(
                   Icons.keyboard_arrow_down,
                   color: ColorManager.primary,

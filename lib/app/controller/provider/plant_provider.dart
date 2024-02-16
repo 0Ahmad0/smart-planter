@@ -23,6 +23,7 @@ class PlanetModelProvider with ChangeNotifier {
       planetModelsApi = PlanetModels.fromJson(result['data']);
       print(planetModelsApi.planetModels.length);
     }
+    print(result);
     return result;
   }
 
@@ -55,6 +56,12 @@ class PlanetModelProvider with ChangeNotifier {
     return result;
   }
 
+  addDefaultPlanet(BuildContext context,
+      {required PlanetModel planetModel}) async {
+    var result;
+    result = await FirebaseFun.addDefaultPlanet(planetModel: planetModel);
+    return result;
+  }
   addPlanetModel(BuildContext context,
       {required PlanetModel planetModel}) async {
     var result;

@@ -53,6 +53,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 return ListTile(
                   onTap: () {
                     isPumpOn = !isPumpOn;
+                    planetModel.pump_watering=isPumpOn;
                     pumpState(() {});
                   },
                   title: Text(
@@ -63,9 +64,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   trailing: Switch(
                     thumbColor: MaterialStateProperty.all(ColorManager.primary),
                     activeTrackColor: ColorManager.primary.withOpacity(.5),
-                    value: isPumpOn,
+                    value: planetModel.pump_watering,
                     onChanged: (bool value) {
                       isPumpOn = value;
+                      planetModel.pump_watering=isPumpOn;
                       pumpState(() {});
                     },
                   ),
