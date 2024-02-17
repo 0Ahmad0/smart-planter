@@ -148,7 +148,6 @@ return plants;
       else if(compareNumber(planetModel2.sunlight.degree,planetModel2.sunlight.minimum)==-1)
         NotificationProvider().addNotification(context,
             notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_min_sunlight_plant+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_change_plant_warning , message: ''));
-
     }
 
     else if(oldPlanetModel.soil_ph.minimum!=planetModel2.soil_ph.minimum
@@ -246,6 +245,11 @@ return plants;
 
       Navigator.of(context).pop();
     }
+    Const.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()));
+    return result;
+  }
+  updatePlanetModel2(BuildContext context,{ required PlanetModel planetModel}) async {
+    var result=await planetModelProvider.updatePlanetModelReal(context,planetModel: planetModel);
     Const.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()));
     return result;
   }

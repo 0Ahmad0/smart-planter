@@ -57,6 +57,7 @@ class _DetailsScreen2State extends State<DetailsScreen2> {
                     isPumpOn = !isPumpOn;
                     planetModel.pump_fertilizing=isPumpOn;
                     pumpState(() {});
+                    PlantController(context: context).updatePlanetModel2(context, planetModel: planetModel);
                   },
                   title: Text(
                     AppString.pump + arguments['details']['pump'],
@@ -71,6 +72,7 @@ class _DetailsScreen2State extends State<DetailsScreen2> {
                       isPumpOn = value;
                       planetModel.pump_fertilizing=isPumpOn;
                       pumpState(() {});
+                      PlantController(context: context).updatePlanetModel2(context, planetModel: planetModel);
                     },
                   ),
                 );
@@ -96,8 +98,13 @@ class _DetailsScreen2State extends State<DetailsScreen2> {
                 ),
                 DetailsButton(icon: Icons.add,onPressed: (){
 
-                  if(planetModel.sunlight.maximum==null||(planetModel.sunlight.degree??planetModel.sunlight.minimum??0)<(planetModel.sunlight.maximum!))
-                  planetModel.sunlight.degree=(planetModel.sunlight.degree??planetModel.sunlight.minimum??0)+1;
+
+                  if(planetModel.sunlight.maximum==null||(planetModel.sunlight.degree??planetModel.sunlight.minimum??0)<(planetModel.sunlight.maximum!)) {
+                    planetModel.sunlight.degree =
+                        (planetModel.sunlight.degree ??
+                            planetModel.sunlight.minimum ?? 0) + 1;
+                    PlantController(context: context).updatePlanetModel2(context, planetModel: planetModel);
+                  }
                   setState(() {
 
                   });
@@ -108,7 +115,10 @@ class _DetailsScreen2State extends State<DetailsScreen2> {
                 DetailsButton(icon: Icons.remove,onPressed: (){
 
                   if(planetModel.sunlight.minimum==null||(planetModel.sunlight.degree??planetModel.sunlight.minimum??0)>(planetModel.sunlight.minimum!))
+                 {
                     planetModel.sunlight.degree=(planetModel.sunlight.degree??planetModel.sunlight.minimum??0)-1;
+                    PlantController(context: context).updatePlanetModel2(context, planetModel: planetModel);
+                 }
                   setState(() {
 
                   });
@@ -137,7 +147,8 @@ class _DetailsScreen2State extends State<DetailsScreen2> {
                 DetailsButton(icon: Icons.add,onPressed: (){
 
                   if(planetModel.soil_moister.maximum==null||(planetModel.soil_moister.degree??planetModel.soil_moister.minimum??0)<(planetModel.soil_moister.maximum!))
-                    planetModel.soil_moister.degree=(planetModel.soil_moister.degree??planetModel.soil_moister.minimum??0)+1;
+                 {   planetModel.soil_moister.degree=(planetModel.soil_moister.degree??planetModel.soil_moister.minimum??0)+1;
+                 PlantController(context: context).updatePlanetModel2(context, planetModel: planetModel);}
                   setState(() {
 
                   });
@@ -147,10 +158,12 @@ class _DetailsScreen2State extends State<DetailsScreen2> {
                 ),
                 DetailsButton(icon: Icons.remove,onPressed: (){
                   if(planetModel.soil_moister.minimum==null||(planetModel.soil_moister.degree??planetModel.soil_moister.minimum??0)>(planetModel.soil_moister.minimum!))
-                    planetModel.soil_moister.degree=(planetModel.soil_moister.degree??planetModel.soil_moister.minimum??0)-1;
+                    {planetModel.soil_moister.degree=(planetModel.soil_moister.degree??planetModel.soil_moister.minimum??0)-1;
+      PlantController(context: context).updatePlanetModel2(context, planetModel: planetModel);}
                   setState(() {
 
                   });
+
                 },),
 
               ],
@@ -191,8 +204,9 @@ class _DetailsScreen2State extends State<DetailsScreen2> {
                           value: e,
                         ))
                     .toList(),
-                onChanged: (value) {
+                onChanged: (value) async {
                   planetModel.repeat_fertilizing=value;
+                  await PlantController(context: context).updatePlanetModel2(context, planetModel: planetModel);
                 }),
 
             const Spacer(),

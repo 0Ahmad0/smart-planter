@@ -21,7 +21,13 @@ class DetailsScreen extends StatefulWidget {
 
 class _DetailsScreenState extends State<DetailsScreen> {
   bool isPumpOn = false;
-
+late PlantController plantController;
+  @override
+  void initState() {
+    plantController=PlantController(context: context);
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -55,6 +61,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     isPumpOn = !isPumpOn;
                     planetModel.pump_watering=isPumpOn;
                     pumpState(() {});
+                    plantController.updatePlanetModel2(context, planetModel: planetModel);
                   },
                   title: Text(
                     AppString.pump + arguments['details']['pump'],
@@ -69,6 +76,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       isPumpOn = value;
                       planetModel.pump_watering=isPumpOn;
                       pumpState(() {});
+                      plantController.updatePlanetModel2(context, planetModel: planetModel);
                     },
                   ),
                 );
@@ -101,11 +109,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 planetModel.temperature.minimum ??
                                 0) <
                             (planetModel.temperature.maximum!))
+                      {
                       planetModel.temperature.degree =
                           (planetModel.temperature.degree ??
                                   planetModel.temperature.minimum ??
                                   0) +
                               1;
+                      plantController.updatePlanetModel2(context, planetModel: planetModel);
+                      }
                     setState(() {});
                   },
                 ),
@@ -120,11 +131,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 planetModel.temperature.minimum ??
                                 0) >
                             (planetModel.temperature.minimum!))
-                      planetModel.temperature.degree =
+                    {  planetModel.temperature.degree =
                           (planetModel.temperature.degree ??
                                   planetModel.temperature.minimum ??
                                   0) -
                               1;
+                    plantController.updatePlanetModel2(context, planetModel: planetModel);
+                    }
                     setState(() {});
                   },
                 ),
@@ -159,11 +172,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 planetModel.soil_ph.minimum ??
                                 0) <
                             (planetModel.soil_ph.maximum!))
-                      planetModel.soil_ph.degree =
+                     { planetModel.soil_ph.degree =
                           (planetModel.soil_ph.degree ??
                                   planetModel.soil_ph.minimum ??
                                   0) +
                               1;
+                     plantController.updatePlanetModel2(context, planetModel: planetModel);
+                     }
                     setState(() {});
                   },
                 ),
@@ -178,11 +193,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 planetModel.soil_ph.minimum ??
                                 0) >
                             (planetModel.soil_ph.minimum!))
-                      planetModel.soil_ph.degree =
+                     { planetModel.soil_ph.degree =
                           (planetModel.soil_ph.degree ??
                                   planetModel.soil_ph.minimum ??
                                   0) -
                               1;
+                     plantController.updatePlanetModel2(context, planetModel: planetModel);
+                     }
                     setState(() {});
                   },
                 ),
@@ -226,6 +243,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     .toList(),
                 onChanged: (value) {
                   planetModel.repeat_watering =value;
+                  plantController.updatePlanetModel2(context, planetModel: planetModel);
                 }),
 
             const Spacer(),
@@ -233,6 +251,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               onPressed: () {
                 PlantController(context: context)
                     .updatePlanetModel(context, planetModel: planetModel);
+
               },
               text: AppString.apply,
               backgroundColor: ColorManager.secondary,
