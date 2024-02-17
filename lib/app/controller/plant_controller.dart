@@ -24,66 +24,97 @@ import '../../core/route/app_route.dart';
 import '../widgets/constans.dart';
 
 
-class PlantController{
+class PlantController {
   late PlanetModelProvider planetModelProvider;
 
   var context;
-  PlantController({required this.context}){
 
-    planetModelProvider= Provider.of<PlanetModelProvider>(context,listen: false);
+  PlantController({required this.context}) {
+    planetModelProvider =
+        Provider.of<PlanetModelProvider>(context, listen: false);
   }
 
-  addPlant(BuildContext context,  {
+  addPlant(BuildContext context, {
     required PlanetModel planetModel
   }) async {
-
-    if(planetModel.temperature.degree==null)
+    if (planetModel.temperature.degree == null)
       planetModel.temperature.degree = planetModel.temperature.minimum;
-    if(planetModel.soil_ph.degree==null)
+    if (planetModel.soil_ph.degree == null)
       planetModel.soil_ph.degree = planetModel.soil_ph.minimum;
-    if(planetModel.soil_moister.degree==null)
+    if (planetModel.soil_moister.degree == null)
       planetModel.soil_moister.degree = planetModel.soil_moister.minimum;
-    if(planetModel.sunlight.degree==null)
+    if (planetModel.sunlight.degree == null)
       planetModel.sunlight.degree = planetModel.sunlight.minimum;
-    ProfileProvider profileProvider= Provider.of<ProfileProvider>(context,listen: false);
-    planetModel.userId=profileProvider.user.id;
+    ProfileProvider profileProvider = Provider.of<ProfileProvider>(
+        context, listen: false);
+    planetModel.userId = profileProvider.user.id;
     Const.loading(context);
     var result;
-       result=await planetModelProvider.addPlanetModelReal(context, planetModel:
-       planetModel
-       );
-    Navigator.of(context).pop();
-       if(result['status']){
-       planetModelProvider.planetModelsApi.planetModels.clear();
-       planetModelProvider..notifyListeners();
-       // NotificationProvider().addNotification(context,
-       //     notification: NotificationModel(idUser:context.read<ProfileProvider>().user.id, subtitle:AppString.notify_new_plant_subtitle+ ' ${planetModel.name}', dateTime: DateTime.now(), title:AppString.notify_new_plant_title, message: ''));
 
-         Get.offAllNamed(AppRoute.homeRoute);
-       }
-       Const.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()));
+    if (AppConstants.strawberry == planetModel.name || 1 == planetModel.id)
+      result =
+      await planetModelProvider.addPlanetModelReal(context, planetModel:
+      planetModel
+      );
+    result = result =
+    await planetModelProvider.addPlanetModel(context, planetModel:
+    planetModel
+    );
+    Navigator.of(context).pop();
+    if (result['status']) {
+      planetModelProvider.planetModelsApi.planetModels.clear();
+      planetModelProvider..notifyListeners();
+      // NotificationProvider().addNotification(context,
+      //     notification: NotificationModel(idUser:context.read<ProfileProvider>().user.id, subtitle:AppString.notify_new_plant_subtitle+ ' ${planetModel.name}', dateTime: DateTime.now(), title:AppString.notify_new_plant_title, message: ''));
+
+      Get.offAllNamed(AppRoute.homeRoute);
+    }
+    Const.TOAST(context,
+        textToast: FirebaseFun.findTextToast(result['message'].toString()));
 
     return result;
   }
 
   getPlants(context,) async {
     Const.loading(context);
-    var result=await planetModelProvider.fetchAllPlanetModelFromApi(context);
+    var result = await planetModelProvider.fetchAllPlanetModelFromApi(context);
     Navigator.of(context).pop();
-    if(result['status']){
-
+    if (result['status']) {
       Get.offAllNamed(AppRoute.homeRoute);
     }
-    Const.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()));
+    Const.TOAST(context,
+        textToast: FirebaseFun.findTextToast(result['message'].toString()));
     return result;
   }
+  changePlantsFromReal(BuildContext context,{required PlanetModel newPlanetModel,required PlanetModel? oldPlanetModel}){
+    if(oldPlanetModel!=null){
 
-  processPlants(BuildContext context,{required List<PlanetModel> plants})  {
+      newPlanetModel.plantId=oldPlanetModel.plantId;
+      newPlanetModel.userId=oldPlanetModel.userId;
+      newPlanetModel.sunlight=MinMaxModel(minimum: oldPlanetModel.sunlight.minimum, maximum: oldPlanetModel.sunlight.maximum, degree: newPlanetModel.sunlight.degree);
+      newPlanetModel.soil_moister=MinMaxModel(minimum: oldPlanetModel.soil_moister.minimum, maximum: oldPlanetModel.soil_moister.maximum, degree: newPlanetModel.soil_moister.degree);
+      newPlanetModel.soil_ph=MinMaxModel(minimum: oldPlanetModel.soil_ph.minimum, maximum: oldPlanetModel.soil_ph.maximum, degree: newPlanetModel.soil_ph.degree);
+      newPlanetModel.temperature=MinMaxModel(minimum: oldPlanetModel.temperature.minimum, maximum: oldPlanetModel.temperature.maximum, degree: newPlanetModel.temperature.degree);
+    }
+ return newPlanetModel;
+  }
+
+  processPlants(BuildContext context,{required List<PlanetModel> plants, bool isGetToProvider=true})  async {
     for(PlanetModel planetModel in plants){
       PlanetModel? oldPlanetModel=getPlantByIdPlantFromList(id: planetModel.id,plants: planetModelProvider.planetModels.planetModels);
+      if(AppConstants.strawberry==planetModel.name||1==planetModel.id){
+           planetModelProvider.updatePlanetModel(context, planetModel:
+          changePlantsFromReal(context, newPlanetModel: planetModel, oldPlanetModel: oldPlanetModel)
+          );
+          await planetModelProvider.updatePlanetModelReal(context, planetModel:
+          changePlantsFromReal(context, newPlanetModel: planetModel, oldPlanetModel: oldPlanetModel)
+          );
+      }
+
       addNotifyPlantChanged(context,oldPlanetModel,planetModel);
 
     }
+    if(isGetToProvider)
     planetModelProvider.planetModels.planetModels=plants;
 
     //change current plant
@@ -96,6 +127,7 @@ class PlantController{
   }
 
   processDefaultPlants(BuildContext context,{required List<PlanetModel> plants})  {
+
     for(PlanetModel planetModel in plants){
       PlanetModel? oldPlanetModel=getPlantByIdPlantFromList(id: planetModel.id,plants: planetModelProvider.planetModels.planetModels);
       if(oldPlanetModel!=null)
@@ -237,7 +269,14 @@ return plants;
 
   updatePlanetModel(BuildContext context,{ required PlanetModel planetModel}) async {
     Const.loading(context);
-    var result=await planetModelProvider.updatePlanetModelReal(context,planetModel: planetModel);
+    var result;
+    if(AppConstants.strawberry==planetModel.name||1==planetModel.id)
+      result=await planetModelProvider.updatePlanetModelReal(context, planetModel:
+      planetModel
+      );
+    result=result=await planetModelProvider.updatePlanetModel(context, planetModel:
+    planetModel
+    );
     Navigator.of(context).pop();
     if(result['status']){
       // NotificationProvider().addNotification(context,
@@ -249,7 +288,14 @@ return plants;
     return result;
   }
   updatePlanetModel2(BuildContext context,{ required PlanetModel planetModel}) async {
-    var result=await planetModelProvider.updatePlanetModelReal(context,planetModel: planetModel);
+    var result;
+    if(AppConstants.strawberry==planetModel.name||1==planetModel.id)
+      result=await planetModelProvider.updatePlanetModelReal(context, planetModel:
+      planetModel
+      );
+    result=result=await planetModelProvider.updatePlanetModel(context, planetModel:
+    planetModel
+    );
     Const.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()));
     return result;
   }
@@ -257,7 +303,14 @@ return plants;
   deletePlanetModel(BuildContext context,{ required PlanetModel planetModel}) async {
     //Const.loading(context);
     String idUser=context.read<ProfileProvider>().user.id;
-    final result = await planetModelProvider.deletePlanetModelReal(context,planetModel: planetModel);
+    var result;
+    if(AppConstants.strawberry==planetModel.name||1==planetModel.id)
+      result=await planetModelProvider.deletePlanetModelReal(context, planetModel:
+      planetModel
+      );
+    result=await planetModelProvider.deletePlanetModel(context, planetModel:
+    planetModel
+    );
      if(result['status']);
        // NotificationProvider().addNotification(context,
        //     notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_delete_plant_subtitle+ ' ${planetModel.name}', dateTime: DateTime.now(), title:AppString.notify_delete_plant_title , message: ''));

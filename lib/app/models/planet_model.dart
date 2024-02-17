@@ -13,8 +13,8 @@ class PlanetModel {
   String? description;
   num? repeat_fertilizing;
   num? repeat_watering;
-  bool pump_fertilizing=false;
-  bool pump_watering=false;
+  int pump_fertilizing=0;
+  int pump_watering=0;
   MinMaxModel soil_ph;
   MinMaxModel sunlight;
   MinMaxModel soil_moister;
@@ -27,8 +27,8 @@ class PlanetModel {
      this.plantId,
     required this.description,
      this.userId,
-     this.pump_watering=false,
-     this.pump_fertilizing=false,
+     this.pump_watering=0,
+     this.pump_fertilizing=0,
     required this.name,
     required this.age,
     required this.fertilizer_quantity,
@@ -53,6 +53,8 @@ class PlanetModel {
       age: json["age"],
       repeat_fertilizing: json["repeat_fertilizing"],
       repeat_watering: json["repeat_watering"],
+      pump_watering: (json["pump_watering"]??0)!=0?1:0,
+      pump_fertilizing: (json["pump_fertilizing"]??0)!=0?1:0,
       url_image: json["url_image"],
       sunlight: MinMaxModel.fromJson(json["sunlight "] ?? json["sunlight"]),
       soil_ph: MinMaxModel.fromJson(json["soil_ph"]),
@@ -71,8 +73,8 @@ class PlanetModel {
       repeat_fertilizing: json["repeat_fertilizing"],
       repeat_watering: json["repeat_watering"],
       url_image: json["url_image"],
-      pump_watering: json["pump_watering"],
-      pump_fertilizing: json["pump_fertilizing"],
+      pump_watering: json["pump_watering"]!=0?1:0,
+      pump_fertilizing: json["pump_fertilizing"]!=0?1:0,
       sunlight: MinMaxModel(minimum: null, maximum: null, degree: json["sunlight"]),
       soil_ph:  MinMaxModel(minimum: null, maximum: null, degree: json["soil_ph"]),
       soil_moister:  MinMaxModel(minimum: null, maximum: null, degree: json["soil_moister"]),

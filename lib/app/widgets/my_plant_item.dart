@@ -41,7 +41,7 @@ class MyPlantItem extends StatelessWidget {
         children: [
           Column(
             //ToDo: look to the mainAxisSize and mainAxisAlignment
-          //  mainAxisSize: MainAxisSize.min,
+            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
 
@@ -271,11 +271,8 @@ class MyPlantItem extends StatelessWidget {
                 await PlantController(context: context).deletePlanetModel(context, planetModel: planetModel);
 
               }, icon:
-          RotationTransition(
-            turns: new AlwaysStoppedAnimation(45 / 360),
-            child:  Icon(Icons.add_circle_outline,color: ColorManager.primary,
-              size: 30.sp,
-            ),
+          Icon(Icons.cancel_outlined,color: ColorManager.primary,
+            size: 30.sp,
           )))
         ],
       ),

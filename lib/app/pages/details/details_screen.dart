@@ -59,7 +59,7 @@ late PlantController plantController;
                 return ListTile(
                   onTap: () {
                     isPumpOn = !isPumpOn;
-                    planetModel.pump_watering=isPumpOn;
+                    planetModel.pump_watering=isPumpOn?1:0;
                     pumpState(() {});
                     plantController.updatePlanetModel2(context, planetModel: planetModel);
                   },
@@ -71,10 +71,10 @@ late PlantController plantController;
                   trailing: Switch(
                     thumbColor: MaterialStateProperty.all(ColorManager.primary),
                     activeTrackColor: ColorManager.primary.withOpacity(.5),
-                    value: planetModel.pump_watering,
+                    value: planetModel.pump_watering==1,
                     onChanged: (bool value) {
                       isPumpOn = value;
-                      planetModel.pump_watering=isPumpOn;
+                      planetModel.pump_watering=isPumpOn?1:0;
                       pumpState(() {});
                       plantController.updatePlanetModel2(context, planetModel: planetModel);
                     },

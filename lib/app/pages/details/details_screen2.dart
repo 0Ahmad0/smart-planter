@@ -55,7 +55,7 @@ class _DetailsScreen2State extends State<DetailsScreen2> {
                 return ListTile(
                   onTap: () {
                     isPumpOn = !isPumpOn;
-                    planetModel.pump_fertilizing=isPumpOn;
+                    planetModel.pump_fertilizing=isPumpOn?1:0;
                     pumpState(() {});
                     PlantController(context: context).updatePlanetModel2(context, planetModel: planetModel);
                   },
@@ -67,10 +67,10 @@ class _DetailsScreen2State extends State<DetailsScreen2> {
                   trailing: Switch(
                     thumbColor: MaterialStateProperty.all(ColorManager.primary),
                     activeTrackColor: ColorManager.primary.withOpacity(.5),
-                    value:   planetModel.pump_fertilizing,
+                    value:   planetModel.pump_fertilizing==1,
                     onChanged: (bool value) {
                       isPumpOn = value;
-                      planetModel.pump_fertilizing=isPumpOn;
+                      planetModel.pump_fertilizing=isPumpOn?1:0;
                       pumpState(() {});
                       PlantController(context: context).updatePlanetModel2(context, planetModel: planetModel);
                     },
@@ -159,7 +159,7 @@ class _DetailsScreen2State extends State<DetailsScreen2> {
                 DetailsButton(icon: Icons.remove,onPressed: (){
                   if(planetModel.soil_moister.minimum==null||(planetModel.soil_moister.degree??planetModel.soil_moister.minimum??0)>(planetModel.soil_moister.minimum!))
                     {planetModel.soil_moister.degree=(planetModel.soil_moister.degree??planetModel.soil_moister.minimum??0)-1;
-      PlantController(context: context).updatePlanetModel2(context, planetModel: planetModel);}
+                     PlantController(context: context).updatePlanetModel2(context, planetModel: planetModel);}
                   setState(() {
 
                   });
@@ -206,13 +206,14 @@ class _DetailsScreen2State extends State<DetailsScreen2> {
                     .toList(),
                 onChanged: (value) async {
                   planetModel.repeat_fertilizing=value;
-                  await PlantController(context: context).updatePlanetModel2(context, planetModel: planetModel);
+
+                   PlantController(context: context).updatePlanetModel2(context, planetModel: planetModel);
                 }),
 
             const Spacer(),
             ButtonApp(
-              onPressed: (){
-                PlantController(context: context).updatePlanetModel(context, planetModel: planetModel);
+              onPressed: () async {
+                 PlantController(context: context).updatePlanetModel(context, planetModel: planetModel);
               },
               text: AppString.apply,
               backgroundColor: ColorManager.secondary,

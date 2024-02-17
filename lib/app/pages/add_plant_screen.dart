@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../core/utils/app_constant.dart';
 import '../controller/plant_controller.dart';
+import '../models/dummy/plant_dummy.dart';
 import '../models/planet_model.dart';
 import '../widgets/constans.dart';
 import '/app/widgets/add_plant_item_list.dart';
@@ -68,6 +69,13 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                   plants= PlanetModels.fromJson(snapshot.data!.docs!).planetModels;
                   plantController.processDefaultPlants(context,plants:plants);
                 }
+                else{
+                  {
+                    plants= PlanetModels.fromJson(plantsDummyJson()).planetModels;
+                    plantController.processDefaultPlants(context,plants:plants);
+                  }
+                }
+
                 return buildPlants(context);
 
               } else {
