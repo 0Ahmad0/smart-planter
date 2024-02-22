@@ -26,16 +26,12 @@ class _AddNewPlantScreenState extends State<AddNewPlantScreen> {
 
   final _formKey = GlobalKey<FormState>();
 
-
-
-
-
-
-  
   void _deleteImage() {
     _image = null;
     setState(() {});
-    Get.back();
+    if (Navigator.canPop(context)) {
+      Get.back();
+    }
   }
 
   Future<void> _pickImage({required ImageSource source}) async {
@@ -46,6 +42,8 @@ class _AddNewPlantScreenState extends State<AddNewPlantScreen> {
       Get.back();
     }
   }
+
+  final numberRegExp = RegExp('');
 
   @override
   void initState() {
@@ -93,6 +91,9 @@ class _AddNewPlantScreenState extends State<AddNewPlantScreen> {
                         : InkWell(
                             onTap: () {
                               showModalBottomSheet(
+                                showDragHandle: true,
+                                isDismissible: false,
+                                clipBehavior: Clip.hardEdge,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.vertical(
                                         top: Radius.circular(14.0)),
@@ -170,6 +171,9 @@ class _AddNewPlantScreenState extends State<AddNewPlantScreen> {
                               child: IconButton(
                                 onPressed: () {
                                   showModalBottomSheet(
+                                      showDragHandle: true,
+                                      isDismissible: false,
+                                      clipBehavior: Clip.hardEdge,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.vertical(
                                             top: Radius.circular(14.0)),
@@ -202,58 +206,98 @@ class _AddNewPlantScreenState extends State<AddNewPlantScreen> {
                   )
                 ],
               ),
-              const SizedBox(height: AppSize.s10,),
-              Form(
-                key: _formKey,
-                child: Container(
-                  padding: EdgeInsets.all(AppPadding.p10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(AppSize.s14),
-                    color: ColorManager.white.withOpacity(.2)
-                  ),
-                  child: Column(
-                    children: [
-                      TextFiledApp(hintText: 'Soil Ph'),
-                      const SizedBox(
-                        height: AppSize.s10,
-                      ),
-                      TextFiledApp(hintText: 'Fertilizer quantity'),
-                      const SizedBox(
-                        height: AppSize.s10,
-                      ),
-                      TextFiledApp(hintText: 'Repeat fertlizing'),
-                      const SizedBox(
-                        height: AppSize.s10,
-                      ),
-                      TextFiledApp(hintText: 'Water quantity'),
-                      const SizedBox(
-                        height: AppSize.s10,
-                      ),
-                      TextFiledApp(hintText: 'Soil moister'),
-                      const SizedBox(
-                        height: AppSize.s10,
-                      ),
-                      TextFiledApp(hintText: 'Repeat watering'),
-                      const SizedBox(
-                        height: AppSize.s10,
-                      ),
-                      TextFiledApp(hintText: 'Temperature'),
-                      const SizedBox(
-                        height: AppSize.s10,
-                      ),
-                      TextFiledApp(hintText: 'Sunlight'),
-                      const SizedBox(height: AppSize.s20,),
-                      ButtonApp(text: AppString.addNewPlant,onPressed: (){
-                        if(_image != null || !_formKey.currentState!.validate()){
-
-                        }
-                      },),
-                    ],
-                  ),
-                ),
+              const SizedBox(
+                height: AppSize.s10,
+              ),
+              AddPlantFormWidget(
+                formKey: _formKey,
+                image: _image,
               )
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class AddPlantFormWidget extends StatelessWidget {
+  const AddPlantFormWidget({
+    super.key,
+    required GlobalKey<FormState> formKey,
+    required XFile? image,
+  })  : _formKey = formKey,
+        _image = image;
+
+  final GlobalKey<FormState> _formKey;
+  final XFile? _image;
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Container(
+        padding: EdgeInsets.all(AppPadding.p10),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(AppSize.s14),
+            color: ColorManager.white.withOpacity(.2)),
+        child: Column(
+          children: [
+            TextFiledApp(
+              hintText: 'Soil Ph',
+            ),
+            const SizedBox(
+              height: AppSize.s10,
+            ),
+            TextFiledApp(
+              hintText: 'Fertilizer quantity',
+            ),
+            const SizedBox(
+              height: AppSize.s10,
+            ),
+            TextFiledApp(
+              hintText: 'Repeat fertlizing',
+            ),
+            const SizedBox(
+              height: AppSize.s10,
+            ),
+            TextFiledApp(
+              hintText: 'Water quantity',
+            ),
+            const SizedBox(
+              height: AppSize.s10,
+            ),
+            TextFiledApp(
+              hintText: 'Soil moister',
+            ),
+            const SizedBox(
+              height: AppSize.s10,
+            ),
+            TextFiledApp(
+              hintText: 'Repeat watering',
+            ),
+            const SizedBox(
+              height: AppSize.s10,
+            ),
+            TextFiledApp(
+              hintText: 'Temperature',
+            ),
+            const SizedBox(
+              height: AppSize.s10,
+            ),
+            TextFiledApp(
+              hintText: 'Sunlight',
+            ),
+            const SizedBox(
+              height: AppSize.s20,
+            ),
+            ButtonApp(
+              text: AppString.addNewPlant,
+              onPressed: () {
+                if (_image != null && !_formKey.currentState!.validate()) {}
+              },
+            ),
+          ],
         ),
       ),
     );
