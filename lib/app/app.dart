@@ -34,9 +34,9 @@ class SmartPlantsApp extends StatelessWidget {
                 title: AppString.appName,
                 debugShowCheckedModeBanner: false,
                 theme: ThemeManager.myTheme,
-                home: AddNewPlantScreen(),
-                // initialRoute: AppRoute.initialRoute,
-                // routes: AppRoute.routesMap,
+                // home: AddNewPlantScreen(),
+                initialRoute: AppRoute.initialRoute,
+                routes: AppRoute.routesMap,
               ));
         });
   }
