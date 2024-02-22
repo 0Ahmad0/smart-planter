@@ -96,6 +96,15 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               Get.toNamed(AppRoute.notificationRoute);
             },
           ),
+          Divider(),
+          ListTileDrawerItem(
+            text: AppString.addNewPlant,
+            icon: Icons.add_circle_outline,
+            onTap: () {
+              Get.back();
+              Get.toNamed(AppRoute.addNewPlantRoute);
+            },
+          ),
           const Spacer(),
           ListTileDrawerItem(
             text: 'Log out',

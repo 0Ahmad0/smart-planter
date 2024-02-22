@@ -26,6 +26,7 @@ class AppString {
   // static const establishConnection = 'Go to settings to establish a connection';
   static const establishConnection = 'Add New Plant';
   static const addPlant = 'Add Plant';
+  static const addNewPlant = 'Add New Plant';
   static const age = 'Age : ';
   static const pump = 'Pump : ';
   static const apply = 'Apply';
@@ -33,6 +34,10 @@ class AppString {
   static const notifications = 'Notifications';
   static const setting = 'Setting';
   static const userProfile = 'User Profile';
+  static const addFromCamera = 'Add From Camera';
+  static const addFromGallery = 'Add From Gallery';
+  static const deletePhoto = 'Delete Photo';
+
 
 
 

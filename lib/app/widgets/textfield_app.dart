@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '/core/utils/app_string.dart';
 
@@ -21,7 +22,9 @@ class TextFiledApp extends StatefulWidget {
       this.autofocus = false,
       this.readOnly = false,
       this.maxLine = 1,
-      this.minLine = 1})
+      this.minLine = 1,
+        this.filteringTextFormatterList
+      })
       : super(key: key);
 
   final TextInputAction textInputAction;
@@ -38,7 +41,7 @@ class TextFiledApp extends StatefulWidget {
   final VoidCallback? onTap;
   final int? maxLine;
   final int? minLine;
-
+  final List<FilteringTextInputFormatter>? filteringTextFormatterList;
   @override
   State<TextFiledApp> createState() => _TextFiledAppState();
 }
@@ -53,6 +56,7 @@ class _TextFiledAppState extends State<TextFiledApp> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      inputFormatters: widget.filteringTextFormatterList,
       maxLines: widget.maxLine,
       minLines: widget.minLine,
       readOnly: widget.readOnly,

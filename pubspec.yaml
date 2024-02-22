@@ -59,6 +59,7 @@ dependencies:
   firebase_messaging:
   flutter_local_notifications:
   flutter_styled_toast:
+  image_picker:
 
   ## network
   dio:

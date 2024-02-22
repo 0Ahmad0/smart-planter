@@ -56,11 +56,22 @@ late PlantController plantController;
                   color: ColorManager.secondary,
                   borderRadius: BorderRadius.circular(100.r)),
               child: StatefulBuilder(builder: (context, pumpState) {
+                ///
+                /*
+                  هنا كود الريال تايم
+                   */
+                ///
                 return ListTile(
                   onTap: () {
                     isPumpOn = !isPumpOn;
                     planetModel.pump_watering=isPumpOn?1:0;
                     pumpState(() {});
+                    ///
+                    /*
+                    updatePlanetModel2
+                    هذا التابع الذي يتحكم بارسال وجلب الداتا من الريال تايم داتا بيز
+                     */
+                    ///
                     plantController.updatePlanetModel2(context, planetModel: planetModel);
                   },
                   title: Text(

@@ -53,10 +53,21 @@ class _DetailsScreen2State extends State<DetailsScreen2> {
                   borderRadius: BorderRadius.circular(100.r)),
               child: StatefulBuilder(builder: (context, pumpState) {
                 return ListTile(
+                  ///
+                  /*
+                  هنا كود الريال تايم
+                   */
+                  ///
                   onTap: () {
                     isPumpOn = !isPumpOn;
                     planetModel.pump_fertilizing=isPumpOn?1:0;
                     pumpState(() {});
+                    ///
+                    /*
+                    updatePlanetModel2
+                    هذا التابع الذي يتحكم بارسال وجلب الداتا من الريال تايم داتا بيز
+                     */
+                    ///
                     PlantController(context: context).updatePlanetModel2(context, planetModel: planetModel);
                   },
                   title: Text(
