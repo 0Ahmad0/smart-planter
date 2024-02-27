@@ -237,6 +237,8 @@ class AddPlantFormWidget extends StatefulWidget {
 }
 
 class _AddPlantFormWidgetState extends State<AddPlantFormWidget> {
+
+  ///عرفنا كونترولرات من اجل اخذ القيم من المستخدك
  final soilPhController = TextEditingController();
  final fertilizerQuantityController = TextEditingController();
  final repeatFertlizingController = TextEditingController();
@@ -246,8 +248,12 @@ class _AddPlantFormWidgetState extends State<AddPlantFormWidget> {
  final temperatureController = TextEditingController();
  final sunlightController = TextEditingController();
  final descriptionController = TextEditingController();
-
+ ///هنا جعلنا ال حقل بقبل فقط ارقام اي تظهر لوحة المفاتيح الخاصة بالارقام فقط
  final textInputType = TextInputType.numberWithOptions(decimal: true);
+
+ /// هنا اضفنا reguler expretioon
+ /// من اجل ان لا نسمح بكتابة غير الارقام في الحقل لانه من الممكن مثلا ان يقوم المستخدم بنسح نص ولصقه في الحقل
+ /// فبدون هذه ال regular  سيقبل الحقل وهذا خطأ
  final textInputFormatter = [FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}$'))];
 
 
@@ -363,6 +369,7 @@ class _AddPlantFormWidgetState extends State<AddPlantFormWidget> {
               onPressed: () {
                 if (widget._image != null && !widget._formKey.currentState!.validate()) {
 //send Date
+                //هنا بجب ارسال الداتا
                 }
               },
             ),

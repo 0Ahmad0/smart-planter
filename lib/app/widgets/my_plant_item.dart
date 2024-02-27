@@ -214,7 +214,9 @@ class MyPlantItem extends StatelessWidget {
                                        addAutomaticKeepAlive: true,
                                        backgroundColor: ColorManager.secondary.withOpacity(.7),
                                        center: Text(
-                                         '${AppString.age} ${planetModel.age??0} / ${50}',
+                                         ///تعديل كلمةage
+                                         '${AppString.harvestTime}'
+                                             ' ${planetModel.age??0} / ${50}',
                                          style: StylesManager.titleBoldTextStyle(
                                            size: 20.sp,
                                            color: ColorManager.primary,
@@ -222,18 +224,24 @@ class MyPlantItem extends StatelessWidget {
                                        ),
                                      ),
                                      const SizedBox(height: AppSize.s10,),
+                                     ///جديد
+                                     /// تم اضافة التاريخ هنا عندما يضغط المستخدم يقوم باختيار تاريخ ومن ثم يظهر التاريخ بعد الاختيار
                                      StatefulBuilder(builder: (context,dateSetState){
                                        return ListTile(
                                          onTap: ()async{
                                            final picker = await showDatePicker(
                                                context: context,
+                                               ///تحديد الوقت الحالي
                                                initialDate: DateTime.now(),
+                                               ///تحديد اول تاريخ
                                                firstDate: DateTime.now(),
+                                               ///تحديد اخر تاريخ يمكن اختياره
                                                lastDate: DateTime(2100)
                                            );
 
                                            if(picker != null){
                                              dateSetState((){
+                                               ///عرض التاريخ
                                                dateUserPicker = DateFormat.yMd().format(picker);
                                              });
                                            }
