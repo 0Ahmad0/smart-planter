@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:smart_plans/app/widgets/button_app.dart';
@@ -43,7 +44,6 @@ class _AddNewPlantScreenState extends State<AddNewPlantScreen> {
     }
   }
 
-  final numberRegExp = RegExp('');
 
   @override
   void initState() {
@@ -221,7 +221,7 @@ class _AddNewPlantScreenState extends State<AddNewPlantScreen> {
   }
 }
 
-class AddPlantFormWidget extends StatelessWidget {
+class AddPlantFormWidget extends StatefulWidget {
   const AddPlantFormWidget({
     super.key,
     required GlobalKey<FormState> formKey,
@@ -233,9 +233,42 @@ class AddPlantFormWidget extends StatelessWidget {
   final XFile? _image;
 
   @override
+  State<AddPlantFormWidget> createState() => _AddPlantFormWidgetState();
+}
+
+class _AddPlantFormWidgetState extends State<AddPlantFormWidget> {
+ final soilPhController = TextEditingController();
+ final fertilizerQuantityController = TextEditingController();
+ final repeatFertlizingController = TextEditingController();
+ final waterQuantityController = TextEditingController();
+ final soilMoisterController = TextEditingController();
+ final repeatWateringController = TextEditingController();
+ final temperatureController = TextEditingController();
+ final sunlightController = TextEditingController();
+ final descriptionController = TextEditingController();
+
+ final textInputType = TextInputType.numberWithOptions(decimal: true);
+ final textInputFormatter = [FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}$'))];
+
+
+
+ @override
+  void dispose() {
+   soilPhController.dispose();
+   fertilizerQuantityController.dispose();
+   repeatFertlizingController.dispose();
+   waterQuantityController.dispose();
+   soilMoisterController.dispose();
+   repeatWateringController.dispose();
+   temperatureController.dispose();
+   sunlightController.dispose();
+   descriptionController.dispose();
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formKey,
+      key: widget._formKey,
       child: Container(
         padding: EdgeInsets.all(AppPadding.p10),
         decoration: BoxDecoration(
@@ -244,49 +277,83 @@ class AddPlantFormWidget extends StatelessWidget {
         child: Column(
           children: [
             TextFiledApp(
+              keyboardType: textInputType,
+              filteringTextFormatterList: textInputFormatter,
+              controller: soilPhController,
               hintText: 'Soil Ph',
             ),
             const SizedBox(
               height: AppSize.s10,
             ),
             TextFiledApp(
+              keyboardType: textInputType,
+              filteringTextFormatterList: textInputFormatter,
+              controller: fertilizerQuantityController,
               hintText: 'Fertilizer quantity',
             ),
             const SizedBox(
               height: AppSize.s10,
             ),
             TextFiledApp(
+              keyboardType: textInputType,
+              filteringTextFormatterList: textInputFormatter,
+              controller: repeatFertlizingController,
               hintText: 'Repeat fertlizing',
             ),
             const SizedBox(
               height: AppSize.s10,
             ),
             TextFiledApp(
+              keyboardType: textInputType,
+              filteringTextFormatterList: textInputFormatter,
+              controller: waterQuantityController,
               hintText: 'Water quantity',
             ),
             const SizedBox(
               height: AppSize.s10,
             ),
             TextFiledApp(
+              keyboardType: textInputType,
+              filteringTextFormatterList: textInputFormatter,
+              controller: soilMoisterController,
               hintText: 'Soil moister',
             ),
             const SizedBox(
               height: AppSize.s10,
             ),
             TextFiledApp(
+              keyboardType: textInputType,
+              filteringTextFormatterList: textInputFormatter,
+              controller: repeatWateringController,
               hintText: 'Repeat watering',
             ),
             const SizedBox(
               height: AppSize.s10,
             ),
             TextFiledApp(
+              keyboardType: textInputType,
+              filteringTextFormatterList: textInputFormatter,
+              controller: temperatureController,
               hintText: 'Temperature',
             ),
             const SizedBox(
               height: AppSize.s10,
             ),
             TextFiledApp(
+              keyboardType: textInputType,
+              filteringTextFormatterList: textInputFormatter,
+              controller: sunlightController,
               hintText: 'Sunlight',
+            ),
+            const SizedBox(
+              height: AppSize.s20,
+            ),
+            TextFiledApp(
+
+              controller: descriptionController,
+              hintText: 'Description',
+              minLine: 4,
+              maxLine: 8,
             ),
             const SizedBox(
               height: AppSize.s20,
@@ -294,7 +361,9 @@ class AddPlantFormWidget extends StatelessWidget {
             ButtonApp(
               text: AppString.addNewPlant,
               onPressed: () {
-                if (_image != null && !_formKey.currentState!.validate()) {}
+                if (widget._image != null && !widget._formKey.currentState!.validate()) {
+//send Date
+                }
               },
             ),
           ],

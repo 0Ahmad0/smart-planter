@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_plans/app/pages/details/monitor_details_screen.dart';
@@ -25,6 +28,8 @@ class MyPlantItem extends StatelessWidget {
     required  this.planetModel
   });
   PlanetModel planetModel;
+
+  String dateUserPicker = 'Select Date';
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -216,7 +221,29 @@ class MyPlantItem extends StatelessWidget {
                                          ),
                                        ),
                                      ),
+                                     const SizedBox(height: AppSize.s10,),
+                                     StatefulBuilder(builder: (context,dateSetState){
+                                       return ListTile(
+                                         onTap: ()async{
+                                           final picker = await showDatePicker(
+                                               context: context,
+                                               initialDate: DateTime.now(),
+                                               firstDate: DateTime.now(),
+                                               lastDate: DateTime(2100)
+                                           );
 
+                                           if(picker != null){
+                                             dateSetState((){
+                                               dateUserPicker = DateFormat.yMd().format(picker);
+                                             });
+                                           }
+                                         },
+                                         leading: Icon(Icons.date_range,color: ColorManager.white,),
+                                         title: Text(dateUserPicker,style: TextStyle(
+                                           color: ColorManager.white
+                                         ),),
+                                       );
+                                     }),
                                      const SizedBox(height: AppSize.s10,),
                                      Row(
                                        mainAxisAlignment: MainAxisAlignment.center,

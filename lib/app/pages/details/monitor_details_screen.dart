@@ -104,7 +104,7 @@ class MonitorDetailsScreen extends StatelessWidget {
                 addAutomaticKeepAlive: true,
                 backgroundColor: ColorManager.secondary.withOpacity(.7),
                 center: Text(
-                  '${AppString.age} ${planetModel.age??0} / ${50}',
+                  '${AppString.harvestTime} ${planetModel.age??0} / ${50}',
                   style: StylesManager.titleBoldTextStyle(
                     size: 20.sp,
                     color: ColorManager.primary,

@@ -28,6 +28,7 @@ class AppString {
   static const addPlant = 'Add Plant';
   static const addNewPlant = 'Add New Plant';
   static const age = 'Age : ';
+  static const harvestTime = 'Harvest Time : ';
   static const pump = 'Pump : ';
   static const apply = 'Apply';
   static const connectionWifi = 'Connections Wifi';
