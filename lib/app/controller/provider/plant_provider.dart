@@ -3,9 +3,11 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_plans/app/controller/provider/profile_provider.dart';
 import 'package:smart_plans/app/domain/services/api_services_imp.dart';
+import '../../../core/utils/app_constant.dart';
 import '../../models/planet_model.dart';
 import '../../widgets/constans.dart';
 import '../utils/firebase.dart';
@@ -57,7 +59,15 @@ class PlanetModelProvider with ChangeNotifier {
   }
 
   addDefaultPlanet(BuildContext context,
-      {required PlanetModel planetModel}) async {
+      {required PlanetModel planetModel,XFile? image}) async {
+
+    if(image!=null){
+      var url=await FirebaseFun.uploadImage(image: image, folder: AppConstants.collectionPlant);
+      if(url!=null)
+        planetModel.url_image=url;
+      else
+        return FirebaseFun.errorUser("Fiald in upload image");
+    }
     var result;
     result = await FirebaseFun.addDefaultPlanet(planetModel: planetModel);
     return result;

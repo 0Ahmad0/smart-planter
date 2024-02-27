@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '/core/utils/app_string.dart';
 
@@ -728,6 +732,24 @@ class FirebaseFun {
     int month = dateTime.year - DateTime.now().month;
     int day = dateTime.year - DateTime.now().day;
     return (year * 365 + month * 30 + day);
+  }
+
+  static Future uploadImage({required XFile image, required String folder}) async {
+    try {
+
+      String path =  image.name;
+
+      File file =File(image.path);
+
+      //FirebaseStorage storage = FirebaseStorage.instance.ref().child(path);
+      Reference storage = FirebaseStorage.instance.ref().child("${folder}/${path}");
+      UploadTask storageUploadTask = storage.putFile(file);
+      TaskSnapshot taskSnapshot = await storageUploadTask;
+      String url = await taskSnapshot.ref.getDownloadURL();
+      return url;
+    } catch (ex) {
+      //Const.TOAST( context,textToast:FirebaseFun.findTextToast("Please, upload the image"));
+    }
   }
 
 //

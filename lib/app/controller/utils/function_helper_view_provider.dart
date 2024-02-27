@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:smart_plans/app/controller/plant_controller.dart';
 
 class FunctionHelperViewProvider with ChangeNotifier {
 
 }
 String convertMinutesToTime(int minutes) {
+
   int hours = minutes ~/ 60;
   int days = minutes ~/ (60 * 24);
   int weeks = minutes ~/ (60 * 24 * 7);
@@ -11,6 +13,10 @@ String convertMinutesToTime(int minutes) {
   int years = minutes ~/ (60 * 24 * 30*12);
 
   String result = '';
+  if (hours +days+weeks+months+years==0) {
+    result = 'Every Time';
+  }
+
   if (hours == 1) {
     result = '1 hour';
   } else if (hours > 1) {
@@ -40,6 +46,6 @@ String convertMinutesToTime(int minutes) {
   } else if (years > 1) {
     result = (result.isNotEmpty ? '' : '') + '$years years';
   }
-
+  result=result==''?'Every Time':result;
   return result;
 }

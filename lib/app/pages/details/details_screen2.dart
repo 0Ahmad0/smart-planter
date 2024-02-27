@@ -192,7 +192,9 @@ class _DetailsScreen2State extends State<DetailsScreen2> {
               ),
             ),
             DropdownButtonFormField(
-              value:43200,// planetModel.repeat_fertilizing,
+              value:
+              PlantController(context: context)
+                  .getListRepeat().contains(planetModel.repeat_fertilizing?.toInt())?planetModel.repeat_fertilizing?.toInt():0 ,
                 icon: Icon(
                   Icons.keyboard_arrow_down,
                   color: ColorManager.primary,

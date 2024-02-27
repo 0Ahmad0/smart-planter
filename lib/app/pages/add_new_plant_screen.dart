@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:smart_plans/app/controller/plant_controller.dart';
+import 'package:smart_plans/app/models/planet_model.dart';
 import 'package:smart_plans/app/widgets/button_app.dart';
 import 'package:smart_plans/app/widgets/textfield_app.dart';
 import 'package:smart_plans/core/helper/sizer_media_query.dart';
@@ -239,6 +241,7 @@ class AddPlantFormWidget extends StatefulWidget {
 class _AddPlantFormWidgetState extends State<AddPlantFormWidget> {
 
   ///عرفنا كونترولرات من اجل اخذ القيم من المستخدك
+ final nameController = TextEditingController();
  final soilPhController = TextEditingController();
  final fertilizerQuantityController = TextEditingController();
  final repeatFertlizingController = TextEditingController();
@@ -256,10 +259,16 @@ class _AddPlantFormWidgetState extends State<AddPlantFormWidget> {
  /// فبدون هذه ال regular  سيقبل الحقل وهذا خطأ
  final textInputFormatter = [FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}$'))];
 
+late PlantController plantController;
 
-
+@override
+  void initState() {
+  plantController=PlantController(context: context);
+    super.initState();
+  }
  @override
   void dispose() {
+   nameController.dispose();
    soilPhController.dispose();
    fertilizerQuantityController.dispose();
    repeatFertlizingController.dispose();
@@ -282,6 +291,13 @@ class _AddPlantFormWidgetState extends State<AddPlantFormWidget> {
             color: ColorManager.white.withOpacity(.2)),
         child: Column(
           children: [
+            TextFiledApp(
+              controller: nameController,
+              hintText: 'Name plant',
+            ),
+            const SizedBox(
+              height: AppSize.s10,
+            ),
             TextFiledApp(
               keyboardType: textInputType,
               filteringTextFormatterList: textInputFormatter,
@@ -367,7 +383,26 @@ class _AddPlantFormWidgetState extends State<AddPlantFormWidget> {
             ButtonApp(
               text: AppString.addNewPlant,
               onPressed: () {
+
                 if (widget._image != null && !widget._formKey.currentState!.validate()) {
+
+                  plantController.addDefaultPlanet(context, planetModel:
+                  PlanetModel(id: 0,
+                      description: descriptionController.value.text,
+                      name: nameController.value.text,
+                      age: 0,
+                      fertilizer_quantity: QuantityModel(value: double.parse(fertilizerQuantityController.value.text).toInt(), type: ''),
+                      repeat_fertilizing:double.parse(repeatFertlizingController.value.text) ,
+                      repeat_watering:double.parse(repeatWateringController.value.text) ,
+                      soil_moister:MinMaxModel(minimum: null, maximum: null, degree: double.parse(soilMoisterController.value.text)) ,
+                      soil_ph:MinMaxModel(minimum: null, maximum: null, degree: double.parse(soilPhController.value.text)) ,
+                      sunlight:MinMaxModel(minimum: null, maximum: null, degree: double.parse(sunlightController.value.text)) ,
+                      temperature:MinMaxModel(minimum: null, maximum: null, degree: double.parse(temperatureController.value.text)) ,
+                      url_image: '',
+                      water_quantity:QuantityModel(value: double.parse(waterQuantityController.value.text).toInt(), type: '') ,
+                      isAdd:false,
+
+                  ),image: widget._image);
 //send Date
                 //هنا بجب ارسال الداتا
                 }

@@ -52,8 +52,9 @@ class MyPlantItem extends StatelessWidget {
 
               Flexible(child:
       planetModel.url_image!=null?
-              Image.network(planetModel.url_image??''):
-              Image.asset('assets/images/strawberries.png')),
+              Image.network(planetModel.url_image!):
+           Image.asset('assets/images/logo.png')
+              ),
               Container(
                 width: getWidth(context),
                 height: getWidth(context) / 5,
@@ -128,6 +129,7 @@ class MyPlantItem extends StatelessWidget {
             child: IconButton(
               icon: Icon(Icons.info_outline,size: 30.sp,),
               onPressed: (){
+               context.read<PlanetModelProvider>().planetModel=planetModel;
                Get.to(()=>Scaffold(
                  appBar: AppBar(
                    title: Text(
@@ -142,6 +144,7 @@ class MyPlantItem extends StatelessWidget {
                        child: Consumer<PlanetModelProvider>(
                            builder: (context, planetModelProvider, child) {
                              PlanetModel planetModel = planetModelProvider.planetModel;
+
                              return
                                Padding(
                                  padding: const EdgeInsets.all(AppPadding.p16),
@@ -160,7 +163,7 @@ class MyPlantItem extends StatelessWidget {
                                        child:
                                        planetModel.url_image!=null?
                                        Image.network(planetModel.url_image??''):
-                                       Image.asset('assets/images/strawberries.png'),
+                                       Image.asset('assets/images/logo.png'),
                                      ),
                                      const SizedBox(
                                        height: AppSize.s20,
@@ -216,7 +219,7 @@ class MyPlantItem extends StatelessWidget {
                                        center: Text(
                                          ///تعديل كلمةage
                                          '${AppString.harvestTime}'
-                                             ' ${planetModel.age??0} / ${50}',
+                                             ' ${planetModel.age??0} / ${(planetModel.age??0)>50?planetModel.age!:50}',
                                          style: StylesManager.titleBoldTextStyle(
                                            size: 20.sp,
                                            color: ColorManager.primary,
@@ -234,7 +237,7 @@ class MyPlantItem extends StatelessWidget {
                                                ///تحديد الوقت الحالي
                                                initialDate: DateTime.now(),
                                                ///تحديد اول تاريخ
-                                               firstDate: DateTime.now(),
+                                               firstDate: DateTime.now().subtract(Duration(days: (planetModel.age??0).toInt())),
                                                ///تحديد اخر تاريخ يمكن اختياره
                                                lastDate: DateTime(2100)
                                            );
@@ -243,6 +246,9 @@ class MyPlantItem extends StatelessWidget {
                                              dateSetState((){
                                                ///عرض التاريخ
                                                dateUserPicker = DateFormat.yMd().format(picker);
+                                               planetModel.age=DateTime.now().difference(picker).inDays;
+                                               planetModel.age=(planetModel.age??0)<0?0:planetModel.age;
+                                               PlantController(context: context).updatePlanetModel2(context, planetModel: planetModel);
                                              });
                                            }
                                          },

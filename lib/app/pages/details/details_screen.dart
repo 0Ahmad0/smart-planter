@@ -229,7 +229,8 @@ late PlantController plantController;
               ),
             ),
             DropdownButtonFormField(
-                value: planetModel.repeat_watering,
+                value:PlantController(context: context)
+                    .getListRepeat().contains(planetModel.repeat_watering?.toInt())?planetModel.repeat_watering?.toInt():0 ,
                 icon: Icon(
                   Icons.keyboard_arrow_down,
                   color: ColorManager.primary,

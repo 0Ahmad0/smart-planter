@@ -5,9 +5,11 @@ import 'dart:math';
 import 'dart:ui';
 
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_plans/app/controller/provider/notification_provider.dart';
 import 'package:smart_plans/app/models/notification_model.dart';
@@ -32,6 +34,39 @@ class PlantController {
   PlantController({required this.context}) {
     planetModelProvider =
         Provider.of<PlanetModelProvider>(context, listen: false);
+  }
+
+  addDefaultPlanet(BuildContext context, {
+    required PlanetModel planetModel,
+    XFile? image
+  }) async {
+    // if (planetModel.temperature.maximum == null)
+    //   planetModel.temperature.maximum = planetModel.temperature.degree;
+    // if (planetModel.soil_ph.minimum == null)
+    //   planetModel.soil_ph.minimum = planetModel.soil_ph.degree;
+    // if (planetModel.soil_moister.minimum == null)
+    //   planetModel.soil_moister.minimum = planetModel.soil_moister.degree;
+    // if (planetModel.sunlight.minimum == null)
+    //   planetModel.sunlight.minimum = planetModel.sunlight.degree;
+    ProfileProvider profileProvider = Provider.of<ProfileProvider>(
+        context, listen: false);
+    planetModel.userId = profileProvider.user.id;
+    planetModel.id = Timestamp.now().seconds;
+    Const.loading(context);
+    var result;
+    result =
+    await planetModelProvider.addDefaultPlanet(context, planetModel:
+    planetModel,image:image
+    );
+    Navigator.of(context).pop();
+    if (result['status']) {
+      //    planetModelProvider.planetModelsApi.planetModels.clear();
+//      planetModelProvider..notifyListeners();
+      Get.offAllNamed(AppRoute.homeRoute);
+    }
+    Const.TOAST(context,
+        textToast: FirebaseFun.findTextToast(result['message'].toString()));
+    return result;
   }
 
   addPlant(BuildContext context, {
@@ -110,6 +145,7 @@ class PlantController {
           changePlantsFromReal(context, newPlanetModel: planetModel, oldPlanetModel: oldPlanetModel)
           );
       }
+
 
       addNotifyPlantChanged(context,oldPlanetModel,planetModel);
 
@@ -321,6 +357,9 @@ return plants;
   List<int> getListRepeat(){
 
     return[
+      0,
+      60,
+      60*3,
       60*24,
       60*24*3,
       60*24*7,
