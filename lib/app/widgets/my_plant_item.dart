@@ -236,10 +236,19 @@ class MyPlantItem extends StatelessWidget {
                                                context: context,
                                                ///تحديد الوقت الحالي
                                                initialDate: DateTime.now(),
+
+                                               //في حال الرغبة في وضع التاريخ الحالي هو عمر النبتة الحقيقي
+                                              // DateTime.now().subtract(Duration(days: (planetModel.age??0).toInt()))
                                                ///تحديد اول تاريخ
                                                firstDate: DateTime.now().subtract(Duration(days: (planetModel.age??0).toInt())),
+
+                                              //في حال الرغبة في وضع اول تاريخ قبل 50 يوم
+                                              // DateTime.now().subtract(Duration(50).toInt()))
                                                ///تحديد اخر تاريخ يمكن اختياره
                                                lastDate: DateTime(2100)
+
+                                           //في حال الرغبة في وضع اخر تاريخ هو تاريخ اليوم
+                                           // DateTime.now()
                                            );
 
                                            if(picker != null){
