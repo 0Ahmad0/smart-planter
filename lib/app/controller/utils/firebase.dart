@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -431,6 +430,16 @@ class FirebaseFun {
     return result;
   }
 
+  static Future<Map<String, dynamic>> onValueFetchUsers(value) async {
+    // print(true);
+    print("Users count : ${value.docs.length}");
+
+    return {
+      'status': true,
+      'message': 'Users successfully fetch',
+      'body': value.docs
+    };
+  }
   static fetchNotificationByField(
       {required String field,
       required String value,
@@ -583,7 +592,7 @@ class FirebaseFun {
     };
   }
 
-  static Future<Map<String, dynamic>> onValueFetchUsers(value) async {
+  static Future<Map<String, dynamic>> sendonValueFetchUsers(value) async {
     // print(true);
     print("Users count : ${value.docs.length}");
 

@@ -1,4 +1,6 @@
 import '../../app/pages/add_new_plant_screen.dart';
+import '../../app/pages/add_schedule.dart';
+import '../../app/pages/schedule_page.dart';
 import '/app/pages/add_plant_screen.dart';
 import '/app/pages/connection_wifi_screen.dart';
 import '/app/pages/details/details_screen.dart';
@@ -29,6 +31,8 @@ class AppRoute {
   static const connectionWifiRoute = '/connectionWifi';
   static const settingRoute = '/setting';
   static const addNewPlantRoute = '/addNewPlant';
+  static const scheduleRoute = '/schedule';
+  static const addScheduleRoute = '/addSchedule';
 
 
 
@@ -49,5 +53,7 @@ class AppRoute {
     connectionWifiRoute: (context) => ConnectionWifiScreen(),
     settingRoute: (context) => SettingScreen(),
     addNewPlantRoute: (context) => AddNewPlantScreen(),
+    scheduleRoute: (context) => ScheduleScreen(),
+    addScheduleRoute: (context) => AddScheduleScreen(),
   };
 }

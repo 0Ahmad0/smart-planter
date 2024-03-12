@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_plans/core/route/app_route.dart';
 import '../../controller/utils/function_helper_view_provider.dart';
 import '/app/models/planet_model.dart';
 import '/app/widgets/button_app.dart';
@@ -257,7 +258,27 @@ late PlantController plantController;
                   planetModel.repeat_watering =value;
                   plantController.updatePlanetModel2(context, planetModel: planetModel);
                 }),
-
+            const SizedBox(
+              height: AppSize.s20,
+            ),
+            Container(
+              decoration: BoxDecoration(
+                color: ColorManager.secondary,
+                borderRadius: BorderRadius.circular(8)
+              ),
+              child: ListTile(
+                // contentPadding: EdgeInsets.zero,
+                onTap: (){
+                  Navigator.pushNamed(context, AppRoute.scheduleRoute);
+                },
+                leading: Icon(Icons.date_range,color: ColorManager.primary),
+                title: Text('Show Schedule',style: StylesManager.titleNormalTextStyle(
+                  color: ColorManager.black,
+                  size: 16.sp
+                ),),
+                trailing: Icon(Icons.arrow_forward_ios,color: ColorManager.primary,),
+              ),
+            ),
             const Spacer(),
             ButtonApp(
               onPressed: () {

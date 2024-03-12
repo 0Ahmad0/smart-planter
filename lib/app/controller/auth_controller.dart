@@ -20,7 +20,8 @@ class AuthController {
   var context;
 
   AuthController({required this.context}) {
-    authProvider = Provider.of<AuthProvider>(context, listen: false);
+    authProvider = Provider.of<AuthProvider>(context,
+        listen: false);
   }
 
   login(
@@ -64,8 +65,6 @@ class AuthController {
     if (result['status']) {
       await sendEmailVerification(context);
       Get.offNamed(AppRoute.verifyEmail);
-
-
       // Navigator.of(context).pop();
 
     }
