@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:numberpicker/numberpicker.dart';
+import 'package:smart_plans/app/widgets/button_app.dart';
+import 'package:smart_plans/app/widgets/textfield_app.dart';
 import 'package:smart_plans/core/utils/color_manager.dart';
 import 'package:smart_plans/core/utils/styles_manager.dart';
 import 'package:smart_plans/core/utils/values_manager.dart';
@@ -22,6 +26,17 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
     'Wednesday'
   ];
   int _currentIndex = 0;
+  final amTimeController = TextEditingController();
+
+  final pmTimeController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  @override
+  void dispose() {
+    amTimeController.dispose();
+    pmTimeController.dispose();
+    super.dispose();
+  }
+  int _currentValue = 3;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,12 +68,105 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                     itemCount: _weeksName.length),
               );
             }
+          ),
+          const Spacer(),
+          Form(
+            key: _formKey,
+            child: Padding(
+              padding: const EdgeInsets.all(AppPadding.p12),
+              child: TextFiledApp(
+                hintText: 'Am Time',
+                onTap: ()async{
+                  showModalBottomSheet(context: context, builder: (_){
+                    return StatefulBuilder(
+                      builder: (context,timeSetState) {
+                        return Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            NumberPicker(
+                              decoration: BoxDecoration(
+                                color: ColorManager.primary.withOpacity(.2),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              textStyle: StylesManager.titleBoldTextStyle(),
+                              selectedTextStyle: StylesManager.titleBoldTextStyle(color: ColorManager.primary),
+                              value: _currentValue,
+                              minValue: 0,
+                              step: 1,
+                              maxValue: 24,
+                              haptics: true,
+                              onChanged: (value) => timeSetState(() {
+                                _currentValue = value;
+                                amTimeController.text = value.toString();
+                              }),
+                            ),
+                          ],
+                        );
+                      }
+                    );
+                  });
+
+                },
+                readOnly: true,
+                controller: amTimeController,
+              ),
+            ),
+          ),
+          const SizedBox(height: AppSize.s20,),
+          Padding(
+            padding: const EdgeInsets.all(AppPadding.p12),
+            child: TextFiledApp(
+              hintText: 'Pm Time',
+
+              onTap: ()async{
+                showModalBottomSheet(context: context, builder: (_){
+                  return StatefulBuilder(
+                      builder: (context,timeSetState) {
+                        return Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            NumberPicker(
+                              decoration: BoxDecoration(
+                                color: ColorManager.primary.withOpacity(.2),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              textStyle: StylesManager.titleBoldTextStyle(),
+                              selectedTextStyle: StylesManager.titleBoldTextStyle(color: ColorManager.primary),
+                              value: _currentValue,
+                              minValue: 0,
+                              step: 1,
+                              maxValue: 24,
+                              haptics: true,
+                              onChanged: (value) => timeSetState(() {
+                                _currentValue = value;
+                                pmTimeController.text = value.toString();
+                              }),
+                            ),
+                          ],
+                        );
+                      }
+                  );
+                });
+              },
+              readOnly: true,
+              controller: pmTimeController,
+            ),
+          ),
+          const Spacer(),
+          ButtonApp(
+            text: 'Add',
+            onPressed: (){
+              if(_formKey.currentState!.validate()){
+                Get.back();
+              }
+            },
           )
         ],
       ),
     );
   }
 }
+
 
 class DayWidget extends StatelessWidget {
   const DayWidget({super.key, required this.isSelected, required this.day});
@@ -88,7 +196,8 @@ class DayWidget extends StatelessWidget {
               style: StylesManager.titleBoldTextStyle(
                   color: isSelected ? ColorManager.black : ColorManager.secondary, size: 20.sp),
             ),
-          )
+          ),
+
         ],
       ),
     );
