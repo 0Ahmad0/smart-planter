@@ -1,6 +1,6 @@
 import '../../app/pages/add_new_plant_screen.dart';
-import '../../app/pages/add_schedule.dart';
-import '../../app/pages/schedule_page.dart';
+import '../../app/pages/add_schedule_screen.dart';
+import '../../app/pages/schedule_screen.dart';
 import '/app/pages/add_plant_screen.dart';
 import '/app/pages/connection_wifi_screen.dart';
 import '/app/pages/details/details_screen.dart';
