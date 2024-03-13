@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:smart_plans/core/utils/values_manager.dart';
 import '/core/utils/app_string.dart';
 
 import '../../core/utils/color_manager.dart';
@@ -23,14 +24,15 @@ class TextFiledApp extends StatefulWidget {
       this.readOnly = false,
       this.maxLine = 1,
       this.minLine = 1,
-        this.filteringTextFormatterList
-      })
+      this.filteringTextFormatterList,
+      this.iconDataImage})
       : super(key: key);
 
   final TextInputAction textInputAction;
   final TextInputType keyboardType;
   final TextEditingController? controller;
   final IconData? iconData;
+  final String? iconDataImage;
   final String? hintText;
   final bool suffixIcon;
   final bool autofocus;
@@ -42,6 +44,7 @@ class TextFiledApp extends StatefulWidget {
   final int? maxLine;
   final int? minLine;
   final List<FilteringTextInputFormatter>? filteringTextFormatterList;
+
   @override
   State<TextFiledApp> createState() => _TextFiledAppState();
 }
@@ -84,12 +87,21 @@ class _TextFiledAppState extends State<TextFiledApp> {
         hintStyle: TextStyle(color: ColorManager.secondary.withOpacity(.75)),
         errorStyle: TextStyle(color: ColorManager.secondary),
         errorMaxLines: 2,
-        prefixIcon: widget.iconData == null
+        prefixIcon: (widget.iconData == null&& widget.iconDataImage== null)
             ? null
-            : Icon(
-                widget.iconData,
-                size: 24.sp,
-              ),
+            : widget.iconDataImage != null
+                ? Padding(
+                  padding: const EdgeInsets.all(AppPadding.p8),
+                  child: Image.asset(
+                      widget.iconDataImage!,
+          width: 15.sp,
+          height: 15.sp,
+                    ),
+                )
+                : Icon(
+                    widget.iconData,
+                    size: 24.sp,
+                  ),
         suffixIcon: widget.suffixIcon
             ? IconButton(
                 onPressed: () {

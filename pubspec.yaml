@@ -60,7 +60,8 @@ dependencies:
   flutter_local_notifications:
   flutter_styled_toast:
   image_picker:
-
+  flutter_time_picker_spinner:
+  numberpicker:
   ## network
   dio:
   firebase_database: ^10.4.0
