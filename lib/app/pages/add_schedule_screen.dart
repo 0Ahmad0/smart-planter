@@ -25,8 +25,8 @@ class AddScheduleScreen extends StatefulWidget {
 class _AddScheduleScreenState extends State<AddScheduleScreen> {
   final List<String> _weeksName = [
     'Friday',
-    'Monday',
     'Saturday',
+    'Monday',
     'Sunday',
     'Thursday',
     'Tuesday',
@@ -105,8 +105,7 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
             child: Padding(
               padding: const EdgeInsets.all(AppPadding.p12),
               child: TextFiledApp(
-                iconDataImage: AssetsManager.addNewPlantIMG,
-                // iconDataImage: AssetsManager.clockIMG,
+                iconDataImage: AssetsManager.clockIMG,
                 hintText: 'Am Time',
                 onTap: () async {
                   showModalBottomSheet(
@@ -185,8 +184,7 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                   Padding(
                     padding: const EdgeInsets.all(AppPadding.p12),
                     child: TextFiledApp(
-                      iconDataImage: AssetsManager.addNewPlantIMG,
-                      // iconDataImage: AssetsManager.clockIMG,
+                      iconDataImage: AssetsManager.clockIMG,
                       hintText: 'Pm Time',
                       onTap: () async {
                         showModalBottomSheet(
@@ -249,8 +247,7 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                   Padding(
                     padding: const EdgeInsets.all(AppPadding.p12),
                     child: TextFiledApp(
-                      iconDataImage: AssetsManager.addNewPlantIMG,
-                      // iconDataImage: AssetsManager.clockIMG,
+                      iconDataImage: AssetsManager.clockIMG,
                       hintText: 'interval Time',
                       onTap: () async {
                         showModalBottomSheet(
