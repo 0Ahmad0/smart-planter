@@ -243,3 +243,4 @@ class QuantityModel {
         'value': value,
       };
 }
+

@@ -6,6 +6,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../models/schedule_model.dart';
 import '/core/utils/app_string.dart';
 
 import '../../../core/utils/app_constant.dart';
@@ -385,6 +386,47 @@ class FirebaseFun {
     return result;
   }
 
+
+  ///plants real
+  static addScheduleReal({required ScheduleModel scheduleModel}) async {
+    final result = await database.child(AppConstants.collectionSchedule)
+
+        .update( scheduleModel.toJson())
+        .then(onValueAddScheduleModel)
+        .catchError(onError)
+        .timeout(timeOut, onTimeout: onTimeOut);
+    return result;
+  }
+
+  static updateScheduleReal({required ScheduleModel scheduleModel}) async {
+
+    final result = await database.child(AppConstants.collectionUser).child('${scheduleModel.id}')
+        .update( scheduleModel.toJson())
+        .then(onValueUpdateScheduleModel)
+        .catchError(onError)
+        .timeout(timeOut, onTimeout: onTimeOut);
+    return result;
+  }
+
+  static deleteScheduleReal({required ScheduleModel scheduleModel}) async {
+
+    final result = await database.child(AppConstants.collectionSchedule).child('${scheduleModel.id}')
+        .remove()
+        .then(onValueDeleteScheduleModel)
+        .catchError(onError)
+        .timeout(timeOut, onTimeout: onTimeOut);
+    return result;
+  }
+
+  static fetchAllScheduleReal() async {
+    final result = await database.child(AppConstants.collectionUser)
+        .get()
+        .then((onValueFetchScheduleModels))
+        .catchError(onError)
+        .timeout(timeOut, onTimeout: onTimeOut);
+    return result;
+  }
+
   ///Notification
   static addNotification({required NotificationModel notification}) async {
     final result = await FirebaseFirestore.instance
@@ -645,6 +687,44 @@ class FirebaseFun {
       'body': value.docs
     };
   }
+
+
+  static Future<Map<String, dynamic>> onValueAddScheduleModel(value) async {
+    return {
+      'status': true,
+      'message': 'ScheduleModel successfully add',
+      'body': {}
+    };
+  }
+
+  static Future<Map<String, dynamic>> onValueUpdateScheduleModel(value) async {
+    return {
+      'status': true,
+      'message': 'ScheduleModel successfully update',
+      'body': {}
+    };
+  }
+
+  static Future<Map<String, dynamic>> onValueDeleteScheduleModel(value) async {
+    return {
+      'status': true,
+      'message': 'ScheduleModel successfully delete',
+      'body': {}
+    };
+  }
+
+  static Future<Map<String, dynamic>> onValueFetchScheduleModels(value) async {
+    // print(true);
+    print("ScheduleModel count : ${value.docs.length}");
+
+    return {
+      'status': true,
+      'message': 'ScheduleModel successfully fetch',
+      'body': value.docs
+    };
+  }
+
+
 
   static Future<Map<String, dynamic>> onValueAddNotification(value) async {
     return {

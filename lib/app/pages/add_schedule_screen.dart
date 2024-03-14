@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:smart_plans/app/models/schedule_model.dart';
 import 'package:smart_plans/app/widgets/button_app.dart';
 import 'package:smart_plans/app/widgets/textfield_app.dart';
 import 'package:smart_plans/core/utils/assets_manager.dart';
@@ -11,6 +12,8 @@ import 'package:smart_plans/core/utils/styles_manager.dart';
 import 'package:smart_plans/core/utils/theme_manager.dart';
 import 'package:smart_plans/core/utils/values_manager.dart';
 import 'package:numberpicker/numberpicker.dart';
+
+import '../controller/schedule_controller.dart';
 
 class AddScheduleScreen extends StatefulWidget {
   const AddScheduleScreen({super.key});
@@ -32,9 +35,11 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
   int _currentIndex = 0;
   final amTimeController = TextEditingController();
   final pmTimeController = TextEditingController();
+  DateTime? dateTimeAm;
+  DateTime? dateTimePm;
   final intervalTimeController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
+  late ScheduleController scheduleController;
   @override
   void dispose() {
     amTimeController.dispose();
@@ -42,11 +47,16 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
     intervalTimeController.dispose();
     super.dispose();
   }
-
+@override
+  void initState() {
+  scheduleController=ScheduleController(context: context);
+    super.initState();
+  }
   int _currentValue = 3;
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Add New Schedule'),
@@ -75,8 +85,7 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                   itemBuilder: (context, index) => InkWell(
                         //ToDo : New Code
                         /// check Day Is Before Selected
-                        onTap: false
-                            ? null
+                        onTap:false? null
                             : () {
                                 daySetState(() {
                                   _currentIndex = index;
@@ -96,7 +105,8 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
             child: Padding(
               padding: const EdgeInsets.all(AppPadding.p12),
               child: TextFiledApp(
-                iconDataImage: AssetsManager.clockIMG,
+                iconDataImage: AssetsManager.addNewPlantIMG,
+                // iconDataImage: AssetsManager.clockIMG,
                 hintText: 'Am Time',
                 onTap: () async {
                   showModalBottomSheet(
@@ -125,6 +135,7 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                                     isForce2Digits: true,
                                     onTimeChange: (time) {
                                       timeSetState(() {
+                                        dateTimeAm=time;
                                         amTimeController.text =
                                             DateFormat().add_jm().format(time);
                                       });
@@ -174,7 +185,8 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                   Padding(
                     padding: const EdgeInsets.all(AppPadding.p12),
                     child: TextFiledApp(
-                      iconDataImage: AssetsManager.clockIMG,
+                      iconDataImage: AssetsManager.addNewPlantIMG,
+                      // iconDataImage: AssetsManager.clockIMG,
                       hintText: 'Pm Time',
                       onTap: () async {
                         showModalBottomSheet(
@@ -203,6 +215,7 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                                           isForce2Digits: true,
                                           onTimeChange: (time) {
                                             timeSetState(() {
+                                              dateTimePm=time;
                                               pmTimeController.text =
                                                   DateFormat().add_jm().format(time);
                                             });
@@ -236,7 +249,8 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                   Padding(
                     padding: const EdgeInsets.all(AppPadding.p12),
                     child: TextFiledApp(
-                      iconDataImage: AssetsManager.clockIMG,
+                      iconDataImage: AssetsManager.addNewPlantIMG,
+                      // iconDataImage: AssetsManager.clockIMG,
                       hintText: 'interval Time',
                       onTap: () async {
                         showModalBottomSheet(
@@ -308,9 +322,24 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
             padding: const EdgeInsets.all(AppPadding.p12),
             child: ButtonApp(
               text: 'Add',
-              onPressed: () {
+              onPressed: () async {
+
+                String? hour12 = dateTimePm!=null?DateFormat('h').format(dateTimePm!):null;
+
+                int? pmH=int.tryParse(hour12??'');
+
+
+                int? pmM=dateTimePm?.minute;
+                int? amM=dateTimeAm?.minute;
+                int? amH=dateTimeAm?.hour;
+                int dayNumber=_currentIndex+1;
+                // print(ScheduleModel(dayNumber: dayNumber, duration: _currentValue
+                // ,timeAmH: amH,timeAmM: amM,timePmH: pmH,timePmM: pmM).toJson());
                 if (_formKey.currentState!.validate()) {
-                  Get.back();
+                  await scheduleController.addScheduleModel(context, scheduleModel:
+                  ScheduleModel(dayNumber: dayNumber, duration: _currentValue
+                      ,timeAmH: amH,timeAmM: amM,timePmH: pmH,timePmM: pmM));
+                  // Get.back();
                 }
               },
             ),

@@ -1,11 +1,22 @@
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_plans/app/controller/provider/schedule_provider.dart';
+import 'package:smart_plans/app/controller/schedule_controller.dart';
+import 'package:smart_plans/app/models/schedule_model.dart';
 import 'package:smart_plans/core/route/app_route.dart';
 import 'package:smart_plans/core/utils/assets_manager.dart';
 import 'package:smart_plans/core/utils/color_manager.dart';
 import 'package:smart_plans/core/utils/styles_manager.dart';
 import 'package:smart_plans/core/utils/values_manager.dart';
+
+import '../../core/utils/app_constant.dart';
+import '../controller/utils/firebase.dart';
+import '../widgets/constans.dart';
+import '../widgets/empty_plants_widget.dart';
+import '../widgets/empty_schedules_widget.dart';
 
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({super.key});
@@ -15,6 +26,18 @@ class ScheduleScreen extends StatefulWidget {
 }
 
 class _ScheduleScreenState extends State<ScheduleScreen> {
+  var getSchedulesReal;
+  late ScheduleController scheduleController;
+  getSchedulesFun()  {
+    getSchedulesReal  = FirebaseFun.database.child(AppConstants.collectionSchedule).onValue;
+    return getSchedulesReal;
+  }
+  @override
+  void initState() {
+    scheduleController=ScheduleController(context: context);
+    getSchedulesFun();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,17 +50,48 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       appBar: AppBar(
         title: Text('All Schedule'),
       ),
-      body: ListView.builder(
-        itemBuilder: (context, index) => ScheduleWidget(),
-        itemCount: 3,
-      ),
+      body:
+      StreamBuilder<DatabaseEvent>(
+        stream: getSchedulesReal,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Const.SHOWLOADINGINDECATOR();
+          } else{ if (snapshot.connectionState == ConnectionState.active) {
+            List<ScheduleModel> schedules=[];
+            if (snapshot.hasData) {
+              Const.SHOWLOADINGINDECATOR();
+              if ((snapshot.data?.snapshot.children.length??0)>0) {
+                //schedules= ScheduleModels.fromJson(snapshot.data!.snapshot.children.toList()).listScheduleModel;
+              }
+            }
+            return
+
+              ChangeNotifierProvider<ScheduleModelProvider>.value(
+                  value: Provider.of<ScheduleModelProvider>(context),
+                  child: Consumer<ScheduleModelProvider>(
+                      builder: (context, planetModelProvider, child) =>
+                      schedules.isNotEmpty?
+
+                      ListView.builder(
+                        itemBuilder: (context, index) => ScheduleWidget(scheduleModel:schedules[index]),
+                        itemCount: schedules.length,
+                      )
+                          : EmptySchedulesWidget()));
+          }
+         else{
+           return Center(child: Text('Error'));
+          }
+          }
+        })
+
+
     );
   }
 }
 
 class ScheduleWidget extends StatelessWidget {
-  const ScheduleWidget({super.key});
-
+  const ScheduleWidget({super.key, required this.scheduleModel});
+  final ScheduleModel scheduleModel;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -79,6 +133,7 @@ class ScheduleWidget extends StatelessWidget {
                 child: ListTile(
                   title: Text(
                     'Day Name',
+                   // scheduleModel.dayName,
                     style: StylesManager.titleBoldTextStyle(
                         size: 20.sp,
                         color: ColorManager.black
@@ -86,6 +141,7 @@ class ScheduleWidget extends StatelessWidget {
                   ),
                   trailing: IconButton(
                     onPressed: (){
+                      ScheduleController(context: context).deleteScheduleModel(context, scheduleModel: scheduleModel);
                       ///Delete Schedule
                     },
                     icon: Icon(Icons.delete,color: ColorManager.error,),
@@ -95,7 +151,8 @@ class ScheduleWidget extends StatelessWidget {
                       top: AppPadding.p10
                     ),
                     child: Text(
-                        '${"16:24"} AM - ${"18:35"}PM',
+                      //'${scheduleModel.timeAm}'+'${(scheduleModel.timePm!=null)?' - ${scheduleModel.timePm}':''}',
+                         '${"16:24"} AM - ${"18:35"}PM',
                     style: StylesManager.titleNormalTextStyle(
                       size: 16.sp,
                       color: ColorManager.primary
