@@ -75,7 +75,7 @@ class PlanetModel {
       url_image: json["url_image"],
       pump_watering: json["pump_watering"]!=0?1:0,
       pump_fertilizing: json["pump_fertilizing"]!=0?1:0,
-      sunlight: MinMaxModel(minimum: null, maximum: null, degree: json["sunlight"]),
+      sunlight: MinMaxModel(minimum: null, maximum: null, degree: json["sunlight"] ),
       soil_ph:  MinMaxModel(minimum: null, maximum: null, degree: json["soil_ph"]),
       soil_moister:  MinMaxModel(minimum: null, maximum: null, degree: json["soil_moister"]),
       temperature: MinMaxModel(minimum: null, maximum: null, degree: json["temperature"]),

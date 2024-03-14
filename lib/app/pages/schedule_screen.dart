@@ -61,7 +61,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             if (snapshot.hasData) {
               Const.SHOWLOADINGINDECATOR();
               if ((snapshot.data?.snapshot.children.length??0)>0) {
-                //schedules= ScheduleModels.fromJson(snapshot.data!.snapshot.children.toList()).listScheduleModel;
+
+                schedules= ScheduleModels.fromJson(snapshot.data!.snapshot.children.toList()).listScheduleModel;
               }
             }
             return
@@ -132,8 +133,9 @@ class ScheduleWidget extends StatelessWidget {
               Expanded(
                 child: ListTile(
                   title: Text(
-                    'Day Name',
-                   // scheduleModel.dayName,
+
+
+                    scheduleModel.dayName??'Day Name',
                     style: StylesManager.titleBoldTextStyle(
                         size: 20.sp,
                         color: ColorManager.black
@@ -151,8 +153,8 @@ class ScheduleWidget extends StatelessWidget {
                       top: AppPadding.p10
                     ),
                     child: Text(
-                      //'${scheduleModel.timeAm}'+'${(scheduleModel.timePm!=null)?' - ${scheduleModel.timePm}':''}',
-                         '${"16:24"} AM - ${"18:35"}PM',
+                       // '${"16:24"} AM - ${"18:35"}PM',
+                          '${scheduleModel.timeAm}'+(scheduleModel.timePm!=null?'- ${scheduleModel.timePm}':''),
                     style: StylesManager.titleNormalTextStyle(
                       size: 16.sp,
                       color: ColorManager.primary
