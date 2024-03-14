@@ -24,13 +24,13 @@ class AddScheduleScreen extends StatefulWidget {
 
 class _AddScheduleScreenState extends State<AddScheduleScreen> {
   final List<String> _weeksName = [
-    'Friday',
-    'Monday',
     'Saturday',
+    'Friday',
     'Sunday',
-    'Thursday',
+    'Monday',
     'Tuesday',
     'Wednesday'
+    'Thursday',
   ];
   int _currentIndex = 0;
   final amTimeController = TextEditingController();
