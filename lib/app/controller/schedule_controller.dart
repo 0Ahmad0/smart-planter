@@ -13,6 +13,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_plans/app/controller/provider/notification_provider.dart';
 import 'package:smart_plans/app/controller/provider/schedule_provider.dart';
+import 'package:smart_plans/app/models/dummy/day_dummy.dart';
 import 'package:smart_plans/app/models/notification_model.dart';
 import 'package:smart_plans/core/utils/app_string.dart';
 import '../models/schedule_model.dart';
@@ -44,12 +45,15 @@ class ScheduleController {
     required ScheduleModel scheduleModel
   }) async {
     scheduleModel.id=Timestamp.now().seconds;
+    scheduleModel.dayName??=DaysDummy()[scheduleModel.dayNumber-1];
     Const.loading(context);
     var result;
     result =
     await scheduleModelProvider.addScheduleReal(context, scheduleModel:
     scheduleModel
     );
+    if(scheduleModel.dayName!=null)
+      await scheduleModelProvider.updateDayReal(context, days: {scheduleModel.dayName!:true});
     Navigator.of(context).pop();
     if (result['status']) {
       scheduleModelProvider.notifyListeners();
@@ -66,6 +70,8 @@ class ScheduleController {
     result=await scheduleModelProvider.updateScheduleReal(context, scheduleModel:
     scheduleModel
     );
+    if(scheduleModel.dayName!=null)
+      await scheduleModelProvider.updateDayReal(context, days: {scheduleModel.dayName!:true});
     Get.back();
     Const.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()));
     return result;
@@ -76,7 +82,30 @@ class ScheduleController {
     var result;
 
     result=await scheduleModelProvider.deleteScheduleModelReal(context, scheduleModel: scheduleModel);
+    if(scheduleModel.dayName!=null)
+      await scheduleModelProvider.updateDayReal(context, days: {scheduleModel.dayName!:false});
      if(result['status']);
   }
+
+
+  addAllDayDefault(BuildContext context, ) async {
+   Map<String,bool> days= {};
+   DaysDummy().forEach((element) {days[element]=false; });
+    Const.loading(context);
+    var result;
+    result =
+    await scheduleModelProvider.addDayReal(context,days:days
+    );
+    Navigator.of(context).pop();
+    if (result['status']) {
+      scheduleModelProvider.notifyListeners();
+      Get.back();
+    }
+    Const.TOAST(context,
+        textToast: FirebaseFun.findTextToast(result['message'].toString()));
+    return result;
+  }
+
+
 
 }

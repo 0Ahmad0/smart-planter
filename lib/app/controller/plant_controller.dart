@@ -86,13 +86,17 @@ class PlantController {
     Const.loading(context);
     var result;
 
-    if (AppConstants.strawberry == planetModel.name || 1 == planetModel.id)
-      result =
-      await planetModelProvider.addPlanetModelReal(context, planetModel:
-      planetModel
-      );
-    result = result =
-    await planetModelProvider.addPlanetModel(context, planetModel:
+    ///real and fire store
+    // if (AppConstants.strawberry == planetModel.name || 1 == planetModel.id)
+    //   result =
+    //   await planetModelProvider.addPlanetModelReal(context, planetModel:
+    //   planetModel
+    //   );
+    // result = result =
+    // await planetModelProvider.addPlanetModel(context, planetModel:
+    // planetModel
+    // );
+    result = await planetModelProvider.addPlanetModelReal(context, planetModel:
     planetModel
     );
     Navigator.of(context).pop();
@@ -137,14 +141,18 @@ class PlantController {
   processPlants(BuildContext context,{required List<PlanetModel> plants, bool isGetToProvider=true})  async {
     for(PlanetModel planetModel in plants){
       PlanetModel? oldPlanetModel=getPlantByIdPlantFromList(id: planetModel.id,plants: planetModelProvider.planetModels.planetModels);
-      if(AppConstants.strawberry==planetModel.name||1==planetModel.id){
-           planetModelProvider.updatePlanetModel(context, planetModel:
-          changePlantsFromReal(context, newPlanetModel: planetModel, oldPlanetModel: oldPlanetModel)
-          );
-          await planetModelProvider.updatePlanetModelReal(context, planetModel:
-          changePlantsFromReal(context, newPlanetModel: planetModel, oldPlanetModel: oldPlanetModel)
-          );
-      }
+      ///real and fire store
+      // if(AppConstants.strawberry==planetModel.name||1==planetModel.id){
+      //      planetModelProvider.updatePlanetModel(context, planetModel:
+      //     changePlantsFromReal(context, newPlanetModel: planetModel, oldPlanetModel: oldPlanetModel)
+      //     );
+      //     await planetModelProvider.updatePlanetModelReal(context, planetModel:
+      //     changePlantsFromReal(context, newPlanetModel: planetModel, oldPlanetModel: oldPlanetModel)
+      //     );
+      // }
+      //     await planetModelProvider.updatePlanetModelReal(context, planetModel:
+      //     changePlantsFromReal(context, newPlanetModel: planetModel, oldPlanetModel: oldPlanetModel)
+      //     );
 
 
       addNotifyPlantChanged(context,oldPlanetModel,planetModel);
@@ -325,11 +333,15 @@ return plants;
   }
   updatePlanetModel2(BuildContext context,{ required PlanetModel planetModel}) async {
     var result;
-    if(AppConstants.strawberry==planetModel.name||1==planetModel.id)
-      result=await planetModelProvider.updatePlanetModelReal(context, planetModel:
-      planetModel
-      );
-    result=result=await planetModelProvider.updatePlanetModel(context, planetModel:
+    ///real and fire store
+    // if(AppConstants.strawberry==planetModel.name||1==planetModel.id)
+    //   result=await planetModelProvider.updatePlanetModelReal(context, planetModel:
+    //   planetModel
+    //   );
+    // result=result=await planetModelProvider.updatePlanetModel(context, planetModel:
+    // planetModel
+    // );
+    result=await planetModelProvider.updatePlanetModelReal(context, planetModel:
     planetModel
     );
     Const.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()));
@@ -340,11 +352,15 @@ return plants;
     //Const.loading(context);
     String idUser=context.read<ProfileProvider>().user.id;
     var result;
-    if(AppConstants.strawberry==planetModel.name||1==planetModel.id)
-      result=await planetModelProvider.deletePlanetModelReal(context, planetModel:
-      planetModel
-      );
-    result=await planetModelProvider.deletePlanetModel(context, planetModel:
+    ///real and fire store
+    // if(AppConstants.strawberry==planetModel.name||1==planetModel.id)
+    //   result=await planetModelProvider.deletePlanetModelReal(context, planetModel:
+    //   planetModel
+    //   );
+    // result=await planetModelProvider.deletePlanetModel(context, planetModel:
+    // planetModel
+    // );
+    result=await planetModelProvider.deletePlanetModelReal(context, planetModel:
     planetModel
     );
      if(result['status']);

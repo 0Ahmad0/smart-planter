@@ -84,7 +84,7 @@ class AuthController {
   Future<bool> isEmailVerification(BuildContext context) async {
     bool result = await authProvider.isEmailVerification();
 
-    if (!result);
+    if (!result)
      Get.offNamed(AppRoute.verifyEmail);
      return result;
   }

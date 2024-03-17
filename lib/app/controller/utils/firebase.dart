@@ -400,7 +400,7 @@ class FirebaseFun {
 
   static updateScheduleReal({required ScheduleModel scheduleModel}) async {
 
-    final result = await database.child(AppConstants.collectionUser).child('${scheduleModel.id}')
+    final result = await database.child(AppConstants.collectionSchedule)
         .update( scheduleModel.toJson())
         .then(onValueUpdateScheduleModel)
         .catchError(onError)
@@ -409,8 +409,11 @@ class FirebaseFun {
   }
 
   static deleteScheduleReal({required ScheduleModel scheduleModel}) async {
-
-    final result = await database.child(AppConstants.collectionSchedule).child('${scheduleModel.id}')
+    print(scheduleModel.dayNumber+1);
+     database.child(AppConstants.collectionSchedule).child('t${scheduleModel.dayNumber+1}m1').remove();
+     database.child(AppConstants.collectionSchedule).child('t${scheduleModel.dayNumber+1}m2').remove();
+     database.child(AppConstants.collectionSchedule).child('t${scheduleModel.dayNumber+1}h2').remove();
+    final result = await database.child(AppConstants.collectionSchedule).child('t${scheduleModel.dayNumber+1}h1')
         .remove()
         .then(onValueDeleteScheduleModel)
         .catchError(onError)
@@ -422,6 +425,25 @@ class FirebaseFun {
     final result = await database.child(AppConstants.collectionUser)
         .get()
         .then((onValueFetchScheduleModels))
+        .catchError(onError)
+        .timeout(timeOut, onTimeout: onTimeOut);
+    return result;
+  }
+
+  ///Days
+  static addDaysReal({required Map<String,bool> day}) async {
+    final result = await database.child(AppConstants.collectionDays)
+        .update(day)
+        .then(onValueAddScheduleModel)
+        .catchError(onError)
+        .timeout(timeOut, onTimeout: onTimeOut);
+    return result;
+  }
+  static updateDaysReal({required Map<String,bool> days}) async {
+
+    final result = await database.child(AppConstants.collectionDays)
+        .update( days)
+        .then(onValueUpdateScheduleModel)
         .catchError(onError)
         .timeout(timeOut, onTimeout: onTimeOut);
     return result;

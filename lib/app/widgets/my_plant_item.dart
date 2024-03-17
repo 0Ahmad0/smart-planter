@@ -256,7 +256,9 @@ class MyPlantItem extends StatelessWidget {
                                                ///عرض التاريخ
                                                dateUserPicker = DateFormat.yMd().format(picker);
                                                planetModel.age=DateTime.now().difference(picker).inDays;
-                                               planetModel.age=(planetModel.age??0)<0?0:planetModel.age;
+                                               planetModel.age??=0;
+                                               planetModel.age=(planetModel.age!)<0?(-1*planetModel.age!):planetModel.age;
+
                                                PlantController(context: context).updatePlanetModel2(context, planetModel: planetModel);
                                              });
                                            }
@@ -296,10 +298,11 @@ class MyPlantItem extends StatelessWidget {
                                            text: '${planetModel.temperature.degree??planetModel.temperature.minimum??0} c',
                                            image: AssetsManager.thermometerIMG,
                                          ),
+                                         // ToDo hariri  90%  or 90.5%
                                          DetailsPlantWidget(
                                            onTap: null,
                                            active: false,
-                                           text: '${planetModel.sunlight.degree??planetModel.sunlight.minimum??0}',
+                                           text: '${((planetModel.sunlight.degree??planetModel.sunlight.minimum??0)/10).toStringAsFixed(0)} %',
                                            image: AssetsManager.sunIMG,
                                          ),
 

@@ -53,4 +53,19 @@ class ScheduleModelProvider with ChangeNotifier {
     Const.TOAST(context, textToast: FirebaseFun.findTextToast(result['message'].toString()));
     return result;
   }
+
+
+  addDayReal(BuildContext context,
+      {required Map<String,bool> days}) async {
+    var result;
+    result = await FirebaseFun.addDaysReal(day: days);
+    return result;
+  }
+  updateDayReal(BuildContext context,
+      {required Map<String,bool> days}) async {
+    var result;
+
+    result = await FirebaseFun.updateDaysReal(days: days);
+    return result;
+  }
 }

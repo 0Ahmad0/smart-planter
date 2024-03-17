@@ -48,9 +48,9 @@ class SplashController {
           profileProvider.updateUser(user: UserModel.fromJson(result['body']));
 
           ///For verify Email
-          if((await AuthController(context: context).isEmailVerification(context)))
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (ctx) => HomeScreen()));
+          bool isEmailVerification =await AuthController(context: context).isEmailVerification(context);
+          if(isEmailVerification)
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (ctx) => HomeScreen()));
         }
       } else {
         Navigator.pushReplacement(

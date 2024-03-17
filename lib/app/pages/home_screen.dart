@@ -31,7 +31,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var getPlants;
+
   var getPlantsReal;
 
   DateTime selectDate=DateTime.now();
@@ -39,10 +39,8 @@ class _HomeScreenState extends State<HomeScreen> {
   getPlantsFun()  {
     getPlantsReal  = FirebaseFun.database.child(AppConstants.collectionUser).child(context.read<ProfileProvider>().user.id).onValue
        ;
-    getPlants = FirebaseFirestore.instance.collection(AppConstants.collectionPlant)
-        .where('userId',isEqualTo: context.read<ProfileProvider>().user.id)
-        .snapshots();
-    return getPlants;
+
+    return getPlantsReal;
   }
   @override
   void initState() {
@@ -83,8 +81,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           drawer: DrawerWidget(),
           body:
-                  StreamBuilder<QuerySnapshot>(
-                    stream: getPlants,
+          StreamBuilder<DatabaseEvent>(
+                    stream: getPlantsReal,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return Const.SHOWLOADINGINDECATOR();
@@ -94,67 +92,44 @@ class _HomeScreenState extends State<HomeScreen> {
                         } else if (snapshot.hasData) {
                           Const.SHOWLOADINGINDECATOR();
                           List<PlanetModel> plants=[];
-                          if ((snapshot.data?.docs.length??0)>0) {
-                            plants= PlanetModels.fromJson(snapshot.data!.docs).planetModels;
+                          if ((snapshot.data?.snapshot.children.length??0)>0) {
+                            plants= PlanetModels.fromJsonReal(snapshot.data!.snapshot.children).planetModels;
                             plantController.processPlants(context,plants:plants);
-
-                          }else
+                          }
+                        else
                             plantController.planetModelProvider.planetModels.planetModels.clear();
 
+                          return   ChangeNotifierProvider<PlanetModelProvider>.value(
+                              value: Provider.of<PlanetModelProvider>(context),
+                              child: Consumer<PlanetModelProvider>(
+                                  builder: (context, planetModelProvider, child) =>
+                                  plants.isNotEmpty?
 
-                          // if (snapshot.data!.docs!.length > 0) {
-                          //   // plants= PlanetModels.fromJson(snapshot.data!.docs!).planetModels;
-                          //   // plantController.processPlants(context,plants:plants);
-                          // }
-                          return  StreamBuilder<DatabaseEvent>(
-                              stream: getPlantsReal,
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState == ConnectionState.waiting) {
-                                  return Const.SHOWLOADINGINDECATOR();
-                                } else{ if (snapshot.connectionState == ConnectionState.active) {
-                                  if (snapshot.hasData) {
-                                    Const.SHOWLOADINGINDECATOR();
-                                    List<PlanetModel> plantsReal=[];
-                                    if ((snapshot.data?.snapshot.children.length??0)>0) {
-                                      plantsReal= PlanetModels.fromJsonReal(snapshot.data!.snapshot.children).planetModels;
-                                      plantController.processPlants(context,plants:plantsReal,isGetToProvider: false);
-                                    }
-                                  }}
-                                  return
+                                  Center(
+                                    child: CarouselSlider(
+                                      options: CarouselOptions(
+                                        height: getWidth(context),
+                                        viewportFraction: .9,
+                                        initialPage: 0,
+                                        enableInfiniteScroll: false,
+                                        reverse: false,
+                                        autoPlayCurve: Curves.fastOutSlowIn,
+                                        enlargeCenterPage: true,
+                                        enlargeFactor: 0.17,
+                                      ),
+                                      items: plants.map((i) {
+                                        return Builder(
+                                          builder: (BuildContext context) {
 
-                                    ChangeNotifierProvider<PlanetModelProvider>.value(
-                                        value: Provider.of<PlanetModelProvider>(context),
-                                        child: Consumer<PlanetModelProvider>(
-                                            builder: (context, planetModelProvider, child) =>
-                                            plants.isNotEmpty?
-
-                                            Center(
-                                              child: CarouselSlider(
-                                                options: CarouselOptions(
-                                                  height: getWidth(context),
-                                                  viewportFraction: .9,
-                                                  initialPage: 0,
-                                                  enableInfiniteScroll: false,
-                                                  reverse: false,
-                                                  autoPlayCurve: Curves.fastOutSlowIn,
-                                                  enlargeCenterPage: true,
-                                                  enlargeFactor: 0.17,
-                                                ),
-                                                items: plants.map((i) {
-                                                  return Builder(
-                                                    builder: (BuildContext context) {
-
-                                                      return MyPlantItem(planetModel:i ,);
-                                                    },
-                                                  );
-                                                }).toList(),
-                                              ),
-                                              //  ): (listPlant.listTemp.isNotEmpty)
-                                            ): (planetModelProvider.planetModelsApi.planetModels.isNotEmpty)
-                                                ? AddNewPlant()
-                                                : EmptyPlantsWidget()));
-                                 }
-                              });
+                                            return MyPlantItem(planetModel:i ,);
+                                          },
+                                        );
+                                      }).toList(),
+                                    ),
+                                    //  ): (listPlant.listTemp.isNotEmpty)
+                                  ): (planetModelProvider.planetModelsApi.planetModels.isNotEmpty)
+                                      ? AddNewPlant()
+                                      : EmptyPlantsWidget()));;
 
                         } else {
                           return const Text('Empty data');

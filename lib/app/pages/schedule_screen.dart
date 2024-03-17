@@ -154,7 +154,7 @@ class ScheduleWidget extends StatelessWidget {
                     ),
                     child: Text(
                        // '${"16:24"} AM - ${"18:35"}PM',
-                          '${scheduleModel.timeAm}'+(scheduleModel.timePm!=null?'- ${scheduleModel.timePm}':''),
+                          '${scheduleModel.timeAm}'+(scheduleModel.timePm!=null?' - ${scheduleModel.timePm}':''),
                     style: StylesManager.titleNormalTextStyle(
                       size: 16.sp,
                       color: ColorManager.primary

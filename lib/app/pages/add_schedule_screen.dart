@@ -14,6 +14,7 @@ import 'package:smart_plans/core/utils/values_manager.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 import '../controller/schedule_controller.dart';
+import '../models/dummy/day_dummy.dart';
 
 class AddScheduleScreen extends StatefulWidget {
   const AddScheduleScreen({super.key});
@@ -23,15 +24,16 @@ class AddScheduleScreen extends StatefulWidget {
 }
 
 class _AddScheduleScreenState extends State<AddScheduleScreen> {
-  final List<String> _weeksName = [
-    'Friday',
-    'Saturday',
-    'Monday',
-    'Sunday',
-    'Thursday',
-    'Tuesday',
-    'Wednesday'
-  ];
+  final List<String> _weeksName = DaysDummy();
+  // [
+  //   'Friday',
+  //   'Saturday',
+  //   'Monday',
+  //   'Sunday',
+  //   'Thursday',
+  //   'Tuesday',
+  //   'Wednesday'
+  // ];
   int _currentIndex = 0;
   final amTimeController = TextEditingController();
   final pmTimeController = TextEditingController();
@@ -121,7 +123,7 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   TimePickerSpinner(
-                                    is24HourMode: true,
+                                    is24HourMode: false,
                                     normalTextStyle: TextStyle(
                                         fontSize: 20.sp,
                                         color:
@@ -133,6 +135,7 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                                     spacing: 40,
                                     isForce2Digits: true,
                                     onTimeChange: (time) {
+                                      if (time.hour >= 0 && time.hour < 12)
                                       timeSetState(() {
                                         dateTimeAm=time;
                                         amTimeController.text =
@@ -200,7 +203,7 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         TimePickerSpinner(
-                                          is24HourMode: true,
+                                          is24HourMode: false,
                                           normalTextStyle: TextStyle(
                                               fontSize: 20.sp,
                                               color:
@@ -211,7 +214,9 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                                               fontWeight: FontWeight.bold),
                                           spacing: 40,
                                           isForce2Digits: true,
+
                                           onTimeChange: (time) {
+                                            if (time.hour >= 12 && time.hour <= 23)
                                             timeSetState(() {
                                               dateTimePm=time;
                                               pmTimeController.text =
@@ -319,13 +324,10 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
             padding: const EdgeInsets.all(AppPadding.p12),
             child: ButtonApp(
               text: 'Add',
-              onPressed: () async {
-
+              onPressed: () async {;
                 String? hour12 = dateTimePm!=null?DateFormat('h').format(dateTimePm!):null;
 
                 int? pmH=int.tryParse(hour12??'');
-
-
                 int? pmM=dateTimePm?.minute;
                 int? amM=dateTimeAm?.minute;
                 int? amH=dateTimeAm?.hour;

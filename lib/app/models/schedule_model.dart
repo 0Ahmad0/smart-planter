@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:intl/intl.dart';
 
+import 'dummy/day_dummy.dart';
+
 class ScheduleModel {
   int id;
   int dayNumber;
@@ -44,8 +46,8 @@ class ScheduleModel {
   Map<String, dynamic> toJson() {
     return {
     //  'id': id,
-      "t${dayNumber}m1":timeAmH,
-      "t${dayNumber}h1":timeAmM,
+      "t${dayNumber}m1":timeAmM,
+      "t${dayNumber}h1":timeAmH,
       "t${dayNumber}h2":timePmH,
       "t${dayNumber}m2":timePmM,
       'duration': duration,
@@ -75,22 +77,15 @@ class ScheduleModels {
         map[i]=tempDataSp;
     }
     map.forEach((key, value) {
+
       int dayNumber=key-1;
-      int? pmH=value.singleWhere((element) => element.key?.contains('m2')??false).value as int?;
-      int? pmM=value.singleWhere((element) => element.key?.contains('h2')??false).value as int?;
-      int? amH=value.singleWhere((element) => element.key?.contains('h1')??false).value as int?;
-      int? amM=value.singleWhere((element) => element.key?.contains('m1')??false).value as int?;
+      int? pmM=value?.where((element) => element.key?.contains('m2')??false)?.firstOrNull?.value as int?;
+      int? pmH=value?.where((element) => element.key?.contains('h2')??false)?.firstOrNull?.value as int?;
+      int? amH=value?.where((element) => element.key?.contains('h1')??false)?.firstOrNull?.value as int?;
+      int? amM=value?.where((element) => element.key?.contains('m1')??false)?.firstOrNull?.value as int?;
       String? timePm=pmH!=null?'${pmH}:${pmM??0} PM':null;
       String? timeAm=amH!=null?'${amH}:${amM??0} AM':null;
-      String? dayName=[
-        'Friday',
-        'Monday',
-        'Saturday',
-        'Sunday',
-        'Thursday',
-        'Tuesday',
-        'Wednesday'
-      ][dayNumber];
+      String? dayName=DaysDummy()[dayNumber];
       temp.add(ScheduleModel(dayNumber: dayNumber, duration: duration
       ,timePmM: pmM,timePmH: pmH,timeAmM: amM,timeAmH: amH
       ,timePm:timePm,timeAm:timeAm,dayName:dayName));
