@@ -108,14 +108,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Center(
                                     child: CarouselSlider(
                                       options: CarouselOptions(
-                                        height: getWidth(context),
-                                        viewportFraction: .9,
-                                        initialPage: 0,
+                                        scrollDirection: Axis.vertical,
+                                        height: getHeight(context) ,
+                                        viewportFraction: .5,
                                         enableInfiniteScroll: false,
                                         reverse: false,
                                         autoPlayCurve: Curves.fastOutSlowIn,
                                         enlargeCenterPage: true,
-                                        enlargeFactor: 0.17,
+                                        enlargeFactor: 0.15,
                                       ),
                                       items: plants.map((i) {
                                         return Builder(
