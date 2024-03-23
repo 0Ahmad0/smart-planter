@@ -9,6 +9,7 @@ class PlanetModel {
   String? name;
   String? url_image;
   num? age;
+  DateTime? createdAt;
   bool isAdd;
   String? description;
   num? repeat_fertilizing;
@@ -29,8 +30,9 @@ class PlanetModel {
      this.userId,
      this.pump_watering=0,
      this.pump_fertilizing=0,
+     this.createdAt,
     required this.name,
-    required this.age,
+     this.age,
     required this.fertilizer_quantity,
     required this.repeat_fertilizing,
     required this.repeat_watering,
@@ -65,11 +67,19 @@ class PlanetModel {
     );
   }
   factory PlanetModel.fromJsonReal(json) {
+    DateTime createdAt=DateTime.tryParse(json['createdAt'])??DateTime.now();
+    int age=0;
+    age = DateTime.now()
+        .difference(createdAt)
+        .inDays;
+    age =
+    (age!) < 0 ? (-1 * age!) : age;
     return PlanetModel(
       id: json['id'],
       description: json["description"],
       name: json["name"],
-      age: json["age"],
+     age: age,
+      createdAt:createdAt,
       repeat_fertilizing: json["repeat_fertilizing"],
       repeat_watering: json["repeat_watering"],
       url_image: json["url_image"],
@@ -94,6 +104,7 @@ class PlanetModel {
         repeat_fertilizing: 0,
         repeat_watering: 0,
         age: 0,
+        createdAt: DateTime.now(),
         soil_moister: MinMaxModel.init(),
         soil_ph: MinMaxModel.init(),
         sunlight: MinMaxModel.init(),
@@ -130,7 +141,8 @@ class PlanetModel {
     'repeat_watering': repeat_watering,
     'repeat_fertilizing': repeat_fertilizing,
     'name': name,
-    'age': age,
+   // 'age': age,
+    'createdAt':(createdAt??DateTime.now()).toString(),
     'pump_watering': pump_watering,
     'pump_fertilizing': pump_fertilizing,
     'water_quantity': water_quantity.value,

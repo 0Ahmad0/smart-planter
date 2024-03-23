@@ -219,6 +219,8 @@ class MyPlantItem extends StatelessWidget {
                                           borderRadius: BorderRadius.circular(12.0)
                                         ),
                                         child: ListTile(
+                                          //TODO select date or show date
+                                          /// the date is planetModel.createdAt
                                           onTap: () async {
                                             final picker = await showDatePicker(
                                                 context: context,
@@ -229,7 +231,7 @@ class MyPlantItem extends StatelessWidget {
                                                 //في حال الرغبة في وضع التاريخ الحالي هو عمر النبتة الحقيقي
                                                 // DateTime.now().subtract(Duration(days: (planetModel.age??0).toInt()))
                                                 ///تحديد اول تاريخ
-                                                firstDate: DateTime.now()
+                                                firstDate: planetModel.createdAt??DateTime.now()
                                                     .subtract(Duration(
                                                         days:
                                                             (planetModel.age ?? 0)
@@ -249,7 +251,7 @@ class MyPlantItem extends StatelessWidget {
                                                 ///عرض التاريخ
                                                 dateUserPicker = DateFormat.yMd()
                                                     .format(picker);
-
+                                                planetModel.createdAt=picker;
                                                 planetModel.age = DateTime.now()
                                                     .difference(picker)
                                                     .inDays;
