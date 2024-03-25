@@ -1,9 +1,9 @@
-List<String> DaysDummy()=>[
-  'Sunday',
-    'Monday',
-    'Tuesday',
-    'Thursday',
-    'Wednesday',
-    'Friday',
-    'Saturday',
-];
+List<String> DaysDummy() => [
+      'Saturday',
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+    ];
