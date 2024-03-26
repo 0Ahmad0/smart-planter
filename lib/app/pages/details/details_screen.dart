@@ -223,44 +223,44 @@ late PlantController plantController;
             const SizedBox(
               height: AppSize.s20,
             ),
-            Text(
-              arguments['details']['repeat'],
-              style: StylesManager.titleBoldTextStyle(
-                size: 20.sp,
-              ),
-            ),
-            DropdownButtonFormField(
-                value:PlantController(context: context)
-                    .getListRepeat().contains(planetModel.repeat_watering?.toInt())?planetModel.repeat_watering?.toInt():0 ,
-                icon: Icon(
-                  Icons.keyboard_arrow_down,
-                  color: ColorManager.primary,
-                ),
-                decoration: InputDecoration(
-                    filled: true,
-                    fillColor: ColorManager.secondary,
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: AppSize.s12),
-                    border: OutlineInputBorder(),
-                    hintText: 'value'),
-                items: PlantController(context: context)
-                    .getListRepeat()
-                    .map((e) => DropdownMenuItem(
-                          child: Text(
-                            'Every ${convertMinutesToTime(e)}',
-                            style: StylesManager.titleBoldTextStyle(
-                                size: 20.sp, color: ColorManager.primary),
-                          ),
-                          value: e,
-                        ))
-                    .toList(),
-                onChanged: (value) {
-                  planetModel.repeat_watering =value;
-                  plantController.updatePlanetModel2(context, planetModel: planetModel);
-                }),
-            const SizedBox(
-              height: AppSize.s20,
-            ),
+            // Text(
+            //   arguments['details']['repeat'],
+            //   style: StylesManager.titleBoldTextStyle(
+            //     size: 20.sp,
+            //   ),
+            // ),
+            // DropdownButtonFormField(
+            //     value:PlantController(context: context)
+            //         .getListRepeat().contains(planetModel.repeat_watering?.toInt())?planetModel.repeat_watering?.toInt():0 ,
+            //     icon: Icon(
+            //       Icons.keyboard_arrow_down,
+            //       color: ColorManager.primary,
+            //     ),
+            //     decoration: InputDecoration(
+            //         filled: true,
+            //         fillColor: ColorManager.secondary,
+            //         contentPadding:
+            //             EdgeInsets.symmetric(horizontal: AppSize.s12),
+            //         border: OutlineInputBorder(),
+            //         hintText: 'value'),
+            //     items: PlantController(context: context)
+            //         .getListRepeat()
+            //         .map((e) => DropdownMenuItem(
+            //               child: Text(
+            //                 'Every ${convertMinutesToTime(e)}',
+            //                 style: StylesManager.titleBoldTextStyle(
+            //                     size: 20.sp, color: ColorManager.primary),
+            //               ),
+            //               value: e,
+            //             ))
+            //         .toList(),
+            //     onChanged: (value) {
+            //       planetModel.repeat_watering =value;
+            //       plantController.updatePlanetModel2(context, planetModel: planetModel);
+            //     }),
+            // const SizedBox(
+            //   height: AppSize.s20,
+            // ),
             Container(
               decoration: BoxDecoration(
                 color: ColorManager.secondary,
@@ -280,16 +280,16 @@ late PlantController plantController;
               ),
             ),
             const Spacer(),
-            ButtonApp(
-              onPressed: () {
-                PlantController(context: context)
-                    .updatePlanetModel(context, planetModel: planetModel);
-
-              },
-              text: AppString.apply,
-              backgroundColor: ColorManager.secondary,
-              textColor: ColorManager.primary,
-            )
+            // ButtonApp(
+            //   onPressed: () {
+            //     PlantController(context: context)
+            //         .updatePlanetModel(context, planetModel: planetModel);
+            //
+            //   },
+            //   text: AppString.apply,
+            //   backgroundColor: ColorManager.secondary,
+            //   textColor: ColorManager.primary,
+            // )
           ],
         ),
       );})),

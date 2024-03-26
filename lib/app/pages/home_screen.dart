@@ -10,6 +10,7 @@ import 'package:smart_plans/app/controller/plant_controller.dart';
 import 'package:smart_plans/app/controller/service/fcm_controller.dart';
 import 'package:smart_plans/app/controller/utils/firebase.dart';
 import 'package:smart_plans/app/models/dummy/plant_dummy.dart';
+import 'package:smart_plans/core/utils/color_manager.dart';
 import '/app/models/planet_model.dart';
 import '../../core/route/app_route.dart';
 import '../../core/utils/app_constant.dart';
@@ -53,18 +54,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return
         Scaffold(
-          floatingActionButton: FloatingActionButton(
-            onPressed: () async {
-
-              // for(PlanetModel planetModel in PlanetModels.fromJson(plantsDummyJson()).planetModels)
-              //  await  plantController.planetModelProvider.addDefaultPlanet(context, planetModel: planetModel);
-
-               // Get.toNamed(AppRoute.connectionWifiRoute);
-                Get.toNamed(AppRoute.addPlantRoute);
-             // FCMService().showLocalNotification(title: 'title', description: 'description');
-            },
-            child: Icon(Icons.add),
-          ),
+          // floatingActionButton: FloatingActionButton(
+          //   onPressed: () async {
+          //
+          //     // for(PlanetModel planetModel in PlanetModels.fromJson(plantsDummyJson()).planetModels)
+          //     //  await  plantController.planetModelProvider.addDefaultPlanet(context, planetModel: planetModel);
+          //
+          //      // Get.toNamed(AppRoute.connectionWifiRoute);
+          //       Get.toNamed(AppRoute.addPlantRoute);
+          //    // FCMService().showLocalNotification(title: 'title', description: 'description');
+          //   },
+          //   child: Icon(Icons.add),
+          // ),
           appBar: AppBar(
             title: Text(AppString.myPlants),
             leading: Builder(builder: (context) {
@@ -78,6 +79,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               );
             }),
+            actions: [
+              IconButton(onPressed: (){
+                Get.toNamed(AppRoute.addPlantRoute);
+              }, icon: Icon(Icons.add,))
+            ],
           ),
           drawer: DrawerWidget(),
           body:

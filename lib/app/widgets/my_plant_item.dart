@@ -272,43 +272,22 @@ class MyPlantItem extends StatelessWidget {
                                             color: ColorManager.primary,
                                           ),
                                           title: Text(
-                                            dateUserPicker,
+                                            '${DateFormat.yMd().format(planetModel.createdAt ?? DateTime.now())}',
                                             style: TextStyle(
                                                 color: ColorManager.primary),
                                           ),
                                         ),
                                       );
                                     }),
-                                    const SizedBox(
-                                      height: AppSize.s20,
-                                    ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: ColorManager.secondary.withOpacity(.5),
-                                        borderRadius: BorderRadius.circular(12.0)
-                                      ),
-                                      child: ExpansionTile(
-                                        title: Text('Show Information'),children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(AppPadding.p12),
-                                          child: Text(
-                                            planetModel.description ?? '',
-                                            style: TextStyle(
-                                              fontSize: 16.sp,
-                                              height: 1.6,
-                                            ),
-                                          ),
-                                        ),
-                                      ],),
-                                    ),
+
 
                                     DetailsPlantLineWidget(
                                       onTap: null,
                                       active: false,
                                       text:
-                                      '${planetModel.soil_moister.degree ?? planetModel.soil_moister.minimum ?? 0} g',
+                                      '${planetModel.soil_moister.degree ?? planetModel.soil_moister.minimum ?? 0} minute',
                                       image: AssetsManager.seedBagIMG,
-                                       label: 'Mint Fertilizing',
+                                       label: 'Fertilizing',
                                     ),
                                     DetailsPlantLineWidget(
                                       onTap: null,
@@ -316,7 +295,7 @@ class MyPlantItem extends StatelessWidget {
                                       text:
                                       '${planetModel.soil_ph.degree ?? planetModel.soil_ph.minimum ?? 0} inch',
                                       image: AssetsManager.waterDropIMG,
-                                      label: 'Mint Watering',
+                                      label: 'Watering',
                                     ),
                                     DetailsPlantLineWidget(
                                       onTap: null,
@@ -335,7 +314,28 @@ class MyPlantItem extends StatelessWidget {
                                       image: AssetsManager.sunIMG,
                                       label: 'Fully Sunlight',
                                     ),
-
+                                    const SizedBox(
+                                      height: AppSize.s20,
+                                    ),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          color: ColorManager.secondary.withOpacity(.5),
+                                          borderRadius: BorderRadius.circular(12.0)
+                                      ),
+                                      child: ExpansionTile(
+                                        title: Text('Show Info'),children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(AppPadding.p12),
+                                          child: Text(
+                                            planetModel.description ?? '',
+                                            style: TextStyle(
+                                              fontSize: 16.sp,
+                                              height: 1.6,
+                                            ),
+                                          ),
+                                        ),
+                                      ],),
+                                    ),
                                   ],
                                 ),
                               );

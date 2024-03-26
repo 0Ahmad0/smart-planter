@@ -10,7 +10,7 @@ import 'firebase_options.dart';
 Future<void> main() async {
   await WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  FCMService().setupFCM();
+  // FCMService().setupFCM();
   GetStorage.init();
   Provider.debugCheckInvalidValueType = null;
   runApp(SmartPlantsApp());

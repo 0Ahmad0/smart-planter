@@ -9,7 +9,7 @@ import '/app/pages/notificationa_screen.dart';
 import '/app/pages/setting_screen.dart';
 import '/app/pages/verify_email_screen.dart';
 import '../../app/pages/details/details_screen2.dart';
-import '../../app/pages/forget_passord_screen.dart';
+import '../../app/pages/forget_password_screen.dart';
 import '../../app/pages/home_screen.dart';
 import '../../app/pages/signup_screen.dart';
 import '../../app/pages/login_screen.dart';
