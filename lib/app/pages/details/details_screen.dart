@@ -171,7 +171,7 @@ late PlantController plantController;
                 Expanded(
                     child: DetailsContainer(
                         value:
-                            '${planetModel.soil_ph.degree ?? planetModel.soil_ph.minimum ?? 0} inch' //'10',
+                            '${planetModel.soil_moister.degree ?? planetModel.soil_moister.minimum ?? 0} inch' //'10',
                         )),
                 const SizedBox(
                   width: AppSize.s10,
@@ -179,14 +179,14 @@ late PlantController plantController;
                 DetailsButton(
                   icon: Icons.add,
                   onPressed: () {
-                    if (planetModel.soil_ph.maximum == null ||
-                        (planetModel.soil_ph.degree ??
-                                planetModel.soil_ph.minimum ??
+                    if (planetModel.soil_moister.maximum == null ||
+                        (planetModel.soil_moister.degree ??
+                                planetModel.soil_moister.minimum ??
                                 0) <
-                            (planetModel.soil_ph.maximum!))
-                     { planetModel.soil_ph.degree =
-                          (planetModel.soil_ph.degree ??
-                                  planetModel.soil_ph.minimum ??
+                            (planetModel.soil_moister.maximum!))
+                     { planetModel.soil_moister.degree =
+                          (planetModel.soil_moister.degree ??
+                                  planetModel.soil_moister.minimum ??
                                   0) +
                               1;
                      plantController.updatePlanetModel2(context, planetModel: planetModel);
@@ -200,14 +200,14 @@ late PlantController plantController;
                 DetailsButton(
                   icon: Icons.remove,
                   onPressed: () {
-                    if (planetModel.soil_ph.minimum == null ||
-                        (planetModel.soil_ph.degree ??
-                                planetModel.soil_ph.minimum ??
+                    if (planetModel.soil_moister.minimum == null ||
+                        (planetModel.soil_moister.degree ??
+                                planetModel.soil_moister.minimum ??
                                 0) >
-                            (planetModel.soil_ph.minimum!))
-                     { planetModel.soil_ph.degree =
-                          (planetModel.soil_ph.degree ??
-                                  planetModel.soil_ph.minimum ??
+                            (planetModel.soil_moister.minimum!))
+                     { planetModel.soil_moister.degree =
+                          (planetModel.soil_moister.degree ??
+                                  planetModel.soil_moister.minimum ??
                                   0) -
                               1;
                      plantController.updatePlanetModel2(context, planetModel: planetModel);

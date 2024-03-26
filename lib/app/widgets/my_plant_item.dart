@@ -330,6 +330,7 @@ class MyPlantItem extends StatelessWidget {
                                       onTap: null,
                                       active: false,
                                       text:
+
                                       '${((planetModel.sunlight.degree ?? planetModel.sunlight.minimum ?? 0) / 10).toStringAsFixed(0)} %',
                                       image: AssetsManager.sunIMG,
                                       label: 'Fully Sunlight',
