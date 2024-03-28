@@ -86,7 +86,7 @@ class MyPlantItem extends StatelessWidget {
                             'details': {
                               'pump': 'Mineral', //'e.pumb',
                               'quantity': 'Fertilize Quantity',
-                              'soil': 'Ph',
+                              'soil': 'Optimal Ph',
                               'repeat': 'Repeat',
                             }
                           };

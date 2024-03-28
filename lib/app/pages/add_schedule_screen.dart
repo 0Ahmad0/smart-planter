@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:smart_plans/app/models/schedule_model.dart';
 import 'package:smart_plans/app/widgets/button_app.dart';
 import 'package:smart_plans/app/widgets/textfield_app.dart';
+import 'package:smart_plans/core/utils/app_string.dart';
 import 'package:smart_plans/core/utils/assets_manager.dart';
 import 'package:smart_plans/core/utils/color_manager.dart';
 import 'package:smart_plans/core/utils/styles_manager.dart';
@@ -61,7 +62,7 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add New Schedule'),
+        title: Text(AppString.addNewSchedule),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,7 +73,7 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
           Padding(
             padding: const EdgeInsets.all(AppPadding.p12),
             child: Text(
-              'Pick Day : ',
+               AppString.pickDay,
               style: StylesManager.titleBoldTextStyle(
                 size: 24.sp,
               ),
@@ -108,7 +109,7 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
               padding: const EdgeInsets.all(AppPadding.p12),
               child: TextFiledApp(
                 iconDataImage: AssetsManager.clockIMG,
-                hintText: 'Am Time',
+                hintText: AppString.firstTime,
                 onTap: () async {
                   showModalBottomSheet(
                       showDragHandle: true,
@@ -135,7 +136,7 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                                     spacing: 40,
                                     isForce2Digits: true,
                                     onTimeChange: (time) {
-                                      if (time.hour >= 0 && time.hour < 12)
+                                      // if (time.hour >= 0 && time.hour < 12)
                                       timeSetState(() {
                                         dateTimeAm=time;
                                         amTimeController.text =
@@ -188,7 +189,7 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                     padding: const EdgeInsets.all(AppPadding.p12),
                     child: TextFiledApp(
                       iconDataImage: AssetsManager.clockIMG,
-                      hintText: 'Pm Time',
+                      hintText: AppString.secondTime,
                       onTap: () async {
                         showModalBottomSheet(
                             showDragHandle: true,

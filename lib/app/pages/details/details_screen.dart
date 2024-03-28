@@ -52,7 +52,7 @@ late PlantController plantController;
             Container(
               alignment: Alignment.center,
               width: getWidth(context),
-              height: 60.h,
+
               decoration: BoxDecoration(
                   color: ColorManager.secondary,
                   borderRadius: BorderRadius.circular(100.r)),
@@ -108,7 +108,8 @@ late PlantController plantController;
                 Expanded(
                     child: DetailsContainer(
                         value:
-                            '${planetModel.temperature.degree ?? planetModel.temperature.minimum ?? 0} inch' //'10',
+                            '${planetModel.temperature.degree
+                                ?? planetModel.temperature.minimum ?? 0} inch' //'10',
                         )),
                 const SizedBox(
                   width: AppSize.s10,
@@ -171,7 +172,8 @@ late PlantController plantController;
                 Expanded(
                     child: DetailsContainer(
                         value:
-                            '${planetModel.soil_moister.degree ?? planetModel.soil_moister.minimum ?? 0} inch' //'10',
+                            '${planetModel.soil_moister.degree
+                                ?? planetModel.soil_moister.minimum ?? 0} %' //'10',
                         )),
                 const SizedBox(
                   width: AppSize.s10,

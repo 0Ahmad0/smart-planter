@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_plans/core/utils/values_manager.dart';
 import '../../core/utils/app_constant.dart';
 import '../models/notification_model.dart';
 import '/core/route/app_route.dart';
@@ -144,12 +145,22 @@ return StreamBuilder<QuerySnapshot>(
             countUnRead==0?
             SizedBox.shrink()
                 :
-             Badge(
-                backgroundColor: ColorManager.primary,
-                smallSize: 24.sp,
-                largeSize: 30.sp,
-                label: Text('${countUnRead}'),
-            );
+             Container(
+               padding: EdgeInsets.all(2.0),
+               decoration: BoxDecoration(
+                 shape: BoxShape.circle,
+                 color: ColorManager.primary
+               ),
+               child: Badge(
+                  backgroundColor: Colors.transparent,
+                  smallSize: 24.sp,
+                  largeSize: 30.sp,
+                  label: Text('${countUnRead}',style: TextStyle(
+                      color: ColorManager.secondary
+                  ),),
+
+            ),
+             );
         } else {
           return   SizedBox.shrink();
         }

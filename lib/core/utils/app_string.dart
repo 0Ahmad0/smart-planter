@@ -1,5 +1,5 @@
 class AppString {
-  static const appName = "Smart Planter";
+  static const appName = "Igreen";
   static const email = "Email";
   static const emailRecovery = "Email Recovery";
   static const passWord = "Password";
@@ -38,6 +38,10 @@ class AppString {
   static const addFromCamera = 'Add From Camera';
   static const addFromGallery = 'Add From Gallery';
   static const deletePhoto = 'Delete Photo';
+  static const addNewSchedule = 'Add New Schedule';
+  static const pickDay = 'Pick Day :';
+  static const firstTime = 'First Time';
+  static const secondTime = 'Second Time';
 
 
 

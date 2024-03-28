@@ -17,6 +17,7 @@ class AssetsManager {
   static const String sunIMG = '$iconPath/sun.png';
   static const String addNewPlantIMG = '$iconPath/add_plant.png';
   static const String clockIMG = '$iconPath/clock_icon.png';
+  static const String addNewPlantIconIMG = '$iconPath/add_new_plant.png';
 
 
   ///=================<<Json>>=================///

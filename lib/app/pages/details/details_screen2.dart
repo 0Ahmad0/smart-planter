@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import '../../../core/route/app_route.dart';
 import '../../controller/utils/function_helper_view_provider.dart';
 import '/app/models/planet_model.dart';
 import '/app/widgets/button_app.dart';
@@ -47,7 +48,6 @@ class _DetailsScreen2State extends State<DetailsScreen2> {
             Container(
               alignment: Alignment.center,
               width: getWidth(context),
-              height: 60.h,
               decoration: BoxDecoration(
                   color: ColorManager.secondary,
                   borderRadius: BorderRadius.circular(100.r)),
@@ -102,7 +102,7 @@ class _DetailsScreen2State extends State<DetailsScreen2> {
               children: [
                 Expanded(
                     child: DetailsContainer(
-                  value:'${planetModel.sunlight.degree??planetModel.sunlight.minimum??0} g' //'10',
+                  value:'${planetModel.sunlight.degree??planetModel.sunlight.minimum??0} inch' //'10',
                 )),
                 const SizedBox(
                   width: AppSize.s10,
@@ -185,53 +185,73 @@ class _DetailsScreen2State extends State<DetailsScreen2> {
             const SizedBox(
               height: AppSize.s20,
             ),
-            Text(
-              arguments['details']['repeat'],
-              style: StylesManager.titleBoldTextStyle(
-                size: 20.sp,
+            //ToDo :In real Time Database not same water Database
+            Container(
+              decoration: BoxDecoration(
+                  color: ColorManager.secondary,
+                  borderRadius: BorderRadius.circular(8)
+              ),
+              child: ListTile(
+                // contentPadding: EdgeInsets.zero,
+                onTap: (){
+                  Navigator.pushNamed(context, AppRoute.scheduleRoute);
+                },
+                leading: Icon(Icons.date_range,color: ColorManager.primary),
+                title: Text('Show Schedule',style: StylesManager.titleNormalTextStyle(
+                    color: ColorManager.black,
+                    size: 16.sp
+                ),),
+                trailing: Icon(Icons.arrow_forward_ios,color: ColorManager.primary,),
               ),
             ),
-            DropdownButtonFormField(
-              value:
-              PlantController(context: context)
-                  .getListRepeat().contains(planetModel.repeat_fertilizing?.toInt())?planetModel.repeat_fertilizing?.toInt():0 ,
-                icon: Icon(
-                  Icons.keyboard_arrow_down,
-                  color: ColorManager.primary,
-                ),
-                decoration: InputDecoration(
 
-                    filled: true,
-                    fillColor: ColorManager.secondary,
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: AppSize.s12),
-                    border: OutlineInputBorder(),
-                    hintText: 'value'),
-                items: PlantController( context: context).getListRepeat()
-                    .map((e) => DropdownMenuItem(
-                          child: Text(
-                            'Every ${convertMinutesToTime(e)}',
-                            style: StylesManager.titleBoldTextStyle(
-                                size: 20.sp, color: ColorManager.primary),
-                          ),
-                          value: e,
-                        ))
-                    .toList(),
-                onChanged: (value) async {
-                  planetModel.repeat_fertilizing=value;
-
-                   PlantController(context: context).updatePlanetModel2(context, planetModel: planetModel);
-                }),
+            // Text(
+            //   arguments['details']['repeat'],
+            //   style: StylesManager.titleBoldTextStyle(
+            //     size: 20.sp,
+            //   ),
+            // ),
+            // DropdownButtonFormField(
+            //   value:
+            //   PlantController(context: context)
+            //       .getListRepeat().contains(planetModel.repeat_fertilizing?.toInt())?planetModel.repeat_fertilizing?.toInt():0 ,
+            //     icon: Icon(
+            //       Icons.keyboard_arrow_down,
+            //       color: ColorManager.primary,
+            //     ),
+            //     decoration: InputDecoration(
+            //
+            //         filled: true,
+            //         fillColor: ColorManager.secondary,
+            //         contentPadding:
+            //             EdgeInsets.symmetric(horizontal: AppSize.s12),
+            //         border: OutlineInputBorder(),
+            //         hintText: 'value'),
+            //     items: PlantController( context: context).getListRepeat()
+            //         .map((e) => DropdownMenuItem(
+            //               child: Text(
+            //                 'Every ${convertMinutesToTime(e)}',
+            //                 style: StylesManager.titleBoldTextStyle(
+            //                     size: 20.sp, color: ColorManager.primary),
+            //               ),
+            //               value: e,
+            //             ))
+            //         .toList(),
+            //     onChanged: (value) async {
+            //       planetModel.repeat_fertilizing=value;
+            //
+            //        PlantController(context: context).updatePlanetModel2(context, planetModel: planetModel);
+            //     }),
 
             const Spacer(),
-            ButtonApp(
-              onPressed: () async {
-                 PlantController(context: context).updatePlanetModel(context, planetModel: planetModel);
-              },
-              text: AppString.apply,
-              backgroundColor: ColorManager.secondary,
-              textColor: ColorManager.primary,
-            )
+            // ButtonApp(
+            //   onPressed: () async {
+            //      PlantController(context: context).updatePlanetModel(context, planetModel: planetModel);
+            //   },
+            //   text: AppString.apply,
+            //   backgroundColor: ColorManager.secondary,
+            //   textColor: ColorManager.primary,
+            // )
           ],
         ),
       );})),
