@@ -51,6 +51,7 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
       floatingActionButton: Stack(
         children: [
           FloatingActionButton(
+            backgroundColor: ColorManager.white,
             onPressed: () {},
             child: Image.asset(
               AssetsManager.addNewPlantIconIMG,

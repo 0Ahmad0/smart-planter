@@ -24,10 +24,9 @@ class AddNewPlantScreen extends StatefulWidget {
 }
 
 class _AddNewPlantScreenState extends State<AddNewPlantScreen> {
-  late final ImagePicker imagePicker;
-  XFile? _image;
-
   final _formKey = GlobalKey<FormState>();
+  final ImagePicker imagePicker = ImagePicker();
+  XFile? _image;
 
   void _deleteImage() {
     _image = null;
@@ -44,13 +43,6 @@ class _AddNewPlantScreenState extends State<AddNewPlantScreen> {
       setState(() {});
       Get.back();
     }
-  }
-
-
-  @override
-  void initState() {
-    imagePicker = ImagePicker();
-    super.initState();
   }
 
   @override
@@ -93,9 +85,9 @@ class _AddNewPlantScreenState extends State<AddNewPlantScreen> {
                         : InkWell(
                             onTap: () {
                               showModalBottomSheet(
-                                showDragHandle: true,
-                                isDismissible: false,
-                                clipBehavior: Clip.hardEdge,
+                                  showDragHandle: true,
+                                  isDismissible: false,
+                                  clipBehavior: Clip.hardEdge,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.vertical(
                                         top: Radius.circular(14.0)),
@@ -132,7 +124,8 @@ class _AddNewPlantScreenState extends State<AddNewPlantScreen> {
                                   AppString.addNewPlant,
                                   textAlign: TextAlign.center,
                                   style: StylesManager.titleNormalTextStyle(
-                                      color: ColorManager.primary),
+                                    color: ColorManager.primary,
+                                  ),
                                 ),
                               ],
                             ),
@@ -239,47 +232,51 @@ class AddPlantFormWidget extends StatefulWidget {
 }
 
 class _AddPlantFormWidgetState extends State<AddPlantFormWidget> {
-
   ///عرفنا كونترولرات من اجل اخذ القيم من المستخدك
- final nameController = TextEditingController();
- final soilPhController = TextEditingController();
- final fertilizerQuantityController = TextEditingController();
- final repeatFertlizingController = TextEditingController();
- final waterQuantityController = TextEditingController();
- final soilMoisterController = TextEditingController();
- final repeatWateringController = TextEditingController();
- final temperatureController = TextEditingController();
- final sunlightController = TextEditingController();
- final descriptionController = TextEditingController();
- ///هنا جعلنا ال حقل بقبل فقط ارقام اي تظهر لوحة المفاتيح الخاصة بالارقام فقط
- final textInputType = TextInputType.numberWithOptions(decimal: true);
+  final nameController = TextEditingController();
+  final soilPhController = TextEditingController();
+  final fertilizerQuantityController = TextEditingController();
+  final repeatFertlizingController = TextEditingController();
+  final waterQuantityController = TextEditingController();
+  final soilMoisterController = TextEditingController();
+  final repeatWateringController = TextEditingController();
+  final temperatureController = TextEditingController();
+  final sunlightController = TextEditingController();
+  final descriptionController = TextEditingController();
 
- /// هنا اضفنا reguler expretioon
- /// من اجل ان لا نسمح بكتابة غير الارقام في الحقل لانه من الممكن مثلا ان يقوم المستخدم بنسح نص ولصقه في الحقل
- /// فبدون هذه ال regular  سيقبل الحقل وهذا خطأ
- final textInputFormatter = [FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}$'))];
+  ///هنا جعلنا ال حقل بقبل فقط ارقام اي تظهر لوحة المفاتيح الخاصة بالارقام فقط
+  final textInputType = TextInputType.numberWithOptions(decimal: true);
 
-late PlantController plantController;
+  /// هنا اضفنا reguler expretioon
+  /// من اجل ان لا نسمح بكتابة غير الارقام في الحقل لانه من الممكن مثلا ان يقوم المستخدم بنسح نص ولصقه في الحقل
+  /// فبدون هذه ال regular  سيقبل الحقل وهذا خطأ
+  final textInputFormatter = [
+    FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}$'))
+  ];
 
-@override
+  late PlantController plantController;
+
+  @override
   void initState() {
-  plantController=PlantController(context: context);
+    plantController = PlantController(context: context);
     super.initState();
   }
- @override
+
+  @override
   void dispose() {
-   nameController.dispose();
-   soilPhController.dispose();
-   fertilizerQuantityController.dispose();
-   repeatFertlizingController.dispose();
-   waterQuantityController.dispose();
-   soilMoisterController.dispose();
-   repeatWateringController.dispose();
-   temperatureController.dispose();
-   sunlightController.dispose();
-   descriptionController.dispose();
+    nameController.dispose();
+    soilPhController.dispose();
+    fertilizerQuantityController.dispose();
+    repeatFertlizingController.dispose();
+    waterQuantityController.dispose();
+    soilMoisterController.dispose();
+    repeatWateringController.dispose();
+    temperatureController.dispose();
+    sunlightController.dispose();
+    descriptionController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -371,7 +368,6 @@ late PlantController plantController;
               height: AppSize.s20,
             ),
             TextFiledApp(
-
               controller: descriptionController,
               hintText: 'Description',
               minLine: 4,
@@ -383,28 +379,53 @@ late PlantController plantController;
             ButtonApp(
               text: AppString.addNewPlant,
               onPressed: () {
-
-                if (widget._image != null && !widget._formKey.currentState!.validate()) {
-
-                  plantController.addDefaultPlanet(context, planetModel:
-                  PlanetModel(id: 0,
-                      description: descriptionController.value.text,
-                      name: nameController.value.text,
-                      age: 0,
-                      fertilizer_quantity: QuantityModel(value: double.parse(fertilizerQuantityController.value.text).toInt(), type: ''),
-                      repeat_fertilizing:double.parse(repeatFertlizingController.value.text) ,
-                      repeat_watering:double.parse(repeatWateringController.value.text) ,
-                      soil_moister:MinMaxModel(minimum: null, maximum: null, degree: double.parse(soilMoisterController.value.text)) ,
-                      soil_ph:MinMaxModel(minimum: null, maximum: null, degree: double.parse(soilPhController.value.text)) ,
-                      sunlight:MinMaxModel(minimum: null, maximum: null, degree: double.parse(sunlightController.value.text)) ,
-                      temperature:MinMaxModel(minimum: null, maximum: null, degree: double.parse(temperatureController.value.text)) ,
-                      url_image: '',
-                      water_quantity:QuantityModel(value: double.parse(waterQuantityController.value.text).toInt(), type: '') ,
-                      isAdd:false,
-
-                  ),image: widget._image);
+                if (widget._image != null &&
+                    !widget._formKey.currentState!.validate()) {
+                  plantController.addDefaultPlanet(context,
+                      planetModel: PlanetModel(
+                        id: 0,
+                        description: descriptionController.value.text,
+                        name: nameController.value.text,
+                        age: 0,
+                        fertilizer_quantity: QuantityModel(
+                            value: double.parse(
+                                    fertilizerQuantityController.value.text)
+                                .toInt(),
+                            type: ''),
+                        repeat_fertilizing:
+                            double.parse(repeatFertlizingController.value.text),
+                        repeat_watering:
+                            double.parse(repeatWateringController.value.text),
+                        soil_moister: MinMaxModel(
+                            minimum: null,
+                            maximum: null,
+                            degree:
+                                double.parse(soilMoisterController.value.text)),
+                        soil_ph: MinMaxModel(
+                            minimum: null,
+                            maximum: null,
+                            degree: double.parse(soilPhController.value.text)),
+                        sunlight: MinMaxModel(
+                            minimum: null,
+                            maximum: null,
+                            degree:
+                                double.parse(sunlightController.value.text)),
+                        temperature: MinMaxModel(
+                            minimum: null,
+                            maximum: null,
+                            degree:
+                                double.parse(temperatureController.value.text)),
+                        url_image: '',
+                        water_quantity: QuantityModel(
+                            value:
+                                double.parse(waterQuantityController.value.text)
+                                    .toInt(),
+                            type: ''),
+                        isAdd: false,
+                      ),
+                      image: widget._image);
 //send Date
-                //هنا بجب ارسال الداتا
+                  //هنا بجب ارسال الداتا
                 }
               },
             ),

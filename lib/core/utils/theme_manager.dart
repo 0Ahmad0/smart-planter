@@ -27,8 +27,13 @@ class ThemeManager {
             centerTitle: true,
             titleTextStyle: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: ColorManager.black,
+                color: ColorManager.white,
                 fontSize: 24.sp),
+          ),
+          listTileTheme: ListTileThemeData(
+            titleTextStyle: TextStyle(
+              color: ColorManager.white
+            )
           ),
           drawerTheme: DrawerThemeData(backgroundColor: ColorManager.secondary))
       .copyWith(

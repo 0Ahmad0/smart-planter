@@ -143,7 +143,9 @@ class _HomeScreenState extends State<HomeScreen> {
         //   ],
         // ),
         appBar: AppBar(
-          title: Text(AppString.appName),
+          title: Text(AppString.appName,style: TextStyle(
+            color: ColorManager.white
+          ),),
           centerTitle: false,
           leading: Builder(builder: (context) {
             return IconButton(

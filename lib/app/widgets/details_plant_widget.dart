@@ -40,7 +40,10 @@ class DetailsPlantWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(14.r)),
               child: Text(
                 text,
-                style: StylesManager.titleBoldTextStyle(size: 22.sp),
+                style: StylesManager.titleBoldTextStyle(
+                  size: 22.sp,
+                  color: ColorManager.white
+                ),
               )),
           Positioned(
             top: 0.0,
@@ -70,7 +73,6 @@ class DetailsPlantWidget extends StatelessWidget {
   }
 }
 
-
 class DetailsPlantLineWidget extends StatelessWidget {
   const DetailsPlantLineWidget({
     super.key,
@@ -96,22 +98,21 @@ class DetailsPlantLineWidget extends StatelessWidget {
           Container(
               alignment: Alignment.bottomCenter,
               margin: const EdgeInsets.only(
-                top: AppMargin.m30,
-                left: AppMargin.m30
-              ),
+                  top: AppMargin.m30, left: AppMargin.m30),
               padding: const EdgeInsets.only(
-
                 left: AppPadding.p20,
               ),
               decoration: BoxDecoration(
                   color: active ? ColorManager.primary : ColorManager.grey,
                   borderRadius: BorderRadius.circular(14.r)),
               child: ListTile(
-                title: Text(label,style: TextStyle(
-                  color: ColorManager.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18.sp
-                ),),
+                title: Text(
+                  label,
+                  style: TextStyle(
+                      color: ColorManager.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.sp),
+                ),
                 subtitle: Padding(
                   padding: const EdgeInsets.only(top: AppPadding.p8),
                   child: Text(
@@ -119,8 +120,7 @@ class DetailsPlantLineWidget extends StatelessWidget {
                     style: StylesManager.titleBoldTextStyle(size: 18.sp),
                   ),
                 ),
-              )
-          ),
+              )),
           Positioned(
             bottom: 6.0,
             left: 0.0,

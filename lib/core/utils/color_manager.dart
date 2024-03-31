@@ -1,8 +1,22 @@
 import 'package:flutter/material.dart';
 
 class ColorManager{
-  static const primary = Color(0xff2D6A4F);
-  static const secondary = Color(0xffF2E8CF);
+  ///=========> Default Colors
+  // static const primary = Color(0xff2D6A4F); default
+  // static const secondary = Color(0xffF2E8CF); default
+  /// # ==> 0xFF(6 digets) 000000
+  // static const primary = Color(0xff98B8E1); one
+  ///==========>One
+  // static const primary = Color(0xff6377B6); /// Prefer One Color
+  // static const secondary = Color(0xffCDE7DE); /// Prefer One Color
+  ///==========>Two
+  // static const primary = Color(0xff57855E); /// Prefer Two Color
+  // static const secondary = Color(0xffF7E650); /// Prefer Two Color
+  ///==========>Three
+  static const primary = Color(0xff6D9773); /// Prefer Two Color
+  static const secondary = Color(0xff0C3B2E); /// Prefer Two Color
+  ///
+
 
   ///
   static const textFieldColor = Color(0xffD9D9D9);
@@ -10,6 +24,8 @@ class ColorManager{
   static const facebookButtonColor = Color(0xff4C8ECC);
   static const appBarColor = Color(0xff212A34);
   static const progressColor = Color(0xffAFD056);
+  static const orangeColor = Color(0xffFFBA00);
+  static const brownColor = Color(0xffBB8A52);
 
   ///--- Neutral
   static const black = Color(0xff13181E);

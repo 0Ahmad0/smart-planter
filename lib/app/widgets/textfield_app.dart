@@ -84,20 +84,22 @@ class _TextFiledAppState extends State<TextFiledApp> {
             color: ColorManager.secondary, width: 4),
         enabledBorder: StylesManager.borderTextFiled(),
         focusedBorder: StylesManager.borderTextFiled(width: 4),
-        hintStyle: TextStyle(color: ColorManager.secondary.withOpacity(.75)),
+        hintStyle: TextStyle(
+          color: ColorManager.secondary.withOpacity(.75),
+        ),
         errorStyle: TextStyle(color: ColorManager.secondary),
         errorMaxLines: 2,
-        prefixIcon: (widget.iconData == null&& widget.iconDataImage== null)
+        prefixIcon: (widget.iconData == null && widget.iconDataImage == null)
             ? null
             : widget.iconDataImage != null
                 ? Padding(
-                  padding: const EdgeInsets.all(AppPadding.p8),
-                  child: Image.asset(
+                    padding: const EdgeInsets.all(AppPadding.p8),
+                    child: Image.asset(
                       widget.iconDataImage!,
-          width: 15.sp,
-          height: 15.sp,
+                      width: 15.sp,
+                      height: 15.sp,
                     ),
-                )
+                  )
                 : Icon(
                     widget.iconData,
                     size: 24.sp,

@@ -41,7 +41,7 @@ class _AddPlantItemListState extends State<AddPlantItemList> {
         margin: EdgeInsets.symmetric(vertical: AppSize.s10),
         padding: EdgeInsets.all(AppPadding.p8),
         decoration: BoxDecoration(
-          color: ColorManager.secondary,
+          color: ColorManager.white,
           borderRadius: BorderRadius.circular(14.r),
         ),
         child: Row(
