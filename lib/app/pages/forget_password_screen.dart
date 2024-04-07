@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:smart_plans/app/widgets/gradient_container_widget.dart';
 import '../../core/utils/app_string.dart';
 import '../../core/utils/color_manager.dart';
 import '../../core/utils/styles_manager.dart';
@@ -29,74 +30,77 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(AppString.resetPassword),
-      ),
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(AppPadding.p16),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(AppPadding.p12),
-                  decoration: BoxDecoration(
-                      color: ColorManager.secondary,
-                      borderRadius: BorderRadius.circular(8.r)),
-                  child: ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    title: Icon(Icons.notes_sharp,color: ColorManager.error,),
-                    subtitle: Text(
-                      AppString.emailRecoveryDescription,
-                      textAlign: TextAlign.center,
-                      style: StylesManager.titleNormalTextStyle(
-                        size: 20.sp,
+    return GradientContainerWidget(
+      colors: ColorManager.gradientColors,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(AppString.resetPassword),
+        ),
+        body: SingleChildScrollView(
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(AppPadding.p16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(AppPadding.p12),
+                    decoration: BoxDecoration(
+                        color: ColorManager.secondary,
+                        borderRadius: BorderRadius.circular(8.r)),
+                    child: ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: Icon(Icons.notes_sharp,color: ColorManager.error,),
+                      subtitle: Text(
+                        AppString.emailRecoveryDescription,
+                        textAlign: TextAlign.center,
+                        style: StylesManager.titleNormalTextStyle(
+                          size: 20.sp,
 
-                        color: ColorManager.black
-                      )?.copyWith(
-                        height: 1.8,
+                          color: ColorManager.black
+                        )?.copyWith(
+                          height: 1.8,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: AppSize.s30,
-                ),
-                Form(
-                  key: _formKey,
-                  child: TextFiledApp(
-                    validator: (value){
-                      if(!value!.isEmail){
-                        return 'error';
-                      }else{
-                        return null;
+                  const SizedBox(
+                    height: AppSize.s30,
+                  ),
+                  Form(
+                    key: _formKey,
+                    child: TextFiledApp(
+                      validator: (value){
+                        if(!value!.isEmail){
+                          return 'error';
+                        }else{
+                          return null;
+                        }
+                      },
+                      controller: emailController,
+                      iconData: Icons.alternate_email,
+                      hintText: AppString.emailRecovery,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: AppSize.s20,
+                  ),
+                  ButtonApp(
+                    text: AppString.send,
+                    textColor: ColorManager.primary,
+                    backgroundColor: ColorManager.secondary,
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        await authController.sendPasswordResetEmail(context, email: emailController.value.text);
+                        print('Send Email ');
+                      } else {
+                        print('Error');
                       }
                     },
-                    controller: emailController,
-                    iconData: Icons.alternate_email,
-                    hintText: AppString.emailRecovery,
                   ),
-                ),
-                const SizedBox(
-                  height: AppSize.s20,
-                ),
-                ButtonApp(
-                  text: AppString.send,
-                  textColor: ColorManager.primary,
-                  backgroundColor: ColorManager.secondary,
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      await authController.sendPasswordResetEmail(context, email: emailController.value.text);
-                      print('Send Email ');
-                    } else {
-                      print('Error');
-                    }
-                  },
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

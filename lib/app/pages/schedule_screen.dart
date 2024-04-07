@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:smart_plans/app/controller/provider/schedule_provider.dart';
 import 'package:smart_plans/app/controller/schedule_controller.dart';
 import 'package:smart_plans/app/models/schedule_model.dart';
+import 'package:smart_plans/app/widgets/gradient_container_widget.dart';
 import 'package:smart_plans/core/route/app_route.dart';
 import 'package:smart_plans/core/utils/assets_manager.dart';
 import 'package:smart_plans/core/utils/color_manager.dart';
@@ -40,52 +41,55 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, AppRoute.addScheduleRoute);
-        },
-        child: Icon(Icons.add),
-      ),
-      appBar: AppBar(
-        title: Text('All Schedule'),
-      ),
-      body:
-      StreamBuilder<DatabaseEvent>(
-        stream: getSchedulesReal,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Const.SHOWLOADINGINDECATOR();
-          } else{ if (snapshot.connectionState == ConnectionState.active) {
-            List<ScheduleModel> schedules=[];
-            if (snapshot.hasData) {
-              Const.SHOWLOADINGINDECATOR();
-              if ((snapshot.data?.snapshot.children.length??0)>0) {
+    return GradientContainerWidget(
+      colors: ColorManager.gradientColors,
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, AppRoute.addScheduleRoute);
+          },
+          child: Icon(Icons.add),
+        ),
+        appBar: AppBar(
+          title: Text('All Schedule'),
+        ),
+        body:
+        StreamBuilder<DatabaseEvent>(
+          stream: getSchedulesReal,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Const.SHOWLOADINGINDECATOR();
+            } else{ if (snapshot.connectionState == ConnectionState.active) {
+              List<ScheduleModel> schedules=[];
+              if (snapshot.hasData) {
+                Const.SHOWLOADINGINDECATOR();
+                if ((snapshot.data?.snapshot.children.length??0)>0) {
 
-                schedules= ScheduleModels.fromJson(snapshot.data!.snapshot.children.toList()).listScheduleModel;
+                  schedules= ScheduleModels.fromJson(snapshot.data!.snapshot.children.toList()).listScheduleModel;
+                }
               }
+              return
+
+                ChangeNotifierProvider<ScheduleModelProvider>.value(
+                    value: Provider.of<ScheduleModelProvider>(context),
+                    child: Consumer<ScheduleModelProvider>(
+                        builder: (context, planetModelProvider, child) =>
+                        schedules.isNotEmpty?
+
+                        ListView.builder(
+                          itemBuilder: (context, index) => ScheduleWidget(scheduleModel:schedules[index]),
+                          itemCount: schedules.length,
+                        )
+                            : EmptySchedulesWidget()));
             }
-            return
-
-              ChangeNotifierProvider<ScheduleModelProvider>.value(
-                  value: Provider.of<ScheduleModelProvider>(context),
-                  child: Consumer<ScheduleModelProvider>(
-                      builder: (context, planetModelProvider, child) =>
-                      schedules.isNotEmpty?
-
-                      ListView.builder(
-                        itemBuilder: (context, index) => ScheduleWidget(scheduleModel:schedules[index]),
-                        itemCount: schedules.length,
-                      )
-                          : EmptySchedulesWidget()));
-          }
-         else{
-           return Center(child: Text('Error'));
-          }
-          }
-        })
+           else{
+             return Center(child: Text('Error'));
+            }
+            }
+          })
 
 
+      ),
     );
   }
 }

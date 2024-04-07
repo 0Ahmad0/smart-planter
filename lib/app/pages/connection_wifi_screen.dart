@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:smart_plans/app/widgets/gradient_container_widget.dart';
 import '/core/utils/app_string.dart';
 import '/core/utils/color_manager.dart';
 import '/core/utils/styles_manager.dart';
@@ -24,32 +25,35 @@ class _ConnectionWifiScreenState extends State<ConnectionWifiScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(AppString.connectionWifi),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(AppPadding.p16),
-        child: Column(
-          children: [
-            WifiConnectingWidget(
-              wifiName: 'Wifi-1',
-              onTap: () {
-                plantController.getPlants(context);
-              },
-            ),
-            const SizedBox(
-              height: AppSize.s10,
-            ),
-            IgnorePointer(
-              ignoring: true,
-              child: WifiConnectingWidget(
-                wifiName: 'Wifi-2',
-                onTap: null,
-                active: false,
+    return GradientContainerWidget(
+      colors: ColorManager.gradientColors,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(AppString.connectionWifi),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(AppPadding.p16),
+          child: Column(
+            children: [
+              WifiConnectingWidget(
+                wifiName: 'Wifi-1',
+                onTap: () {
+                  plantController.getPlants(context);
+                },
               ),
-            ),
-          ],
+              const SizedBox(
+                height: AppSize.s10,
+              ),
+              IgnorePointer(
+                ignoring: true,
+                child: WifiConnectingWidget(
+                  wifiName: 'Wifi-2',
+                  onTap: null,
+                  active: false,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

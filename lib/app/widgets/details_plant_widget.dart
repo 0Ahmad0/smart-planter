@@ -36,7 +36,14 @@ class DetailsPlantWidget extends StatelessWidget {
               ),
               padding: const EdgeInsets.all(AppPadding.p8),
               decoration: BoxDecoration(
-                  color: active ? ColorManager.primary : ColorManager.grey,
+
+                boxShadow: [
+                  BoxShadow(
+                    color: ColorManager.black.withOpacity(0.75),
+                    blurRadius: 12.0,
+                  )
+                ],
+                  color: active ? ColorManager.gradientColor2 : ColorManager.grey,
                   borderRadius: BorderRadius.circular(14.r)),
               child: Text(
                 text,
@@ -55,9 +62,9 @@ class DetailsPlantWidget extends StatelessWidget {
               decoration: BoxDecoration(
                   border: Border.all(
                     color: ColorManager.secondary,
-                    width: AppSize.s4,
+                    width: 2.5,
                   ),
-                  color: active ? ColorManager.primary : ColorManager.grey,
+                  color: active ? ColorManager.gradientColor2 : ColorManager.grey,
                   shape: BoxShape.circle),
               child: Padding(
                 padding: const EdgeInsets.all(AppPadding.p10),

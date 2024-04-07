@@ -25,7 +25,7 @@ class StylesManager {
   }
 
   //
-  static borderTextFiled({double width = 1,color = ColorManager.secondary}) => UnderlineInputBorder(
+  static borderTextFiled({double width = 1,color = ColorManager.white}) => UnderlineInputBorder(
         borderSide: BorderSide(
           color: color,
           width: width,

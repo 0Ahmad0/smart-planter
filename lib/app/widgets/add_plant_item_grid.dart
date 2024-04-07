@@ -27,7 +27,7 @@ class AddPlantItemGrid extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(AppPadding.p6),
         decoration: BoxDecoration(
-          color: ColorManager.secondary,
+          color: ColorManager.white,
           borderRadius: BorderRadius.circular(14.r),
         ),
         child: Column(

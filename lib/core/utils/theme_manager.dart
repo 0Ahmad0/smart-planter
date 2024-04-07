@@ -6,7 +6,6 @@ import 'color_manager.dart';
 
 class ThemeManager {
   static ThemeData myTheme = ThemeData(
-          scaffoldBackgroundColor: ColorManager.primary,
           fontFamily: GoogleFonts.montserrat().fontFamily,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           colorScheme: ThemeData().colorScheme.copyWith(
@@ -20,6 +19,7 @@ class ThemeManager {
             foregroundColor: ColorManager.primary,
           ),
           appBarTheme: AppBarTheme(
+            backgroundColor: ColorManager.white,
             iconTheme: IconThemeData(
               color: ColorManager.primary,
             ),
@@ -27,16 +27,16 @@ class ThemeManager {
             centerTitle: true,
             titleTextStyle: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: ColorManager.white,
+                color: ColorManager.primary,
                 fontSize: 24.sp),
           ),
           listTileTheme: ListTileThemeData(
-            titleTextStyle: TextStyle(
-              color: ColorManager.white
-            )
-          ),
+              titleTextStyle: TextStyle(color: ColorManager.white)),
           drawerTheme: DrawerThemeData(backgroundColor: ColorManager.secondary))
       .copyWith(
-    textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
-  );
+          textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
+          scaffoldBackgroundColor: Colors.transparent,
+          colorScheme: ThemeData().colorScheme.copyWith(
+                primary: Colors.white,
+              ));
 }

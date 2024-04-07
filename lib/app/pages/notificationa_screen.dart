@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_plans/app/models/notification_model.dart';
+import 'package:smart_plans/app/widgets/gradient_container_widget.dart';
 import '../../core/utils/app_constant.dart';
 import '../controller/provider/notification_provider.dart';
 import '../controller/provider/profile_provider.dart';
@@ -63,60 +64,63 @@ class _NotificationScreenState extends State<NotificationScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(AppString.notifications),
-      ),
-      body:
-      StreamBuilder<QuerySnapshot>(
-        //prints the messages to the screen0
-          stream: getNotifications,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Const.SHOWLOADINGINDECATOR();
-            } else if (snapshot.connectionState == ConnectionState.active) {
-              if (snapshot.hasError) {
-                return const Text('Error');
-              } else if (snapshot.hasData) {
-                Const.SHOWLOADINGINDECATOR();
-                notificationProvider.notifications.listNotificationModel.clear();
-                if (snapshot.data!.docs!.length > 0) {
-                  notificationProvider.notifications = NotificationModels.fromJson(snapshot.data!.docs!);
+    return GradientContainerWidget(
+      colors: ColorManager.gradientColors,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(AppString.notifications),
+        ),
+        body:
+        StreamBuilder<QuerySnapshot>(
+          //prints the messages to the screen0
+            stream: getNotifications,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Const.SHOWLOADINGINDECATOR();
+              } else if (snapshot.connectionState == ConnectionState.active) {
+                if (snapshot.hasError) {
+                  return const Text('Error');
+                } else if (snapshot.hasData) {
+                  Const.SHOWLOADINGINDECATOR();
+                  notificationProvider.notifications.listNotificationModel.clear();
+                  if (snapshot.data!.docs!.length > 0) {
+                    notificationProvider.notifications = NotificationModels.fromJson(snapshot.data!.docs!);
+                  }
+                  List<NotificationModel> listNotifications=notificationProvider.notifications.listNotificationModel;
+                  return
+                    listNotifications.isEmpty?
+                    Const.emptyWidget(context,text: "No Notification Yet")
+                        :
+                    ListView.builder(
+                        itemCount:listNotifications.length,
+                        itemBuilder: (_, index) {
+                          bool isSameDate = true;
+                          final String dateString = list[0]['time'];
+                          final DateTime date = listNotifications[index].dateTime;//DateTime.parse(dateString);
+                          final item = listNotifications[index];
+                          if (index == 0) {
+                            isSameDate = false;
+                          } else {
+                            //final String prevDateString = list[index - 1]['time'];
+                            final DateTime prevDate = listNotifications[index-1].dateTime; //DateTime.parse(prevDateString);
+                            isSameDate = date.isSameDate(prevDate);
+                          }
+                          if (index == 0 || !(isSameDate)) {
+                            return NotificationWidget(date: date,index: index,notificationModel: item,);
+                          } else {
+                            return NotificationItem(index: index, notificationModel: item,);
+                          }
+                        })
+                  ;
+                } else {
+                  return const Text('Empty data');
                 }
-                List<NotificationModel> listNotifications=notificationProvider.notifications.listNotificationModel;
-                return
-                  listNotifications.isEmpty?
-                  Const.emptyWidget(context,text: "No Notification Yet")
-                      :
-                  ListView.builder(
-                      itemCount:listNotifications.length,
-                      itemBuilder: (_, index) {
-                        bool isSameDate = true;
-                        final String dateString = list[0]['time'];
-                        final DateTime date = listNotifications[index].dateTime;//DateTime.parse(dateString);
-                        final item = listNotifications[index];
-                        if (index == 0) {
-                          isSameDate = false;
-                        } else {
-                          //final String prevDateString = list[index - 1]['time'];
-                          final DateTime prevDate = listNotifications[index-1].dateTime; //DateTime.parse(prevDateString);
-                          isSameDate = date.isSameDate(prevDate);
-                        }
-                        if (index == 0 || !(isSameDate)) {
-                          return NotificationWidget(date: date,index: index,notificationModel: item,);
-                        } else {
-                          return NotificationItem(index: index, notificationModel: item,);
-                        }
-                      })
-                ;
               } else {
-                return const Text('Empty data');
+                return Text('State: ${snapshot.connectionState}');
               }
-            } else {
-              return Text('State: ${snapshot.connectionState}');
-            }
-          })
-      ,
+            })
+        ,
+      ),
     );
   }
 }

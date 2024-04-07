@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_plans/app/models/schedule_model.dart';
 import 'package:smart_plans/app/widgets/button_app.dart';
+import 'package:smart_plans/app/widgets/gradient_container_widget.dart';
 import 'package:smart_plans/app/widgets/textfield_app.dart';
 import 'package:smart_plans/core/utils/app_string.dart';
 import 'package:smart_plans/core/utils/assets_manager.dart';
@@ -60,240 +61,174 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(AppString.addNewSchedule),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(
-            height: AppSize.s10,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(AppPadding.p12),
-            child: Text(
-               AppString.pickDay,
-              style: StylesManager.titleBoldTextStyle(
-                size: 24.sp,
-              ),
+    return GradientContainerWidget(
+      colors: ColorManager.gradientColors,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(AppString.addNewSchedule),
+        ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: AppSize.s10,
             ),
-          ),
-          //ToDo : New Code
-          StatefulBuilder(builder: (context, daySetState) {
-            return SizedBox(
-              height: 80.h,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) => InkWell(
-                        //ToDo : New Code
-                        /// check Day Is Before Selected
-                        onTap:false? null
-                            : () {
-                                daySetState(() {
-                                  _currentIndex = index;
-                                });
-                              },
-                        child: DayWidget(
-                          isSelected: _currentIndex == index,
-                          day: _weeksName[index],
-                        ),
-                      ),
-                  itemCount: _weeksName.length),
-            );
-          }),
-          const Spacer(),
-          Form(
-            key: _formKey,
-            child: Padding(
+            Padding(
               padding: const EdgeInsets.all(AppPadding.p12),
-              child: TextFiledApp(
-                iconDataImage: AssetsManager.clockIMG,
-                hintText: AppString.firstTime,
-                onTap: () async {
-                  showModalBottomSheet(
-                      showDragHandle: true,
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(24))),
-                      context: context,
-                      builder: (_) {
-                        return StatefulBuilder(
-                            builder: (context, timeSetState) {
-                              return Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  TimePickerSpinner(
-                                    is24HourMode: false,
-                                    normalTextStyle: TextStyle(
-                                        fontSize: 20.sp,
-                                        color:
-                                        ColorManager.primary.withOpacity(.75)),
-                                    highlightedTextStyle: TextStyle(
-                                        fontSize: 24.sp,
-                                        color: ColorManager.primary,
-                                        fontWeight: FontWeight.bold),
-                                    spacing: 40,
-                                    isForce2Digits: true,
-                                    onTimeChange: (time) {
-                                      // if (time.hour >= 0 && time.hour < 12)
-                                      timeSetState(() {
-                                        dateTimeAm=time;
-                                        amTimeController.text =
-                                            DateFormat().add_jm().format(time);
-                                      });
-                                    },
-                                  ),
-                                  OutlinedButton(
-                                      style: OutlinedButton.styleFrom(
-                                          minimumSize: Size(double.infinity, 50.0)
-                                      ),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Text(
-                                        "Pick",
-                                        style:
-                                        TextStyle(color: ColorManager.primary),
-                                      )),
-                                ],
-                              );
-                            });
-                      });
-                },
-                readOnly: true,
-                controller: amTimeController,
+              child: Text(
+                 AppString.pickDay,
+                style: StylesManager.titleBoldTextStyle(
+                  size: 24.sp,
+                ),
               ),
             ),
-          ),
-          Theme(
-            data: ThemeManager.myTheme.copyWith(
-              dividerColor: Colors.transparent,
-            ),
-            child: Container(
-              margin: EdgeInsets.all(AppMargin.m12),
-              decoration: BoxDecoration(
-                color: ColorManager.white.withOpacity(.5),
-                borderRadius: BorderRadius.circular(8)
-              ),
-              child: ExpansionTile(
-                title: Text('Show More',style: TextStyle(
-                  color: ColorManager.primary
-                ),),
-                children: [
-
-                  const SizedBox(
-                    height: AppSize.s20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(AppPadding.p12),
-                    child: TextFiledApp(
-                      iconDataImage: AssetsManager.clockIMG,
-                      hintText: AppString.secondTime,
-                      onTap: () async {
-                        showModalBottomSheet(
-                            showDragHandle: true,
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                BorderRadius.vertical(top: Radius.circular(24))),
-                            context: context,
-                            builder: (_) {
-                              return StatefulBuilder(
-                                  builder: (context, timeSetState) {
-                                    return Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        TimePickerSpinner(
-                                          is24HourMode: false,
-                                          normalTextStyle: TextStyle(
-                                              fontSize: 20.sp,
-                                              color:
-                                              ColorManager.primary.withOpacity(.75)),
-                                          highlightedTextStyle: TextStyle(
-                                              fontSize: 24.sp,
-                                              color: ColorManager.primary,
-                                              fontWeight: FontWeight.bold),
-                                          spacing: 40,
-                                          isForce2Digits: true,
-
-                                          onTimeChange: (time) {
-                                            if (time.hour >= 12 && time.hour <= 23)
-                                            timeSetState(() {
-                                              dateTimePm=time;
-                                              pmTimeController.text =
-                                                  DateFormat().add_jm().format(time);
-                                            });
-                                          },
-                                        ),
-                                        OutlinedButton(
-                                            style: OutlinedButton.styleFrom(
-                                                minimumSize: Size(double.infinity, 50.0)
-                                            ),
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: Text(
-                                              "Pick",
-                                              style:
-                                              TextStyle(color: ColorManager.primary),
-                                            )),
-                                      ],
-                                    );
+            //ToDo : New Code
+            StatefulBuilder(builder: (context, daySetState) {
+              return SizedBox(
+                height: 80.h,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) => InkWell(
+                          //ToDo : New Code
+                          /// check Day Is Before Selected
+                          onTap:false? null
+                              : () {
+                                  daySetState(() {
+                                    _currentIndex = index;
                                   });
-                            });
-                      },
-
-                      readOnly: true,
-                      controller: pmTimeController,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: AppSize.s20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(AppPadding.p12),
-                    child: TextFiledApp(
-                      iconDataImage: AssetsManager.clockIMG,
-                      hintText: 'interval Time',
-                      onTap: () async {
-                        showModalBottomSheet(
-                            showDragHandle: true,
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                BorderRadius.vertical(top: Radius.circular(24))),
-                            context: context,
-                            builder: (_) {
-                              return StatefulBuilder(
-                                  builder: (context, timeSetState) {
-                                    return Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        NumberPicker(
-                                          decoration: BoxDecoration(
-                                            color: ColorManager.primary.withOpacity(.2),
-                                            borderRadius: BorderRadius.circular(8.0),
-                                          ),
-                                          textStyle: StylesManager.titleBoldTextStyle(
-                                              size: 20.sp
-                                          ),
-                                          selectedTextStyle: StylesManager.titleBoldTextStyle(
-                                              color: ColorManager.primary,
-                                              size: 24.sp
-                                          ),
-                                          value: _currentValue,
-                                          minValue: 0,
-                                          step: 1,
-                                          infiniteLoop: true,
-                                          maxValue: 60,
-                                          haptics: true,
-                                          onChanged: (value) => timeSetState(() {
-                                            _currentValue = value;
-                                            intervalTimeController.text = value.toString()+ " time";
-                                          }),
+                                },
+                          child: DayWidget(
+                            isSelected: _currentIndex == index,
+                            day: _weeksName[index],
+                          ),
+                        ),
+                    itemCount: _weeksName.length),
+              );
+            }),
+            const Spacer(),
+            Form(
+              key: _formKey,
+              child: Padding(
+                padding: const EdgeInsets.all(AppPadding.p12),
+                child: TextFiledApp(
+                  iconDataImage: AssetsManager.clockIMG,
+                  hintText: AppString.firstTime,
+                  onTap: () async {
+                    showModalBottomSheet(
+                        showDragHandle: true,
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(24))),
+                        context: context,
+                        builder: (_) {
+                          return StatefulBuilder(
+                              builder: (context, timeSetState) {
+                                return Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    TimePickerSpinner(
+                                      is24HourMode: false,
+                                      normalTextStyle: TextStyle(
+                                          fontSize: 20.sp,
+                                          color:
+                                          ColorManager.primary.withOpacity(.75)),
+                                      highlightedTextStyle: TextStyle(
+                                          fontSize: 24.sp,
+                                          color: ColorManager.primary,
+                                          fontWeight: FontWeight.bold),
+                                      spacing: 40,
+                                      isForce2Digits: true,
+                                      onTimeChange: (time) {
+                                        // if (time.hour >= 0 && time.hour < 12)
+                                        timeSetState(() {
+                                          dateTimeAm=time;
+                                          amTimeController.text =
+                                              DateFormat().add_jm().format(time);
+                                        });
+                                      },
+                                    ),
+                                    OutlinedButton(
+                                        style: OutlinedButton.styleFrom(
+                                            minimumSize: Size(double.infinity, 50.0)
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(AppPadding.p8),
-                                          child: OutlinedButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text(
+                                          "Pick",
+                                          style:
+                                          TextStyle(color: ColorManager.primary),
+                                        )),
+                                  ],
+                                );
+                              });
+                        });
+                  },
+                  readOnly: true,
+                  controller: amTimeController,
+                ),
+              ),
+            ),
+            Theme(
+              data: ThemeManager.myTheme.copyWith(
+                dividerColor: Colors.transparent,
+              ),
+              child: Container(
+                margin: EdgeInsets.all(AppMargin.m12),
+                decoration: BoxDecoration(
+                  color: ColorManager.white.withOpacity(.5),
+                  borderRadius: BorderRadius.circular(8)
+                ),
+                child: ExpansionTile(
+                  title: Text('Show More',style: TextStyle(
+                    color: ColorManager.primary
+                  ),),
+                  children: [
+
+                    const SizedBox(
+                      height: AppSize.s20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(AppPadding.p12),
+                      child: TextFiledApp(
+                        iconDataImage: AssetsManager.clockIMG,
+                        hintText: AppString.secondTime,
+                        onTap: () async {
+                          showModalBottomSheet(
+                              showDragHandle: true,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                  BorderRadius.vertical(top: Radius.circular(24))),
+                              context: context,
+                              builder: (_) {
+                                return StatefulBuilder(
+                                    builder: (context, timeSetState) {
+                                      return Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          TimePickerSpinner(
+                                            is24HourMode: false,
+                                            normalTextStyle: TextStyle(
+                                                fontSize: 20.sp,
+                                                color:
+                                                ColorManager.primary.withOpacity(.75)),
+                                            highlightedTextStyle: TextStyle(
+                                                fontSize: 24.sp,
+                                                color: ColorManager.primary,
+                                                fontWeight: FontWeight.bold),
+                                            spacing: 40,
+                                            isForce2Digits: true,
+
+                                            onTimeChange: (time) {
+                                              if (time.hour >= 12 && time.hour <= 23)
+                                              timeSetState(() {
+                                                dateTimePm=time;
+                                                pmTimeController.text =
+                                                    DateFormat().add_jm().format(time);
+                                              });
+                                            },
+                                          ),
+                                          OutlinedButton(
                                               style: OutlinedButton.styleFrom(
                                                   minimumSize: Size(double.infinity, 50.0)
                                               ),
@@ -305,46 +240,115 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                                                 style:
                                                 TextStyle(color: ColorManager.primary),
                                               )),
-                                        )
-                                      ],
-                                    );
-                                  });
-                            });
-                      },
+                                        ],
+                                      );
+                                    });
+                              });
+                        },
 
-                      readOnly: true,
-                      controller: intervalTimeController,
+                        readOnly: true,
+                        controller: pmTimeController,
+                      ),
                     ),
-                  ),
-                ],
+                    const SizedBox(
+                      height: AppSize.s20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(AppPadding.p12),
+                      child: TextFiledApp(
+                        iconDataImage: AssetsManager.clockIMG,
+                        hintText: 'interval Time',
+                        onTap: () async {
+                          showModalBottomSheet(
+                              showDragHandle: true,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                  BorderRadius.vertical(top: Radius.circular(24))),
+                              context: context,
+                              builder: (_) {
+                                return StatefulBuilder(
+                                    builder: (context, timeSetState) {
+                                      return Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          NumberPicker(
+                                            decoration: BoxDecoration(
+                                              color: ColorManager.primary.withOpacity(.2),
+                                              borderRadius: BorderRadius.circular(8.0),
+                                            ),
+                                            textStyle: StylesManager.titleBoldTextStyle(
+                                                size: 20.sp
+                                            ),
+                                            selectedTextStyle: StylesManager.titleBoldTextStyle(
+                                                color: ColorManager.primary,
+                                                size: 24.sp
+                                            ),
+                                            value: _currentValue,
+                                            minValue: 0,
+                                            step: 1,
+                                            infiniteLoop: true,
+                                            maxValue: 60,
+                                            haptics: true,
+                                            onChanged: (value) => timeSetState(() {
+                                              _currentValue = value;
+                                              intervalTimeController.text = value.toString()+ " time";
+                                            }),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(AppPadding.p8),
+                                            child: OutlinedButton(
+                                                style: OutlinedButton.styleFrom(
+                                                    minimumSize: Size(double.infinity, 50.0)
+                                                ),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text(
+                                                  "Pick",
+                                                  style:
+                                                  TextStyle(color: ColorManager.primary),
+                                                )),
+                                          )
+                                        ],
+                                      );
+                                    });
+                              });
+                        },
+
+                        readOnly: true,
+                        controller: intervalTimeController,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          const Spacer(),
-          Padding(
-            padding: const EdgeInsets.all(AppPadding.p12),
-            child: ButtonApp(
-              text: 'Add',
-              onPressed: () async {;
-                String? hour12 = dateTimePm!=null?DateFormat('h').format(dateTimePm!):null;
+            const Spacer(),
+            Padding(
+              padding: const EdgeInsets.all(AppPadding.p12),
+              child: ButtonApp(
+                text: 'Add',
+                onPressed: () async {;
+                  String? hour12 = dateTimePm!=null?DateFormat('h').format(dateTimePm!):null;
 
-                int? pmH=int.tryParse(hour12??'');
-                int? pmM=dateTimePm?.minute;
-                int? amM=dateTimeAm?.minute;
-                int? amH=dateTimeAm?.hour;
-                int dayNumber=_currentIndex+1;
-                // print(ScheduleModel(dayNumber: dayNumber, duration: _currentValue
-                // ,timeAmH: amH,timeAmM: amM,timePmH: pmH,timePmM: pmM).toJson());
-                if (_formKey.currentState!.validate()) {
-                  await scheduleController.addScheduleModel(context, scheduleModel:
-                  ScheduleModel(dayNumber: dayNumber, duration: _currentValue
-                      ,timeAmH: amH,timeAmM: amM,timePmH: pmH,timePmM: pmM));
-                  // Get.back();
-                }
-              },
-            ),
-          )
-        ],
+                  int? pmH=int.tryParse(hour12??'');
+                  int? pmM=dateTimePm?.minute;
+                  int? amM=dateTimeAm?.minute;
+                  int? amH=dateTimeAm?.hour;
+                  int dayNumber=_currentIndex+1;
+                  // print(ScheduleModel(dayNumber: dayNumber, duration: _currentValue
+                  // ,timeAmH: amH,timeAmM: amM,timePmH: pmH,timePmM: pmM).toJson());
+                  if (_formKey.currentState!.validate()) {
+                    await scheduleController.addScheduleModel(context, scheduleModel:
+                    ScheduleModel(dayNumber: dayNumber, duration: _currentValue
+                        ,timeAmH: amH,timeAmM: amM,timePmH: pmH,timePmM: pmM));
+                    // Get.back();
+                  }
+                },
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

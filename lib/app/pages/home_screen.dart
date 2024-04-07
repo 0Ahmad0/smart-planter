@@ -11,6 +11,7 @@ import 'package:smart_plans/app/controller/service/fcm_controller.dart';
 import 'package:smart_plans/app/controller/utils/firebase.dart';
 import 'package:smart_plans/app/models/dummy/plant_dummy.dart';
 import 'package:smart_plans/app/pages/notificationa_screen.dart';
+import 'package:smart_plans/app/widgets/gradient_container_widget.dart';
 import 'package:smart_plans/core/utils/color_manager.dart';
 import '../models/notification_model.dart';
 import '/app/models/planet_model.dart';
@@ -49,10 +50,13 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   var getNotifications;
-  getNotificationsFun()  {
-    String idUser=context.read<ProfileProvider>().user.id;
-    getNotifications = FirebaseFirestore.instance.collection(AppConstants.collectionNotification)
-        .where('idUser',isEqualTo:idUser).snapshots();
+
+  getNotificationsFun() {
+    String idUser = context.read<ProfileProvider>().user.id;
+    getNotifications = FirebaseFirestore.instance
+        .collection(AppConstants.collectionNotification)
+        .where('idUser', isEqualTo: idUser)
+        .snapshots();
     return getNotifications;
   }
 
@@ -64,218 +68,225 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      //   floatingActionButton: FloatingActionButton(
-      //     onPressed: () async {
-      //
-      //       // for(PlanetModel planetModel in PlanetModels.fromJson(plantsDummyJson()).planetModels)
-      //       //  await  plantController.planetModelProvider.addDefaultPlanet(context, planetModel: planetModel);
-      //
-      //        // Get.toNamed(AppRoute.connectionWifiRoute);
-      //         Get.toNamed(AppRoute.addPlantRoute);
-      //      // FCMService().showLocalNotification(title: 'title', description: 'description');
-      //     },
-      //     child: Icon(Icons.add),
-      //   ),
-        // bottomNavigationBar: BottomNavigationBar(
-        //   unselectedItemColor: ColorManager.grey,
-        //   selectedItemColor: ColorManager.primary,
-        //   backgroundColor: ColorManager.secondary,
-        //   items: [
-        //     BottomNavigationBarItem(
-        //       icon: InkWell(
-        //         onTap: (){
-        //           Get.to(()=>NotificationScreen());
-        //         },
-        //         child: Badge(
-        //           child: Icon(Icons.notifications),
-        //           label: StreamBuilder<QuerySnapshot>(
-        //
-        //               stream: getNotifications,
-        //               builder: (context, snapshot) {
-        //                 if (snapshot.connectionState == ConnectionState.waiting) {
-        //                   return   SizedBox.shrink();
-        //                 } else if (snapshot.connectionState == ConnectionState.active) {
-        //                   if (snapshot.hasError) {
-        //                     return   SizedBox.shrink();
-        //                   } else if (snapshot.hasData) {
-        //
-        //                     int countUnRead=0;
-        //                     if (snapshot.data!.docs!.length > 0) {
-        //                       List<NotificationModel> listNotifications = NotificationModels.fromJson(snapshot.data!.docs!).listNotificationModel;
-        //                       for(NotificationModel notificationModel in listNotifications)
-        //                         if(!notificationModel.checkRec)
-        //                           countUnRead++;
-        //
-        //                     }
-        //                     return
-        //                       countUnRead==0?
-        //                       SizedBox.shrink()
-        //                           :
-        //                       Badge(
-        //                         backgroundColor: ColorManager.error,
-        //                         smallSize: 24.sp,
-        //                         largeSize: 30.sp,
-        //                         label: Text('${countUnRead}',style: TextStyle(
-        //                           color: ColorManager.secondary
-        //                         ),),
-        //                       );
-        //                   } else {
-        //                     return   SizedBox.shrink();
-        //                   }
-        //                 } else {
-        //                   return   SizedBox.shrink();
-        //                 }
-        //               }),
-        //         ),
-        //       ),
-        //       label: '',
-        //     ),
-        //
-        //     BottomNavigationBarItem(
-        //       icon: Icon(Icons.add),
-        //       label: '',
-        //     ),
-        //   ],
-        // ),
-        appBar: AppBar(
-          title: Text(AppString.appName,style: TextStyle(
-            color: ColorManager.white
-          ),),
-          centerTitle: false,
-          leading: Builder(builder: (context) {
-            return IconButton(
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-              icon: Icon(
-                Icons.settings_outlined,
-                size: 40.sp,
-              ),
-            );
-          }),
-          actions: [
-            IconButton(onPressed: (){
-              Get.to(()=>NotificationScreen());
-            },
-                icon: Badge(
-              backgroundColor: Colors.transparent,
-              child: Icon(Icons.notifications),
-              label: StreamBuilder<QuerySnapshot>(
+    return GradientContainerWidget(
+      colors: ColorManager.gradientColors,
+      child: Scaffold(
 
-                  stream: getNotifications,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return   SizedBox.shrink();
-                    } else if (snapshot.connectionState == ConnectionState.active) {
-                      if (snapshot.hasError) {
-                        return   SizedBox.shrink();
-                      } else if (snapshot.hasData) {
+          // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          //   floatingActionButton: FloatingActionButton(
+          //     onPressed: () async {
+          //
+          //       // for(PlanetModel planetModel in PlanetModels.fromJson(plantsDummyJson()).planetModels)
+          //       //  await  plantController.planetModelProvider.addDefaultPlanet(context, planetModel: planetModel);
+          //
+          //        // Get.toNamed(AppRoute.connectionWifiRoute);
+          //         Get.toNamed(AppRoute.addPlantRoute);
+          //      // FCMService().showLocalNotification(title: 'title', description: 'description');
+          //     },
+          //     child: Icon(Icons.add),
+          //   ),
+          // bottomNavigationBar: BottomNavigationBar(
+          //   unselectedItemColor: ColorManager.grey,
+          //   selectedItemColor: ColorManager.primary,
+          //   backgroundColor: ColorManager.secondary,
+          //   items: [
+          //     BottomNavigationBarItem(
+          //       icon: InkWell(
+          //         onTap: (){
+          //           Get.to(()=>NotificationScreen());
+          //         },
+          //         child: Badge(
+          //           child: Icon(Icons.notifications),
+          //           label: StreamBuilder<QuerySnapshot>(
+          //
+          //               stream: getNotifications,
+          //               builder: (context, snapshot) {
+          //                 if (snapshot.connectionState == ConnectionState.waiting) {
+          //                   return   SizedBox.shrink();
+          //                 } else if (snapshot.connectionState == ConnectionState.active) {
+          //                   if (snapshot.hasError) {
+          //                     return   SizedBox.shrink();
+          //                   } else if (snapshot.hasData) {
+          //
+          //                     int countUnRead=0;
+          //                     if (snapshot.data!.docs!.length > 0) {
+          //                       List<NotificationModel> listNotifications = NotificationModels.fromJson(snapshot.data!.docs!).listNotificationModel;
+          //                       for(NotificationModel notificationModel in listNotifications)
+          //                         if(!notificationModel.checkRec)
+          //                           countUnRead++;
+          //
+          //                     }
+          //                     return
+          //                       countUnRead==0?
+          //                       SizedBox.shrink()
+          //                           :
+          //                       Badge(
+          //                         backgroundColor: ColorManager.error,
+          //                         smallSize: 24.sp,
+          //                         largeSize: 30.sp,
+          //                         label: Text('${countUnRead}',style: TextStyle(
+          //                           color: ColorManager.secondary
+          //                         ),),
+          //                       );
+          //                   } else {
+          //                     return   SizedBox.shrink();
+          //                   }
+          //                 } else {
+          //                   return   SizedBox.shrink();
+          //                 }
+          //               }),
+          //         ),
+          //       ),
+          //       label: '',
+          //     ),
+          //
+          //     BottomNavigationBarItem(
+          //       icon: Icon(Icons.add),
+          //       label: '',
+          //     ),
+          //   ],
+          // ),
+          appBar: AppBar(
+            title: Text(
+              AppString.appName,
 
-                        int countUnRead=0;
-                        if (snapshot.data!.docs!.length > 0) {
-                          List<NotificationModel> listNotifications = NotificationModels.fromJson(snapshot.data!.docs!).listNotificationModel;
-                          for(NotificationModel notificationModel in listNotifications)
-                            if(!notificationModel.checkRec)
-                              countUnRead++;
-
-                        }
-                        return
-                          countUnRead==0?
-                          SizedBox.shrink()
-                              :
-                          Badge(
-                            backgroundColor: ColorManager.error,
-                            smallSize: 24.sp,
-                            largeSize: 30.sp,
-                            label: Text('${countUnRead}',style: TextStyle(
-                                color: ColorManager.secondary
-                            ),),
-                          );
-                      } else {
-                        return   SizedBox.shrink();
-                      }
-                    } else {
-                      return   SizedBox.shrink();
-                    }
-                  }),
-            )),
-
-            IconButton(
+            ),
+            centerTitle: false,
+            leading: Builder(builder: (context) {
+              return IconButton(
                 onPressed: () {
-                  Get.toNamed(AppRoute.addPlantRoute);
+                  Scaffold.of(context).openDrawer();
                 },
                 icon: Icon(
-                  Icons.add,
-                )),
-          ],
-        ),
-        drawer: DrawerWidget(),
-        body: StreamBuilder<DatabaseEvent>(
-            stream: getPlantsReal,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Const.SHOWLOADINGINDECATOR();
-              } else if (snapshot.connectionState == ConnectionState.active) {
-                if (snapshot.hasError) {
-                  return const Text('Error');
-                } else if (snapshot.hasData) {
-                  Const.SHOWLOADINGINDECATOR();
-                  List<PlanetModel> plants = [];
-                  if ((snapshot.data?.snapshot.children.length ?? 0) > 0) {
-                    plants = PlanetModels.fromJsonReal(
-                            snapshot.data!.snapshot.children)
-                        .planetModels;
-                    plantController.processPlants(context, plants: plants);
-                  } else
-                    plantController
-                        .planetModelProvider.planetModels.planetModels
-                        .clear();
-
-                  return ChangeNotifierProvider<PlanetModelProvider>.value(
-                      value: Provider.of<PlanetModelProvider>(context),
-                      child: Consumer<PlanetModelProvider>(
-                          builder: (context, planetModelProvider, child) =>
-                              plants.isNotEmpty
-                                  ? Center(
-                                      child: CarouselSlider(
-                                        options: CarouselOptions(
-                                          scrollDirection: Axis.vertical,
-                                          height: getHeight(context),
-                                          viewportFraction: .5,
-                                          enableInfiniteScroll: false,
-                                          reverse: false,
-                                          autoPlayCurve: Curves.fastOutSlowIn,
-                                          enlargeCenterPage: true,
-                                          enlargeFactor: 0.15,
-                                        ),
-                                        items: plants.map((i) {
-                                          return Builder(
-                                            builder: (BuildContext context) {
-                                              return MyPlantItem(
-                                                planetModel: i,
-                                              );
-                                            },
-                                          );
-                                        }).toList(),
+                  Icons.settings_outlined,
+                  size: 40.sp,
+                ),
+              );
+            }),
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    Get.to(() => NotificationScreen());
+                  },
+                  icon: Badge(
+                    backgroundColor: Colors.transparent,
+                    child: Icon(Icons.notifications),
+                    label: StreamBuilder<QuerySnapshot>(
+                        stream: getNotifications,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return SizedBox.shrink();
+                          } else if (snapshot.connectionState ==
+                              ConnectionState.active) {
+                            if (snapshot.hasError) {
+                              return SizedBox.shrink();
+                            } else if (snapshot.hasData) {
+                              int countUnRead = 0;
+                              if (snapshot.data!.docs!.length > 0) {
+                                List<NotificationModel> listNotifications =
+                                    NotificationModels.fromJson(
+                                            snapshot.data!.docs!)
+                                        .listNotificationModel;
+                                for (NotificationModel notificationModel
+                                    in listNotifications)
+                                  if (!notificationModel.checkRec)
+                                    countUnRead++;
+                              }
+                              return countUnRead == 0
+                                  ? SizedBox.shrink()
+                                  : Badge(
+                                      backgroundColor: ColorManager.error,
+                                      smallSize: 24.sp,
+                                      largeSize: 30.sp,
+                                      label: Text(
+                                        '${countUnRead}',
+                                        style: TextStyle(
+                                            color: ColorManager.secondary),
                                       ),
-                                      //  ): (listPlant.listTemp.isNotEmpty)
-                                    )
-                                  : (planetModelProvider.planetModelsApi
-                                          .planetModels.isNotEmpty)
-                                      ? AddNewPlant()
-                                      : EmptyPlantsWidget()));
-                  ;
+                                    );
+                            } else {
+                              return SizedBox.shrink();
+                            }
+                          } else {
+                            return SizedBox.shrink();
+                          }
+                        }),
+                  )),
+              IconButton(
+                  onPressed: () {
+                    Get.toNamed(AppRoute.addPlantRoute);
+                  },
+                  icon: Icon(
+                    Icons.add,
+                  )),
+            ],
+          ),
+          drawer: DrawerWidget(),
+          body: StreamBuilder<DatabaseEvent>(
+              stream: getPlantsReal,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Const.SHOWLOADINGINDECATOR();
+                } else if (snapshot.connectionState == ConnectionState.active) {
+                  if (snapshot.hasError) {
+                    return const Text('Error');
+                  } else if (snapshot.hasData) {
+                    Const.SHOWLOADINGINDECATOR();
+                    List<PlanetModel> plants = [];
+                    if ((snapshot.data?.snapshot.children.length ?? 0) > 0) {
+                      plants = PlanetModels.fromJsonReal(
+                              snapshot.data!.snapshot.children)
+                          .planetModels;
+                      plantController.processPlants(context, plants: plants);
+                    } else
+                      plantController
+                          .planetModelProvider.planetModels.planetModels
+                          .clear();
+
+                    return ChangeNotifierProvider<PlanetModelProvider>.value(
+                        value: Provider.of<PlanetModelProvider>(context),
+                        child: Consumer<PlanetModelProvider>(
+                            builder: (context, planetModelProvider, child) =>
+                                plants.isNotEmpty
+                                    ? Center(
+                                        child: CarouselSlider(
+                                          options: CarouselOptions(
+                                            scrollDirection: Axis.vertical,
+                                            height: getHeight(context),
+                                            viewportFraction: .5,
+                                            enableInfiniteScroll: false,
+                                            reverse: false,
+                                            autoPlayCurve: Curves.fastOutSlowIn,
+                                            enlargeCenterPage: true,
+                                            enlargeFactor: 0.15,
+                                          ),
+                                          items: plants.map((i) {
+                                            return Builder(
+                                              builder: (BuildContext context) {
+                                                return MyPlantItem(
+                                                  planetModel: i,
+                                                );
+                                              },
+                                            );
+                                          }).toList(),
+                                        ),
+                                        //  ): (listPlant.listTemp.isNotEmpty)
+                                      )
+                                    : (planetModelProvider.planetModelsApi
+                                            .planetModels.isNotEmpty)
+                                        ? AddNewPlant()
+                                        : EmptyPlantsWidget()));
+                    ;
+                  } else {
+                    return const Text('Empty data');
+                  }
                 } else {
-                  return const Text('Empty data');
+                  return Text('State: ${snapshot.connectionState}');
                 }
-              } else {
-                return Text('State: ${snapshot.connectionState}');
-              }
-            }));
+              })),
+    );
   }
 }

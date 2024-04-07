@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:smart_plans/app/controller/plant_controller.dart';
 import 'package:smart_plans/app/models/planet_model.dart';
 import 'package:smart_plans/app/widgets/button_app.dart';
+import 'package:smart_plans/app/widgets/gradient_container_widget.dart';
 import 'package:smart_plans/app/widgets/textfield_app.dart';
 import 'package:smart_plans/core/helper/sizer_media_query.dart';
 import 'package:smart_plans/core/utils/app_string.dart';
@@ -47,168 +48,175 @@ class _AddNewPlantScreenState extends State<AddNewPlantScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(AppString.addNewPlant),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(AppPadding.p12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Stack(
-                children: [
-                  Container(
-                    alignment: Alignment.center,
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    width: double.infinity,
-                    height: getWidth(context) / 2,
-                    decoration: BoxDecoration(
-                        color: ColorManager.secondary,
-                        boxShadow: [
-                          BoxShadow(
-                              color: ColorManager.black.withOpacity(.5),
-                              blurRadius: AppSize.s8)
-                        ],
-                        borderRadius: BorderRadius.circular(12)),
-                    child: _image != null
-                        ? InkWell(
-                            onTap: () {},
-                            child: Image.file(
-                              File(_image!.path),
-                              fit: BoxFit.cover,
-                              width: double.infinity,
-                              height: getWidth(context) / 2,
-                            ),
-                          )
-                        : InkWell(
-                            onTap: () {
-                              showModalBottomSheet(
-                                  showDragHandle: true,
-                                  isDismissible: false,
-                                  clipBehavior: Clip.hardEdge,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.vertical(
-                                        top: Radius.circular(14.0)),
-                                  ),
-                                  context: context,
-                                  builder: (_) => PickImageBottomSheetWidget(
-                                        cameraTap: () {
-                                          _pickImage(
-                                              source: ImageSource.camera);
-                                        },
-                                        galleryTap: () {
-                                          _pickImage(
-                                              source: ImageSource.gallery);
-                                        },
-                                        deleteTap: () {
-                                          _deleteImage();
-                                        },
-                                      ));
-                            },
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  AssetsManager.addNewPlantIMG,
-                                  width: AppSize.s100,
-                                  height: AppSize.s100,
-                                ),
-                                const SizedBox(
-                                  height: AppSize.s10,
-                                ),
-                                Text(
-                                  AppString.addNewPlant,
-                                  textAlign: TextAlign.center,
-                                  style: StylesManager.titleNormalTextStyle(
-                                    color: ColorManager.primary,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                  ),
-                  Visibility(
-                    visible: _image != null,
-                    child: Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: Container(
-                        padding: EdgeInsets.all(AppPadding.p10),
-                        decoration: BoxDecoration(
-                            color: ColorManager.secondary.withOpacity(.9),
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(12.0),
-                              bottomRight: Radius.circular(14.0),
-                            )),
-                        child: Row(
-                          children: [
-                            CircleAvatar(
-                              backgroundColor: ColorManager.white,
-                              child: IconButton(
-                                onPressed: () {
-                                  _deleteImage();
-                                },
-                                icon: Icon(
-                                  Icons.delete,
-                                  color: ColorManager.error,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: AppSize.s10,
-                            ),
-                            CircleAvatar(
-                              backgroundColor: ColorManager.white,
-                              child: IconButton(
-                                onPressed: () {
-                                  showModalBottomSheet(
-                                      showDragHandle: true,
-                                      isDismissible: false,
-                                      clipBehavior: Clip.hardEdge,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(14.0)),
-                                      ),
-                                      context: context,
-                                      builder: (_) =>
-                                          PickImageBottomSheetWidget(
-                                            cameraTap: () {
-                                              _pickImage(
-                                                  source: ImageSource.camera);
-                                            },
-                                            galleryTap: () {
-                                              _pickImage(
-                                                  source: ImageSource.gallery);
-                                            },
-                                            deleteTap: () {
-                                              _deleteImage();
-                                            },
-                                          ));
-                                },
-                                icon: Icon(
-                                  Icons.edit,
-                                ),
-                              ),
-                            ),
+    return GradientContainerWidget(
+      colors: ColorManager.gradientColors,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(AppString.addNewPlant),
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(AppPadding.p12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Stack(
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      width: double.infinity,
+                      height: getWidth(context) / 2,
+                      decoration: BoxDecoration(
+                          color: ColorManager.secondary,
+                          boxShadow: [
+                            BoxShadow(
+                                color: ColorManager.black.withOpacity(.5),
+                                blurRadius: AppSize.s8)
                           ],
+                          borderRadius: BorderRadius.circular(12)),
+                      child: _image != null
+                          ? InkWell(
+                              onTap: () {},
+                              child: Image.file(
+                                File(_image!.path),
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                height: getWidth(context) / 2,
+                              ),
+                            )
+                          : InkWell(
+                              onTap: () {
+                                showModalBottomSheet(
+                                    showDragHandle: true,
+                                    isDismissible: false,
+                                    clipBehavior: Clip.hardEdge,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(14.0)),
+                                    ),
+                                    context: context,
+                                    builder: (_) =>
+                                        PickImageBottomSheetWidget(
+                                          cameraTap: () {
+                                            _pickImage(
+                                                source: ImageSource.camera);
+                                          },
+                                          galleryTap: () {
+                                            _pickImage(
+                                                source: ImageSource.gallery);
+                                          },
+                                          deleteTap: () {
+                                            _deleteImage();
+                                          },
+                                        ));
+                              },
+                              child: Column(
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.stretch,
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    AssetsManager.addNewPlantIMG,
+                                    width: AppSize.s100,
+                                    height: AppSize.s100,
+                                  ),
+                                  const SizedBox(
+                                    height: AppSize.s10,
+                                  ),
+                                  Text(
+                                    AppString.addNewPlant,
+                                    textAlign: TextAlign.center,
+                                    style: StylesManager.titleNormalTextStyle(
+                                      color: ColorManager.primary,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                    ),
+                    Visibility(
+                      visible: _image != null,
+                      child: Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: Container(
+                          padding: EdgeInsets.all(AppPadding.p10),
+                          decoration: BoxDecoration(
+                              color: ColorManager.secondary.withOpacity(.9),
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(12.0),
+                                bottomRight: Radius.circular(14.0),
+                              )),
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: ColorManager.white,
+                                child: IconButton(
+                                  onPressed: () {
+                                    _deleteImage();
+                                  },
+                                  icon: Icon(
+                                    Icons.delete,
+                                    color: ColorManager.error,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: AppSize.s10,
+                              ),
+                              CircleAvatar(
+                                backgroundColor: ColorManager.white,
+                                child: IconButton(
+                                  onPressed: () {
+                                    showModalBottomSheet(
+                                        showDragHandle: true,
+                                        isDismissible: false,
+                                        clipBehavior: Clip.hardEdge,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.vertical(
+                                              top: Radius.circular(14.0)),
+                                        ),
+                                        context: context,
+                                        builder: (_) =>
+                                            PickImageBottomSheetWidget(
+                                              cameraTap: () {
+                                                _pickImage(
+                                                    source:
+                                                        ImageSource.camera);
+                                              },
+                                              galleryTap: () {
+                                                _pickImage(
+                                                    source:
+                                                        ImageSource.gallery);
+                                              },
+                                              deleteTap: () {
+                                                _deleteImage();
+                                              },
+                                            ));
+                                  },
+                                  icon: Icon(
+                                    Icons.edit,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: AppSize.s10,
-              ),
-              AddPlantFormWidget(
-                formKey: _formKey,
-                image: _image,
-              )
-            ],
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: AppSize.s10,
+                ),
+                AddPlantFormWidget(
+                  formKey: _formKey,
+                  image: _image,
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -379,53 +387,54 @@ class _AddPlantFormWidgetState extends State<AddPlantFormWidget> {
             ButtonApp(
               text: AppString.addNewPlant,
               onPressed: () {
-                if (widget._image != null &&
-                    !widget._formKey.currentState!.validate()) {
-                  plantController.addDefaultPlanet(context,
-                      planetModel: PlanetModel(
-                        id: 0,
-                        description: descriptionController.value.text,
-                        name: nameController.value.text,
-                        age: 0,
-                        fertilizer_quantity: QuantityModel(
-                            value: double.parse(
-                                    fertilizerQuantityController.value.text)
-                                .toInt(),
-                            type: ''),
-                        repeat_fertilizing:
-                            double.parse(repeatFertlizingController.value.text),
-                        repeat_watering:
-                            double.parse(repeatWateringController.value.text),
-                        soil_moister: MinMaxModel(
-                            minimum: null,
-                            maximum: null,
-                            degree:
-                                double.parse(soilMoisterController.value.text)),
-                        soil_ph: MinMaxModel(
-                            minimum: null,
-                            maximum: null,
-                            degree: double.parse(soilPhController.value.text)),
-                        sunlight: MinMaxModel(
-                            minimum: null,
-                            maximum: null,
-                            degree:
-                                double.parse(sunlightController.value.text)),
-                        temperature: MinMaxModel(
-                            minimum: null,
-                            maximum: null,
-                            degree:
-                                double.parse(temperatureController.value.text)),
-                        url_image: '',
-                        water_quantity: QuantityModel(
-                            value:
-                                double.parse(waterQuantityController.value.text)
-                                    .toInt(),
-                            type: ''),
-                        isAdd: false,
-                      ),
-                      image: widget._image);
+                if( widget._formKey.currentState!.validate()){
+                  if (widget._image != null) {
+                    plantController.addDefaultPlanet(context,
+                        planetModel: PlanetModel(
+                          id: 0,
+                          description: descriptionController.value.text,
+                          name: nameController.value.text,
+                          age: 0,
+                          fertilizer_quantity: QuantityModel(
+                              value: double.parse(
+                                  fertilizerQuantityController.value.text)
+                                  .toInt(),
+                              type: ''),
+                          repeat_fertilizing:
+                          double.parse(repeatFertlizingController.value.text),
+                          repeat_watering:
+                          double.parse(repeatWateringController.value.text),
+                          soil_moister: MinMaxModel(
+                              minimum: null,
+                              maximum: null,
+                              degree:
+                              double.parse(soilMoisterController.value.text)),
+                          soil_ph: MinMaxModel(
+                              minimum: null,
+                              maximum: null,
+                              degree: double.parse(soilPhController.value.text)),
+                          sunlight: MinMaxModel(
+                              minimum: null,
+                              maximum: null,
+                              degree:
+                              double.parse(sunlightController.value.text)),
+                          temperature: MinMaxModel(
+                              minimum: null,
+                              maximum: null,
+                              degree:
+                              double.parse(temperatureController.value.text)),
+                          url_image: '',
+                          water_quantity: QuantityModel(
+                              value:
+                              double.parse(waterQuantityController.value.text)
+                                  .toInt(),
+                              type: ''),
+                          isAdd: false,
+                        ),
+                        image: widget._image);
 //send Date
-                  //هنا بجب ارسال الداتا
+                    //هنا بجب ارسال الداتا
+                  }
                 }
               },
             ),

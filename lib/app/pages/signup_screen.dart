@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:smart_plans/app/widgets/gradient_container_widget.dart';
 import '../../core/helper/validator.dart';
 import '/core/utils/app_constant.dart';
 import '../controller/auth_controller.dart';
@@ -48,135 +49,138 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(AppPadding.p16),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(
-                    height: AppSize.s20,
-                  ),
-                  Text.rich(
-                    TextSpan(
-                      children: [
-                        TextSpan(
-                          text: AppString.welcome + ' ',
-                          style: StylesManager.titleBoldTextStyle(
-                            size: 30.sp,
-                          ),
-                        ),
-                        TextSpan(
-                          text: AppString.appName,
-                          style: StylesManager.titleBoldTextStyle(
-                            size: 32.sp,
-                          ),
-                        ),
-                      ],
+    return GradientContainerWidget(
+      colors: ColorManager.gradientColors,
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(AppPadding.p16),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(
+                      height: AppSize.s20,
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(
-                    height: AppSize.s20,
-                  ),
-                  Image.asset(
-                    AssetsManager.logoIMG,
-                    width: getWidth(context) / 2,
-                    height: getWidth(context) / 2,
-                  ),
-                  const SizedBox(
-                    height: AppSize.s40,
-                  ),
-                  TextFiledApp(
-                    validator: (value)=>Validator.validateName(name: nameController.text),
-                    controller: nameController,
-                    iconData: Icons.person_outline,
-                    hintText: AppString.name,
-                  ),
-                  const SizedBox(
-                    height: AppSize.s30,
-                  ),
-                  TextFiledApp(
-                    validator: (value)=>Validator.validateEmail(email: emailController.text),
-                    controller: emailController,
-                    iconData: Icons.alternate_email,
-                    hintText: AppString.email,
-                  ),
-                  const SizedBox(
-                    height: AppSize.s30,
-                  ),
-                  TextFiledApp(
-                    validator: (value)=>Validator.validatePassword(password: passwordController.text),
-                    controller: passwordController,
-                    iconData: Icons.lock_outline,
-                    hintText: AppString.passWord,
-                    suffixIcon: true,
-                    obscureText: true,
-                  ),
-                  const SizedBox(
-                    height: AppSize.s30,
-                  ),
-                  TextFiledApp(
-                    validator: (value)=>Validator.validateConfirmPassword(
-                      confirmPassword: confirmPasswordController.text,
-                      password: passwordController.text
+                    Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: AppString.welcome + ' ',
+                            style: StylesManager.titleBoldTextStyle(
+                              size: 30.sp,
+                            ),
+                          ),
+                          TextSpan(
+                            text: AppString.appName,
+                            style: StylesManager.titleBoldTextStyle(
+                              size: 32.sp,
+                            ),
+                          ),
+                        ],
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    controller: confirmPasswordController,
-                    iconData: Icons.lock_outline,
-                    hintText: AppString.confirmPassword,
-                    suffixIcon: true,
-                    obscureText: true,
-                  ),
-                  const SizedBox(
-                    height: AppSize.s40,
-                  ),
-                  ButtonApp(
-                    text: AppString.signup,
-                    textColor: ColorManager.primary,
-                    backgroundColor: ColorManager.secondary,
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                          authController.signUp(context,
-                              email: emailController.value.text,
-                              password: passwordController.value.text,
-                              typeUser: AppConstants.collectionUser,
-                              name: nameController.value.text);
-                      } else {
-                        print('No');
-                      }
-                    },
-                  ),
-                  const SizedBox(
-                    height: AppSize.s10,
-                  ),
-                  TextButton(
+                    const SizedBox(
+                      height: AppSize.s20,
+                    ),
+                    Image.asset(
+                      AssetsManager.logoIMG,
+                      width: getWidth(context) / 2,
+                      height: getWidth(context) / 2,
+                    ),
+                    const SizedBox(
+                      height: AppSize.s40,
+                    ),
+                    TextFiledApp(
+                      validator: (value)=>Validator.validateName(name: nameController.text),
+                      controller: nameController,
+                      iconData: Icons.person_outline,
+                      hintText: AppString.name,
+                    ),
+                    const SizedBox(
+                      height: AppSize.s30,
+                    ),
+                    TextFiledApp(
+                      validator: (value)=>Validator.validateEmail(email: emailController.text),
+                      controller: emailController,
+                      iconData: Icons.alternate_email,
+                      hintText: AppString.email,
+                    ),
+                    const SizedBox(
+                      height: AppSize.s30,
+                    ),
+                    TextFiledApp(
+                      validator: (value)=>Validator.validatePassword(password: passwordController.text),
+                      controller: passwordController,
+                      iconData: Icons.lock_outline,
+                      hintText: AppString.passWord,
+                      suffixIcon: true,
+                      obscureText: true,
+                    ),
+                    const SizedBox(
+                      height: AppSize.s30,
+                    ),
+                    TextFiledApp(
+                      validator: (value)=>Validator.validateConfirmPassword(
+                        confirmPassword: confirmPasswordController.text,
+                        password: passwordController.text
+                      ),
+                      controller: confirmPasswordController,
+                      iconData: Icons.lock_outline,
+                      hintText: AppString.confirmPassword,
+                      suffixIcon: true,
+                      obscureText: true,
+                    ),
+                    const SizedBox(
+                      height: AppSize.s40,
+                    ),
+                    ButtonApp(
+                      text: AppString.signup,
+                      textColor: ColorManager.primary,
+                      backgroundColor: ColorManager.secondary,
                       onPressed: () {
-                        Get.offNamed(
-                          AppRoute.loginRoute,
-                        );
+                        if (_formKey.currentState!.validate()) {
+                            authController.signUp(context,
+                                email: emailController.value.text,
+                                password: passwordController.value.text,
+                                typeUser: AppConstants.collectionUser,
+                                name: nameController.value.text);
+                        } else {
+                          print('No');
+                        }
                       },
-                      child: Text.rich(TextSpan(children: [
-                        TextSpan(
-                            text: AppString.allReadyHaveAccount,
-                            style: TextStyle(
-                              fontSize: 20.sp,
-                              color: ColorManager.secondary.withOpacity(.75),
-                            )),
-                        TextSpan(
-                            text: AppString.login,
-                            style: TextStyle(
-                              fontSize: 22.sp,
-                              fontWeight: FontWeight.bold,
-                              color: ColorManager.secondary,
-                              decoration: TextDecoration.underline,
-                            ))
-                      ])))
-                ],
+                    ),
+                    const SizedBox(
+                      height: AppSize.s10,
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          Get.offNamed(
+                            AppRoute.loginRoute,
+                          );
+                        },
+                        child: Text.rich(TextSpan(children: [
+                          TextSpan(
+                              text: AppString.allReadyHaveAccount,
+                              style: TextStyle(
+                                fontSize: 20.sp,
+                                color: ColorManager.secondary.withOpacity(.75),
+                              )),
+                          TextSpan(
+                              text: AppString.login,
+                              style: TextStyle(
+                                fontSize: 22.sp,
+                                fontWeight: FontWeight.bold,
+                                color: ColorManager.secondary,
+                                decoration: TextDecoration.underline,
+                              ))
+                        ])))
+                  ],
+                ),
               ),
             ),
           ),

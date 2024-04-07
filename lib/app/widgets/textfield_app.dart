@@ -77,6 +77,7 @@ class _TextFiledAppState extends State<TextFiledApp> {
       controller: widget.controller,
       cursorColor: ColorManager.secondary,
       decoration: InputDecoration(
+        iconColor: ColorManager.white,
         border: StylesManager.borderTextFiled(),
         focusedErrorBorder: StylesManager.borderTextFiled(
             color: ColorManager.secondary, width: 4),
@@ -85,7 +86,7 @@ class _TextFiledAppState extends State<TextFiledApp> {
         enabledBorder: StylesManager.borderTextFiled(),
         focusedBorder: StylesManager.borderTextFiled(width: 4),
         hintStyle: TextStyle(
-          color: ColorManager.secondary.withOpacity(.75),
+          color: ColorManager.white,
         ),
         errorStyle: TextStyle(color: ColorManager.secondary),
         errorMaxLines: 2,
