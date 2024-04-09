@@ -256,7 +256,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           options: CarouselOptions(
                                             scrollDirection: Axis.vertical,
                                             height: getHeight(context),
-                                            viewportFraction: .5,
+                                            viewportFraction: .75,
                                             enableInfiniteScroll: false,
                                             reverse: false,
                                             autoPlayCurve: Curves.fastOutSlowIn,

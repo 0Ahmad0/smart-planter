@@ -23,6 +23,52 @@ class DetailsPlantWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
+      child: Container(
+          constraints: BoxConstraints(minWidth: 100.w, maxWidth: 110.w),
+          alignment: Alignment.bottomCenter,
+          margin: const EdgeInsets.only(
+            top: AppMargin.m30,
+            left: AppMargin.m8,
+            right: AppMargin.m8,
+          ),
+          padding: const EdgeInsets.all(AppPadding.p8),
+          decoration: BoxDecoration(
+
+              color: active ? ColorManager.gradientColor2 : ColorManager.grey,
+              borderRadius: BorderRadius.circular(14.r)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: AppSize.s50,
+                height: AppSize.s50,
+                decoration: BoxDecoration(
+                    color: active ? ColorManager.gradientColor1 : ColorManager.grey,
+                    shape: BoxShape.circle),
+                child: Padding(
+                  padding: const EdgeInsets.all(AppPadding.p10),
+                  child: Image.asset(
+                    image,
+                  ),
+                ),
+              ),
+              const SizedBox(height: AppSize.s10,),
+              Text(
+                text,
+                style: StylesManager.titleBoldTextStyle(
+                  size: 22.sp,
+                  color: ColorManager.white
+                ),
+              ),
+            ],
+          )),
+    );
+  }
+}
+///OLD CODE
+/*
+    return InkWell(
+      onTap: onTap,
       child: Stack(
         children: [
           Container(
@@ -77,8 +123,8 @@ class DetailsPlantWidget extends StatelessWidget {
         ],
       ),
     );
-  }
-}
+
+ */
 
 class DetailsPlantLineWidget extends StatelessWidget {
   const DetailsPlantLineWidget({
