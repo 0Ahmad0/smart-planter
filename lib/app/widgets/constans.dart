@@ -115,8 +115,7 @@ class Const {
     );
   }
 
-  static emptyWidget(context, {text = 'Not Data Yet!'}) =>
-      Center(
+  static emptyWidget(context, {text = 'Not Data Yet!'}) => Center(
         child: SingleChildScrollView(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

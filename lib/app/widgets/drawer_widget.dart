@@ -24,20 +24,25 @@ class DrawerWidget extends StatefulWidget {
 class _DrawerWidgetState extends State<DrawerWidget> {
   var getNotifications;
 
-  getNotificationsFun()  {
-    String idUser=context.read<ProfileProvider>().user.id;
-    getNotifications = FirebaseFirestore.instance.collection(AppConstants.collectionNotification)
-        .where('idUser',isEqualTo:idUser).snapshots();
+  getNotificationsFun() {
+    String idUser = context.read<ProfileProvider>().user.id;
+    getNotifications = FirebaseFirestore.instance
+        .collection(AppConstants.collectionNotification)
+        .where('idUser', isEqualTo: idUser)
+        .snapshots();
     return getNotifications;
   }
+
   @override
   void initState() {
-  getNotificationsFun();
+    getNotificationsFun();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: ColorManager.drawerColor,
       child: Column(
         children: [
           ChangeNotifierProvider<ProfileProvider>.value(
@@ -60,14 +65,14 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                               },
                               icon: Icon(
                                 Icons.logout,
-                                color: ColorManager.secondary,
+                                color: ColorManager.gradientColor1,
                               ))
                         ],
                         currentAccountPicture: CircleAvatar(
-                          backgroundColor: ColorManager.secondary,
+                          backgroundColor: ColorManager.gradientColor1,
                         ),
                         decoration: BoxDecoration(
-                          color: ColorManager.primary,
+                          color: ColorManager.gradientColor2,
                         ),
                       ))),
           // ListTileDrawerItem(
@@ -121,52 +126,47 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     );
   }
 
-Widget  buildCountNotifications(){
-return StreamBuilder<QuerySnapshot>(
-
-    stream: getNotifications,
-    builder: (context, snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
-        return   SizedBox.shrink();
-      } else if (snapshot.connectionState == ConnectionState.active) {
-        if (snapshot.hasError) {
-          return   SizedBox.shrink();
-        } else if (snapshot.hasData) {
-
-       int countUnRead=0;
-          if (snapshot.data!.docs!.length > 0) {
-            List<NotificationModel> listNotifications = NotificationModels.fromJson(snapshot.data!.docs!).listNotificationModel;
-            for(NotificationModel notificationModel in listNotifications)
-              if(!notificationModel.checkRec)
-                countUnRead++;
-
+  Widget buildCountNotifications() {
+    return StreamBuilder<QuerySnapshot>(
+        stream: getNotifications,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return SizedBox.shrink();
+          } else if (snapshot.connectionState == ConnectionState.active) {
+            if (snapshot.hasError) {
+              return SizedBox.shrink();
+            } else if (snapshot.hasData) {
+              int countUnRead = 0;
+              if (snapshot.data!.docs!.length > 0) {
+                List<NotificationModel> listNotifications =
+                    NotificationModels.fromJson(snapshot.data!.docs!)
+                        .listNotificationModel;
+                for (NotificationModel notificationModel in listNotifications)
+                  if (!notificationModel.checkRec) countUnRead++;
+              }
+              return countUnRead == 0
+                  ? SizedBox.shrink()
+                  : Container(
+                      padding: EdgeInsets.all(2.0),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: ColorManager.gradientColor2),
+                      child: Badge(
+                        backgroundColor: Colors.transparent,
+                        smallSize: 24.sp,
+                        largeSize: 30.sp,
+                        label: Text(
+                          '${countUnRead}',
+                          style: TextStyle(color: ColorManager.gradientColor2),
+                        ),
+                      ),
+                    );
+            } else {
+              return SizedBox.shrink();
+            }
+          } else {
+            return SizedBox.shrink();
           }
-          return
-            countUnRead==0?
-            SizedBox.shrink()
-                :
-             Container(
-               padding: EdgeInsets.all(2.0),
-               decoration: BoxDecoration(
-                 shape: BoxShape.circle,
-                 color: ColorManager.primary
-               ),
-               child: Badge(
-                  backgroundColor: Colors.transparent,
-                  smallSize: 24.sp,
-                  largeSize: 30.sp,
-                  label: Text('${countUnRead}',style: TextStyle(
-                      color: ColorManager.secondary
-                  ),),
-
-            ),
-             );
-        } else {
-          return   SizedBox.shrink();
-        }
-      } else {
-        return   SizedBox.shrink();
-      }
-    });
+        });
   }
 }

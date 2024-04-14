@@ -35,7 +35,7 @@ class MyPlantItem extends StatelessWidget {
     return Container(
       clipBehavior: Clip.hardEdge,
       width: getWidth(context),
-      margin: EdgeInsets.symmetric(horizontal: AppMargin.m12),
+      margin: EdgeInsets.symmetric(horizontal: AppMargin.m14),
       decoration: BoxDecoration(
         color: ColorManager.white,
         boxShadow: [
@@ -62,15 +62,15 @@ class MyPlantItem extends StatelessWidget {
                   children: [
                     planetModel.url_image != null
                         ? Image.network(
-                      planetModel.url_image!,
-                      width: getWidth(context),
-                      height: getWidth(context) ,
-                    )
+                            planetModel.url_image!,
+                            width: getWidth(context),
+                            height: getWidth(context),
+                          )
                         : Image.asset(
-                      'assets/images/logo.png',
-                      width: getWidth(context),
-                      height: getWidth(context),
-                    ),
+                            'assets/images/logo.png',
+                            width: getWidth(context),
+                            height: getWidth(context),
+                          ),
                     Positioned(
                       bottom: 0.0,
                       child: Center(
@@ -81,11 +81,14 @@ class MyPlantItem extends StatelessWidget {
                               .map(
                                 (e) => DetailsPlantWidget(
                                   onTap: () {
-                                    context.read<PlanetModelProvider>().planetModel =
-                                        planetModel;
+                                    context
+                                        .read<PlanetModelProvider>()
+                                        .planetModel = planetModel;
                                     print(e.text);
                                     if (e.text == 'Fertilize') {
-                                      context.read<PlanetModelProvider>().arguments = {
+                                      context
+                                          .read<PlanetModelProvider>()
+                                          .arguments = {
                                         'text': e.text,
                                         'details': {
                                           'pump': 'Mineral', //'e.pumb',
@@ -96,11 +99,14 @@ class MyPlantItem extends StatelessWidget {
                                       };
                                       Get.toNamed(
                                         AppRoute.details2Route,
-                                        arguments:
-                                            context.read<PlanetModelProvider>().arguments,
+                                        arguments: context
+                                            .read<PlanetModelProvider>()
+                                            .arguments,
                                       );
                                     } else if (e.text == 'Water') {
-                                      context.read<PlanetModelProvider>().arguments = {
+                                      context
+                                          .read<PlanetModelProvider>()
+                                          .arguments = {
                                         'text': e.text,
                                         'details': {
                                           'pump': 'Water', //'e.pumb',
@@ -111,20 +117,23 @@ class MyPlantItem extends StatelessWidget {
                                       };
                                       Get.toNamed(
                                         AppRoute.detailsRoute,
-                                        arguments:
-                                            context.read<PlanetModelProvider>().arguments,
+                                        arguments: context
+                                            .read<PlanetModelProvider>()
+                                            .arguments,
                                       );
                                     } else {
                                       Get.to(() => GradientContainerWidget(
-                                        colors: ColorManager.gradientColors,
-                                        child: Scaffold(
+                                                colors:
+                                                    ColorManager.gradientColors,
+                                                child: Scaffold(
                                                   appBar: AppBar(),
                                                   body: Center(
-                                                    child: Const.emptyWidget(context,
+                                                    child: Const.emptyWidget(
+                                                        context,
                                                         text: 'No Data'),
                                                   ),
                                                 ),
-                                      )
+                                              )
                                           // AppRoute.monitorDetailsRoute,
                                           // arguments: {'text': e.text,},
                                           );
@@ -142,75 +151,85 @@ class MyPlantItem extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: AppSize.s10,
+                height: AppSize.s0_5,
               ),
               Container(
                 width: double.infinity,
                 margin: EdgeInsets.all(AppMargin.m10),
                 decoration: BoxDecoration(
-                    color: ColorManager.gradientColor1.withOpacity(.75),
+                    color: ColorManager.gradientColor2.withOpacity(.75),
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(
-                        color: ColorManager.gradientColor1, width: 4)),
+                        color: ColorManager.gradientColor2, width: 4)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     HomeScreenListTileWidget(
                       image: AssetsManager.sunIMG,
-                      text: 'Fully Sunlight ( ${((planetModel.sunlight.degree ?? planetModel.sunlight.minimum ?? 0) / 10).toStringAsFixed(0)} ) %',
+                      text:
+                          'Fully Sunlight  ${((planetModel.sunlight.degree ?? planetModel.sunlight.minimum ?? 0) / 10).toStringAsFixed(0)}  %',
                     ),
                     const Divider(
                       height: 0.0,
                     ),
                     HomeScreenListTileWidget(
                       image: AssetsManager.thermometerIMG,
-                      text: 'Temperature ( ${planetModel.temperature.degree ?? planetModel.temperature.minimum ?? 0} ) C°',
+                      text:
+                          'Temperature  ${planetModel.temperature.degree ?? planetModel.temperature.minimum ?? 0}  C°',
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: AppSize.s10,),
+              const SizedBox(
+                height: AppSize.s0_5,
+              ),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: AppMargin.m12),
                 decoration: BoxDecoration(
-                  border: Border.all(color: ColorManager.gradientColor2,width: 2),
-                  borderRadius: BorderRadius.circular(14.0)
-                ),
+                    border: Border.all(
+                        color: ColorManager.gradientColor2, width: 3),
+                    borderRadius: BorderRadius.circular(14.0)),
                 child: LinearPercentIndicator(
                   padding: EdgeInsets.zero,
-                  lineHeight: 40.h,
+                  lineHeight: 30.h,
                   percent: (planetModel.age ?? 0) > 50
                       ? 1
                       : (planetModel.age ?? 0) / 50,
                   curve: Curves.easeInOut,
-                  progressColor:
-                  ColorManager.orangeColor,
-                  barRadius: Radius.circular(12.0),
+                  progressColor: ColorManager.orangeColor,
+                  barRadius: Radius.circular(11.0),
                   animation: true,
                   animateFromLastPercent: true,
                   addAutomaticKeepAlive: true,
                   backgroundColor: ColorManager.white,
                   center: Text(
                     ///تعديل كلمةage
-                    '${AppString.age}'
-                        ' ${planetModel.age ?? 0} / ${(planetModel.age ?? 0) > 50 ? planetModel.age! : 50}',
-                    style:
-                    StylesManager.titleBoldTextStyle(
+                    '${AppString.harvestTime}'
+                    ' ${planetModel.age ?? 0} / ${(planetModel.age ?? 0) > 50 ? planetModel.age! : 50}',
+                    style: StylesManager.titleBoldTextStyle(
                       size: 20.sp,
-                      color: ColorManager.primary,
+                      color: ColorManager.gradientColor2,
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: AppSize.s10,),
+              const SizedBox(
+                height: AppSize.s0_5,
+              ),
               ListTile(
-                leading: Icon(Icons.date_range,color: ColorManager.primary,),
-                title: Text(DateFormat.yMd().format(planetModel.createdAt ?? DateTime.now()),style: TextStyle(
-                  color: ColorManager.primary,
-                  fontWeight: FontWeight.bold,
-                ),),
+                leading: Icon(
+                  Icons.date_range,
+                  color: ColorManager.gradientColor2,
+                ),
+                title: Text(
+                  DateFormat.yMd()
+                      .format(planetModel.createdAt ?? DateTime.now()),
+                  style: TextStyle(
+                    color: ColorManager.gradientColor2,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               )
-
             ],
           ),
           Positioned(
@@ -218,7 +237,7 @@ class MyPlantItem extends StatelessWidget {
             right: 0,
             child: IconButton(
               icon: Icon(
-                Icons.info_outline,
+                Icons.info_outline,//infoooooooooo
                 size: 30.sp,
               ),
               onPressed: () {
@@ -229,7 +248,7 @@ class MyPlantItem extends StatelessWidget {
                         appBar: AppBar(
                           backgroundColor: Colors.transparent,
                           leading: BackButton(
-                            color: ColorManager.secondary,
+                            color: ColorManager.white,
                           ),
                         ),
                         body: SingleChildScrollView(
@@ -242,7 +261,7 @@ class MyPlantItem extends StatelessWidget {
                                     planetModelProvider.planetModel;
 
                                 return Padding(
-                                  padding: const EdgeInsets.all(AppPadding.p16),
+                                  padding: const EdgeInsets.all(AppPadding.p14),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
@@ -263,122 +282,8 @@ class MyPlantItem extends StatelessWidget {
                                                 'assets/images/logo.png'),
                                       ),
                                       const SizedBox(
-                                        height: AppSize.s20,
+                                        height: AppSize.s0_5,
                                       ),
-
-                                      LinearPercentIndicator(
-                                        padding: EdgeInsets.zero,
-                                        lineHeight: 60.h,
-                                        percent: (planetModel.age ?? 0) > 50
-                                            ? 1
-                                            : (planetModel.age ?? 0) / 50,
-                                        curve: Curves.easeInOut,
-                                        progressColor:
-                                            ColorManager.progressColor,
-                                        barRadius: Radius.circular(12.0),
-                                        animation: true,
-                                        animateFromLastPercent: true,
-                                        addAutomaticKeepAlive: true,
-                                        backgroundColor: ColorManager.secondary
-                                            .withOpacity(.7),
-                                        center: Text(
-                                          ///تعديل كلمةage
-                                          '${AppString.harvestTime}'
-                                          ' ${planetModel.age ?? 0} / ${(planetModel.age ?? 0) > 50 ? planetModel.age! : 50}',
-                                          style:
-                                              StylesManager.titleBoldTextStyle(
-                                            size: 20.sp,
-                                            color: ColorManager.primary,
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        height: AppSize.s20,
-                                      ),
-
-                                      ///جديد
-                                      /// تم اضافة التاريخ هنا عندما يضغط المستخدم يقوم باختيار تاريخ ومن ثم يظهر التاريخ بعد الاختيار
-                                      StatefulBuilder(
-                                          builder: (context, dateSetState) {
-                                        return Container(
-                                          decoration: BoxDecoration(
-                                              color: ColorManager.secondary,
-                                              borderRadius:
-                                                  BorderRadius.circular(12.0)),
-                                          child: ListTile(
-                                            //TODO select date or show date
-                                            /// the date is planetModel.createdAt
-                                            onTap: () async {
-                                              final picker =
-                                                  await showDatePicker(
-                                                      context: context,
-
-                                                      ///تحديد الوقت الحالي
-                                                      initialDate:
-                                                          DateTime.now(),
-
-                                                      //في حال الرغبة في وضع التاريخ الحالي هو عمر النبتة الحقيقي
-                                                      // DateTime.now().subtract(Duration(days: (planetModel.age??0).toInt()))
-                                                      ///تحديد اول تاريخ
-                                                      firstDate: planetModel
-                                                              .createdAt ??
-                                                          DateTime.now()
-                                                              .subtract(Duration(
-                                                                  days: (planetModel
-                                                                              .age ??
-                                                                          0)
-                                                                      .toInt())),
-
-                                                      //في حال الرغبة في وضع اول تاريخ قبل 50 يوم
-                                                      // DateTime.now().subtract(Duration(50).toInt()))
-                                                      ///تحديد اخر تاريخ يمكن اختياره
-                                                      lastDate: DateTime(2100)
-
-                                                      //في حال الرغبة في وضع اخر تاريخ هو تاريخ اليوم
-                                                      // DateTime.now()
-                                                      );
-
-                                              if (picker != null) {
-                                                dateSetState(() {
-                                                  ///عرض التاريخ
-                                                  dateUserPicker =
-                                                      DateFormat.yMd()
-                                                          .format(picker);
-                                                  planetModel.createdAt =
-                                                      picker;
-                                                  planetModel.age =
-                                                      DateTime.now()
-                                                          .difference(picker)
-                                                          .inDays;
-                                                  planetModel.age ??= 0;
-                                                  planetModel.age =
-                                                      (planetModel.age!) < 0
-                                                          ? (-1 *
-                                                              planetModel.age!)
-                                                          : planetModel.age;
-
-                                                  PlantController(
-                                                          context: context)
-                                                      .updatePlanetModel2(
-                                                          context,
-                                                          planetModel:
-                                                              planetModel);
-                                                });
-                                              }
-                                            },
-                                            leading: Icon(
-                                              Icons.date_range,
-                                              color: ColorManager.primary,
-                                            ),
-                                            title: Text(
-                                              '${DateFormat.yMd().format(planetModel.createdAt ?? DateTime.now())}',
-                                              style: TextStyle(
-                                                  color: ColorManager.primary),
-                                            ),
-                                          ),
-                                        );
-                                      }),
-
                                       DetailsPlantLineWidget(
                                         onTap: null,
                                         active: false,
@@ -418,7 +323,7 @@ class MyPlantItem extends StatelessWidget {
                                         active: false,
                                         text:
                                             '${((planetModel.soil_ph.degree ?? planetModel.soil_ph.minimum ?? 0) / 10).toStringAsFixed(0)} %',
-                                        image: AssetsManager.sunIMG,
+                                        image: AssetsManager.phIMG,
                                         label: 'Optimal Ph',
                                       ),
                                       DetailsPlantLineWidget(
@@ -426,7 +331,7 @@ class MyPlantItem extends StatelessWidget {
                                         active: false,
                                         text:
                                             '${((planetModel.soil_moister.degree ?? planetModel.soil_moister.minimum ?? 0) / 10).toStringAsFixed(0)} %',
-                                        image: AssetsManager.sunIMG,
+                                        image: AssetsManager.soilIMG,
                                         label: 'Soil Moister',
                                       ),
                                       const SizedBox(
@@ -434,8 +339,8 @@ class MyPlantItem extends StatelessWidget {
                                       ),
                                       Container(
                                         decoration: BoxDecoration(
-                                            color: ColorManager.secondary
-                                                .withOpacity(.5),
+                                            color: ColorManager.gradientColor2
+                                                .withOpacity(.7),
                                             borderRadius:
                                                 BorderRadius.circular(12.0)),
                                         child: ExpansionTile(

@@ -19,7 +19,7 @@ class ThemeManager {
             foregroundColor: ColorManager.primary,
           ),
           appBarTheme: AppBarTheme(
-            backgroundColor: ColorManager.white,
+            backgroundColor: ColorManager.appBarColor,
             iconTheme: IconThemeData(
               color: ColorManager.primary,
             ),

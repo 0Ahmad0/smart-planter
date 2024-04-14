@@ -151,7 +151,6 @@ class _HomeScreenState extends State<HomeScreen> {
           appBar: AppBar(
             title: Text(
               AppString.appName,
-
             ),
             centerTitle: false,
             leading: Builder(builder: (context) {
@@ -204,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       label: Text(
                                         '${countUnRead}',
                                         style: TextStyle(
-                                            color: ColorManager.secondary),
+                                            color: ColorManager.gradientColor2),
                                       ),
                                     );
                             } else {

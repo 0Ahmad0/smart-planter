@@ -298,7 +298,7 @@ class _AddPlantFormWidgetState extends State<AddPlantFormWidget> {
           children: [
             TextFiledApp(
               controller: nameController,
-              hintText: 'Name plant',
+              hintText: 'Plant Name',
             ),
             const SizedBox(
               height: AppSize.s10,

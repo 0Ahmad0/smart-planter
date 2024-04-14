@@ -27,14 +27,15 @@ class DetailsPlantWidget extends StatelessWidget {
           constraints: BoxConstraints(minWidth: 100.w, maxWidth: 110.w),
           alignment: Alignment.bottomCenter,
           margin: const EdgeInsets.only(
-            top: AppMargin.m30,
+            top: AppMargin.m26,
             left: AppMargin.m8,
             right: AppMargin.m8,
           ),
           padding: const EdgeInsets.all(AppPadding.p8),
           decoration: BoxDecoration(
-
-              color: active ? ColorManager.gradientColor2 : ColorManager.grey,
+              color: active
+                  ? ColorManager.gradientColor2
+                  : ColorManager.gradientColor2,
               borderRadius: BorderRadius.circular(14.r)),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -43,7 +44,9 @@ class DetailsPlantWidget extends StatelessWidget {
                 width: AppSize.s50,
                 height: AppSize.s50,
                 decoration: BoxDecoration(
-                    color: active ? ColorManager.gradientColor1 : ColorManager.grey,
+                    color: active
+                        ? ColorManager.gradientColor1
+                        : ColorManager.grey,
                     shape: BoxShape.circle),
                 child: Padding(
                   padding: const EdgeInsets.all(AppPadding.p10),
@@ -52,19 +55,20 @@ class DetailsPlantWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: AppSize.s10,),
+              const SizedBox(
+                height: AppSize.s10,
+              ),
               Text(
                 text,
                 style: StylesManager.titleBoldTextStyle(
-                  size: 22.sp,
-                  color: ColorManager.white
-                ),
+                    size: 22.sp, color: ColorManager.white),
               ),
             ],
           )),
     );
   }
 }
+
 ///OLD CODE
 /*
     return InkWell(
@@ -156,13 +160,15 @@ class DetailsPlantLineWidget extends StatelessWidget {
                 left: AppPadding.p20,
               ),
               decoration: BoxDecoration(
-                  color: active ? ColorManager.primary : ColorManager.grey,
+                  color: active
+                      ? ColorManager.gradientColor2
+                      : ColorManager.gradientColor2,
                   borderRadius: BorderRadius.circular(14.r)),
               child: ListTile(
                 title: Text(
                   label,
                   style: TextStyle(
-                      color: ColorManager.black,
+                      color: ColorManager.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 18.sp),
                 ),
@@ -170,7 +176,11 @@ class DetailsPlantLineWidget extends StatelessWidget {
                   padding: const EdgeInsets.only(top: AppPadding.p8),
                   child: Text(
                     text,
-                    style: StylesManager.titleBoldTextStyle(size: 18.sp),
+                    style: StylesManager.titleBoldTextStyle(
+                      size: 18.sp,
+                      //ToDo: Change Text Color
+                      color: ColorManager.white
+                    ),
                   ),
                 ),
               )),
@@ -182,10 +192,12 @@ class DetailsPlantLineWidget extends StatelessWidget {
               height: AppSize.s60,
               decoration: BoxDecoration(
                   border: Border.all(
-                    color: ColorManager.secondary,
+                    color: ColorManager.gradientColor1,
                     width: AppSize.s4,
                   ),
-                  color: active ? ColorManager.primary : ColorManager.grey,
+                  color: active
+                      ? ColorManager.gradientColor1
+                      : ColorManager.gradientColor2,
                   shape: BoxShape.circle),
               child: Padding(
                 padding: const EdgeInsets.all(AppPadding.p10),
