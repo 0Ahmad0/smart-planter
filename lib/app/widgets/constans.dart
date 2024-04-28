@@ -90,7 +90,7 @@ class Const {
                 width: AppSize.s10,
               ),
               Container(
-                padding: const EdgeInsets.all(AppPadding.p4),
+                padding: const EdgeInsets.all(AppPadding.p6),
                 width: 30.w,
                 height: 30.w,
                 decoration: BoxDecoration(
@@ -126,9 +126,9 @@ class Const {
             Text(
               text,
               style: TextStyle(
-                fontSize: MediaQuery.of(context).size.width * 0.08,
-                fontWeight: FontWeight.bold,
-              ),
+                  fontSize: MediaQuery.of(context).size.width * 0.06,
+                  fontWeight: FontWeight.bold,
+                  color: ColorManager.appBarColor),
             ),
           ],
         )),

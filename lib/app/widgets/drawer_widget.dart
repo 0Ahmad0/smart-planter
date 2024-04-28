@@ -52,10 +52,10 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       UserAccountsDrawerHeader(
                         accountName: Text(
                           '${profileProvider.user.name}',
+                          style: TextStyle(color: ColorManager.appBarColor),
                         ),
-                        accountEmail: Text(
-                          '${profileProvider.user.email}',
-                        ),
+                        accountEmail: Text('${profileProvider.user.email}',
+                            style: TextStyle(color: ColorManager.appBarColor)),
                         otherAccountsPictures: [
                           IconButton(
                               onPressed: () async {
@@ -65,14 +65,15 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                               },
                               icon: Icon(
                                 Icons.logout,
-                                color: ColorManager.gradientColor1,
+                                color: ColorManager.fwhite,
                               ))
                         ],
                         currentAccountPicture: CircleAvatar(
-                          backgroundColor: ColorManager.gradientColor1,
+                          backgroundColor:
+                              ColorManager.appBarColor.withOpacity(0.9),
                         ),
                         decoration: BoxDecoration(
-                          color: ColorManager.gradientColor2,
+                          color: ColorManager.fwhite,
                         ),
                       ))),
           // ListTileDrawerItem(
@@ -150,14 +151,14 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       padding: EdgeInsets.all(2.0),
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: ColorManager.gradientColor2),
+                          color: Color.fromARGB(255, 212, 38, 38)),
                       child: Badge(
                         backgroundColor: Colors.transparent,
                         smallSize: 24.sp,
                         largeSize: 30.sp,
                         label: Text(
                           '${countUnRead}',
-                          style: TextStyle(color: ColorManager.gradientColor2),
+                          style: TextStyle(color: ColorManager.white),
                         ),
                       ),
                     );

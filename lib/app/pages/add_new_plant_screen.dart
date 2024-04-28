@@ -68,7 +68,7 @@ class _AddNewPlantScreenState extends State<AddNewPlantScreen> {
                       width: double.infinity,
                       height: getWidth(context) / 2,
                       decoration: BoxDecoration(
-                          color: ColorManager.secondary,
+                          color: ColorManager.appBarColor.withOpacity(0.9),
                           boxShadow: [
                             BoxShadow(
                                 color: ColorManager.black.withOpacity(.5),
@@ -96,8 +96,7 @@ class _AddNewPlantScreenState extends State<AddNewPlantScreen> {
                                           top: Radius.circular(14.0)),
                                     ),
                                     context: context,
-                                    builder: (_) =>
-                                        PickImageBottomSheetWidget(
+                                    builder: (_) => PickImageBottomSheetWidget(
                                           cameraTap: () {
                                             _pickImage(
                                                 source: ImageSource.camera);
@@ -112,8 +111,7 @@ class _AddNewPlantScreenState extends State<AddNewPlantScreen> {
                                         ));
                               },
                               child: Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.stretch,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -129,7 +127,7 @@ class _AddNewPlantScreenState extends State<AddNewPlantScreen> {
                                     AppString.addNewPlant,
                                     textAlign: TextAlign.center,
                                     style: StylesManager.titleNormalTextStyle(
-                                      color: ColorManager.primary,
+                                      color: ColorManager.fwhite,
                                     ),
                                   ),
                                 ],
@@ -183,8 +181,7 @@ class _AddNewPlantScreenState extends State<AddNewPlantScreen> {
                                             PickImageBottomSheetWidget(
                                               cameraTap: () {
                                                 _pickImage(
-                                                    source:
-                                                        ImageSource.camera);
+                                                    source: ImageSource.camera);
                                               },
                                               galleryTap: () {
                                                 _pickImage(
@@ -287,158 +284,162 @@ class _AddPlantFormWidgetState extends State<AddPlantFormWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: widget._formKey,
-      child: Container(
-        padding: EdgeInsets.all(AppPadding.p10),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(AppSize.s14),
-            color: ColorManager.white.withOpacity(.2)),
-        child: Column(
-          children: [
-            TextFiledApp(
-              controller: nameController,
-              hintText: 'Plant Name',
-            ),
-            const SizedBox(
-              height: AppSize.s10,
-            ),
-            TextFiledApp(
-              keyboardType: textInputType,
-              filteringTextFormatterList: textInputFormatter,
-              controller: soilPhController,
-              hintText: 'Soil Ph',
-            ),
-            const SizedBox(
-              height: AppSize.s10,
-            ),
-            TextFiledApp(
-              keyboardType: textInputType,
-              filteringTextFormatterList: textInputFormatter,
-              controller: fertilizerQuantityController,
-              hintText: 'Fertilizer quantity',
-            ),
-            const SizedBox(
-              height: AppSize.s10,
-            ),
-            TextFiledApp(
-              keyboardType: textInputType,
-              filteringTextFormatterList: textInputFormatter,
-              controller: repeatFertlizingController,
-              hintText: 'Repeat fertlizing',
-            ),
-            const SizedBox(
-              height: AppSize.s10,
-            ),
-            TextFiledApp(
-              keyboardType: textInputType,
-              filteringTextFormatterList: textInputFormatter,
-              controller: waterQuantityController,
-              hintText: 'Water quantity',
-            ),
-            const SizedBox(
-              height: AppSize.s10,
-            ),
-            TextFiledApp(
-              keyboardType: textInputType,
-              filteringTextFormatterList: textInputFormatter,
-              controller: soilMoisterController,
-              hintText: 'Soil moister',
-            ),
-            const SizedBox(
-              height: AppSize.s10,
-            ),
-            TextFiledApp(
-              keyboardType: textInputType,
-              filteringTextFormatterList: textInputFormatter,
-              controller: repeatWateringController,
-              hintText: 'Repeat watering',
-            ),
-            const SizedBox(
-              height: AppSize.s10,
-            ),
-            TextFiledApp(
-              keyboardType: textInputType,
-              filteringTextFormatterList: textInputFormatter,
-              controller: temperatureController,
-              hintText: 'Temperature',
-            ),
-            const SizedBox(
-              height: AppSize.s10,
-            ),
-            TextFiledApp(
-              keyboardType: textInputType,
-              filteringTextFormatterList: textInputFormatter,
-              controller: sunlightController,
-              hintText: 'Sunlight',
-            ),
-            const SizedBox(
-              height: AppSize.s20,
-            ),
-            TextFiledApp(
-              controller: descriptionController,
-              hintText: 'Description',
-              minLine: 4,
-              maxLine: 8,
-            ),
-            const SizedBox(
-              height: AppSize.s20,
-            ),
-            ButtonApp(
-              text: AppString.addNewPlant,
-              onPressed: () {
-                if( widget._formKey.currentState!.validate()){
-                  if (widget._image != null) {
-                    plantController.addDefaultPlanet(context,
-                        planetModel: PlanetModel(
-                          id: 0,
-                          description: descriptionController.value.text,
-                          name: nameController.value.text,
-                          age: 0,
-                          fertilizer_quantity: QuantityModel(
-                              value: double.parse(
-                                  fertilizerQuantityController.value.text)
-                                  .toInt(),
-                              type: ''),
-                          repeat_fertilizing:
-                          double.parse(repeatFertlizingController.value.text),
-                          repeat_watering:
-                          double.parse(repeatWateringController.value.text),
-                          soil_moister: MinMaxModel(
-                              minimum: null,
-                              maximum: null,
-                              degree:
-                              double.parse(soilMoisterController.value.text)),
-                          soil_ph: MinMaxModel(
-                              minimum: null,
-                              maximum: null,
-                              degree: double.parse(soilPhController.value.text)),
-                          sunlight: MinMaxModel(
-                              minimum: null,
-                              maximum: null,
-                              degree:
-                              double.parse(sunlightController.value.text)),
-                          temperature: MinMaxModel(
-                              minimum: null,
-                              maximum: null,
-                              degree:
-                              double.parse(temperatureController.value.text)),
-                          url_image: '',
-                          water_quantity: QuantityModel(
-                              value:
-                              double.parse(waterQuantityController.value.text)
-                                  .toInt(),
-                              type: ''),
-                          isAdd: false,
-                        ),
-                        image: widget._image);
-//send Date
-                    //هنا بجب ارسال الداتا
+    return Theme(
+      data: ThemeData(),
+      child: Form(
+        key: widget._formKey,
+        child: Container(
+          padding: EdgeInsets.all(AppPadding.p10),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppSize.s14),
+              color: Color.fromARGB(135, 64, 62, 44)),
+          child: Column(
+            children: [
+              TextFiledApp(
+                controller: nameController,
+                hintText: 'Plant Name',
+              ),
+              const SizedBox(
+                height: AppSize.s10,
+              ),
+              TextFiledApp(
+                keyboardType: textInputType,
+                filteringTextFormatterList: textInputFormatter,
+                controller: soilPhController,
+                hintText: 'Soil Ph',
+              ),
+              const SizedBox(
+                height: AppSize.s10,
+              ),
+              TextFiledApp(
+                keyboardType: textInputType,
+                filteringTextFormatterList: textInputFormatter,
+                controller: fertilizerQuantityController,
+                hintText: 'Fertilizer quantity',
+              ),
+              const SizedBox(
+                height: AppSize.s10,
+              ),
+              TextFiledApp(
+                keyboardType: textInputType,
+                filteringTextFormatterList: textInputFormatter,
+                controller: repeatFertlizingController,
+                hintText: 'Repeat fertlizing',
+              ),
+              const SizedBox(
+                height: AppSize.s10,
+              ),
+              TextFiledApp(
+                keyboardType: textInputType,
+                filteringTextFormatterList: textInputFormatter,
+                controller: waterQuantityController,
+                hintText: 'Water quantity',
+              ),
+              const SizedBox(
+                height: AppSize.s10,
+              ),
+              TextFiledApp(
+                keyboardType: textInputType,
+                filteringTextFormatterList: textInputFormatter,
+                controller: soilMoisterController,
+                hintText: 'Soil moister',
+              ),
+              const SizedBox(
+                height: AppSize.s10,
+              ),
+              TextFiledApp(
+                keyboardType: textInputType,
+                filteringTextFormatterList: textInputFormatter,
+                controller: repeatWateringController,
+                hintText: 'Repeat watering',
+              ),
+              const SizedBox(
+                height: AppSize.s10,
+              ),
+              TextFiledApp(
+                keyboardType: textInputType,
+                filteringTextFormatterList: textInputFormatter,
+                controller: temperatureController,
+                hintText: 'Temperature',
+              ),
+              const SizedBox(
+                height: AppSize.s10,
+              ),
+              TextFiledApp(
+                keyboardType: textInputType,
+                filteringTextFormatterList: textInputFormatter,
+                controller: sunlightController,
+                hintText: 'Sunlight',
+              ),
+              const SizedBox(
+                height: AppSize.s20,
+              ),
+              TextFiledApp(
+                controller: descriptionController,
+                hintText: 'Description',
+                minLine: 4,
+                maxLine: 8,
+              ),
+              const SizedBox(
+                height: AppSize.s20,
+              ),
+              ButtonApp(
+                text: AppString.addNewPlant,
+                onPressed: () {
+                  if (widget._formKey.currentState!.validate()) {
+                    if (widget._image != null) {
+                      plantController.addDefaultPlanet(context,
+                          planetModel: PlanetModel(
+                            id: 0,
+                            description: descriptionController.value.text,
+                            name: nameController.value.text,
+                            age: 0,
+                            fertilizer_quantity: QuantityModel(
+                                value: double.parse(
+                                        fertilizerQuantityController.value.text)
+                                    .toInt(),
+                                type: ''),
+                            repeat_fertilizing: double.parse(
+                                repeatFertlizingController.value.text),
+                            repeat_watering: double.parse(
+                                repeatWateringController.value.text),
+                            soil_moister: MinMaxModel(
+                                minimum: null,
+                                maximum: null,
+                                degree: double.parse(
+                                    soilMoisterController.value.text)),
+                            soil_ph: MinMaxModel(
+                                minimum: null,
+                                maximum: null,
+                                degree:
+                                    double.parse(soilPhController.value.text)),
+                            sunlight: MinMaxModel(
+                                minimum: null,
+                                maximum: null,
+                                degree: double.parse(
+                                    sunlightController.value.text)),
+                            temperature: MinMaxModel(
+                                minimum: null,
+                                maximum: null,
+                                degree: double.parse(
+                                    temperatureController.value.text)),
+                            url_image: '',
+                            water_quantity: QuantityModel(
+                                value: double.parse(
+                                        waterQuantityController.value.text)
+                                    .toInt(),
+                                type: ''),
+                            isAdd: false,
+                          ),
+                          image: widget._image);
+                      //send Date
+                      //هنا بجب ارسال الداتا
+                    }
                   }
-                }
-              },
-            ),
-          ],
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

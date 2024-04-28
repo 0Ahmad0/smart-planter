@@ -1,4 +1,7 @@
 class AppString {
+
+ 
+
   static const appName = "Igreen";
   static const email = "Email";
   static const emailRecovery = "Email Recovery";
@@ -92,7 +95,7 @@ class AppString {
   static const notify_change_repeat_plant_subtitle= "The repeat of the plant has been changed";
 
   static const notify_change_plant_warning= "Plant change warning";
-  static const notify_max_temperature_plant= "The plant temperature has risen above the maximum";
+  static const notify_max_temperature_plant= "The plant temperature has risen above the maximum"+"";
   static const notify_min_temperature_plant= "The plant temperature fell below the minimum";
   static const notify_max_sunlight_plant= "The plant sunlight has risen above the maximum";
   static const notify_min_sunlight_plant= "The plant sunlight fell below the minimum";
@@ -104,3 +107,5 @@ class AppString {
 
 
 }
+
+ 

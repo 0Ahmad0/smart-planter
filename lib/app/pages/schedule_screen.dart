@@ -1,4 +1,3 @@
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,67 +28,71 @@ class ScheduleScreen extends StatefulWidget {
 class _ScheduleScreenState extends State<ScheduleScreen> {
   var getSchedulesReal;
   late ScheduleController scheduleController;
-  getSchedulesFun()  {
-    getSchedulesReal  = FirebaseFun.database.child(AppConstants.collectionSchedule).onValue;
+  getSchedulesFun() {
+    getSchedulesReal =
+        FirebaseFun.database.child(AppConstants.collectionSchedule).onValue;
     return getSchedulesReal;
   }
+
   @override
   void initState() {
-    scheduleController=ScheduleController(context: context);
+    scheduleController = ScheduleController(context: context);
     getSchedulesFun();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return GradientContainerWidget(
       colors: ColorManager.gradientColors,
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, AppRoute.addScheduleRoute);
-          },
-          child: Icon(Icons.add),
-        ),
-        appBar: AppBar(
-          title: Text('All Schedule'),
-        ),
-        body:
-        StreamBuilder<DatabaseEvent>(
-          stream: getSchedulesReal,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Const.SHOWLOADINGINDECATOR();
-            } else{ if (snapshot.connectionState == ConnectionState.active) {
-              List<ScheduleModel> schedules=[];
-              if (snapshot.hasData) {
-                Const.SHOWLOADINGINDECATOR();
-                if ((snapshot.data?.snapshot.children.length??0)>0) {
-
-                  schedules= ScheduleModels.fromJson(snapshot.data!.snapshot.children.toList()).listScheduleModel;
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: ColorManager.appBarColor,
+            onPressed: () {
+              Navigator.pushNamed(context, AppRoute.addScheduleRoute);
+            },
+            child: Icon(
+              Icons.add,
+              color: ColorManager.white,
+            ),
+          ),
+          appBar: AppBar(
+            title: Text('All Schedule'),
+          ),
+          body: StreamBuilder<DatabaseEvent>(
+              stream: getSchedulesReal,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Const.SHOWLOADINGINDECATOR();
+                } else {
+                  if (snapshot.connectionState == ConnectionState.active) {
+                    List<ScheduleModel> schedules = [];
+                    if (snapshot.hasData) {
+                      Const.SHOWLOADINGINDECATOR();
+                      if ((snapshot.data?.snapshot.children.length ?? 0) > 0) {
+                        schedules = ScheduleModels.fromJson(
+                                snapshot.data!.snapshot.children.toList())
+                            .listScheduleModel;
+                      }
+                    }
+                    return ChangeNotifierProvider<ScheduleModelProvider>.value(
+                        value: Provider.of<ScheduleModelProvider>(context),
+                        child: Consumer<ScheduleModelProvider>(
+                            builder: (context, planetModelProvider, child) =>
+                                schedules.isNotEmpty
+                                    ? ListView.builder(
+                                        itemBuilder: (context, index) =>
+                                            ScheduleWidget(
+                                                scheduleModel:
+                                                    schedules[index]),
+                                        itemCount: schedules.length,
+                                      )
+                                    : EmptySchedulesWidget()));
+                  } else {
+                    return Center(child: Text('Error'));
+                  }
                 }
-              }
-              return
-
-                ChangeNotifierProvider<ScheduleModelProvider>.value(
-                    value: Provider.of<ScheduleModelProvider>(context),
-                    child: Consumer<ScheduleModelProvider>(
-                        builder: (context, planetModelProvider, child) =>
-                        schedules.isNotEmpty?
-
-                        ListView.builder(
-                          itemBuilder: (context, index) => ScheduleWidget(scheduleModel:schedules[index]),
-                          itemCount: schedules.length,
-                        )
-                            : EmptySchedulesWidget()));
-            }
-           else{
-             return Center(child: Text('Error'));
-            }
-            }
-          })
-
-
-      ),
+              })),
     );
   }
 }
@@ -108,14 +111,14 @@ class ScheduleWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppSize.s8),
             boxShadow: [
               BoxShadow(
-                color: ColorManager.white.withOpacity(.2),
+                color: ColorManager.fwhite.withOpacity(.2),
                 blurRadius: 12.0,
               )
             ],
             gradient: LinearGradient(colors: [
-              ColorManager.secondary,
-              ColorManager.white,
-              ColorManager.primary.withOpacity(.1),
+              ColorManager.appBarColor,
+              ColorManager.appBarColor,
+              ColorManager.appBarColor,
             ], stops: [
               0.0,
               1.0,
@@ -127,7 +130,8 @@ class ScheduleWidget extends StatelessWidget {
             children: [
               Container(
                 padding: EdgeInsets.all(AppPadding.p12),
-                decoration: BoxDecoration(color: ColorManager.primary),
+                decoration:
+                    BoxDecoration(color: ColorManager.fwhite.withOpacity(0.4)),
                 child: Image.asset(
                   AssetsManager.waterDropIMG,
                   width: 36.w,
@@ -137,32 +141,34 @@ class ScheduleWidget extends StatelessWidget {
               Expanded(
                 child: ListTile(
                   title: Text(
-
-
-                    scheduleModel.dayName??'Day Name',
+                    scheduleModel.dayName ?? 'Day Name',
                     style: StylesManager.titleBoldTextStyle(
-                        size: 20.sp,
-                        color: ColorManager.black
-                    ),
+                        size: 20.sp, color: ColorManager.white),
                   ),
                   trailing: IconButton(
-                    onPressed: (){
-                      ScheduleController(context: context).deleteScheduleModel(context, scheduleModel: scheduleModel);
+                    onPressed: () {
+                      ScheduleController(context: context).deleteScheduleModel(
+                          context,
+                          scheduleModel: scheduleModel);
+
                       ///Delete Schedule
                     },
-                    icon: Icon(Icons.delete,color: ColorManager.error,),
+                    icon: Icon(
+                      Icons.delete,
+                      color: ColorManager.orangeColor,
+                    ),
                   ),
                   subtitle: Padding(
-                    padding: const EdgeInsets.only(
-                      top: AppPadding.p10
-                    ),
+                    padding: const EdgeInsets.only(top: AppPadding.p10),
                     child: Text(
-                       // '${"16:24"} AM - ${"18:35"}PM',
-                          '${scheduleModel.timeAm}'+(scheduleModel.timePm!=null?' - ${scheduleModel.timePm}':''),
-                    style: StylesManager.titleNormalTextStyle(
-                      size: 16.sp,
-                      color: ColorManager.primary
-                    ),),
+                      // '${"16:24"} AM - ${"18:35"}PM',
+                      '${scheduleModel.timeAm}' +
+                          (scheduleModel.timePm != null
+                              ? ' - ${scheduleModel.timePm}'
+                              : ''),
+                      style: StylesManager.titleNormalTextStyle(
+                          size: 16.sp, color: ColorManager.white),
+                    ),
                   ),
                 ),
               ),

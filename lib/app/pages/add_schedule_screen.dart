@@ -51,16 +51,17 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
     intervalTimeController.dispose();
     super.dispose();
   }
-@override
+
+  @override
   void initState() {
-  scheduleController=ScheduleController(context: context);
+    scheduleController = ScheduleController(context: context);
     super.initState();
   }
+
   int _currentValue = 3;
 
   @override
   Widget build(BuildContext context) {
-
     return GradientContainerWidget(
       colors: ColorManager.gradientColors,
       child: Scaffold(
@@ -76,7 +77,7 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
             Padding(
               padding: const EdgeInsets.all(AppPadding.p12),
               child: Text(
-                 AppString.pickDay,
+                AppString.pickDay,
                 style: StylesManager.titleBoldTextStyle(
                   size: 24.sp,
                 ),
@@ -91,7 +92,8 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                     itemBuilder: (context, index) => InkWell(
                           //ToDo : New Code
                           /// check Day Is Before Selected
-                          onTap:false? null
+                          onTap: false
+                              ? null
                               : () {
                                   daySetState(() {
                                     _currentIndex = index;
@@ -117,51 +119,51 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                     showModalBottomSheet(
                         showDragHandle: true,
                         shape: RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(24))),
+                            borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(24))),
                         context: context,
                         builder: (_) {
                           return StatefulBuilder(
                               builder: (context, timeSetState) {
-                                return Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    TimePickerSpinner(
-                                      is24HourMode: false,
-                                      normalTextStyle: TextStyle(
-                                          fontSize: 20.sp,
-                                          color:
-                                          ColorManager.primary.withOpacity(.75)),
-                                      highlightedTextStyle: TextStyle(
-                                          fontSize: 24.sp,
-                                          color: ColorManager.primary,
-                                          fontWeight: FontWeight.bold),
-                                      spacing: 40,
-                                      isForce2Digits: true,
-                                      onTimeChange: (time) {
-                                        // if (time.hour >= 0 && time.hour < 12)
-                                        timeSetState(() {
-                                          dateTimeAm=time;
-                                          amTimeController.text =
-                                              DateFormat().add_jm().format(time);
-                                        });
-                                      },
-                                    ),
-                                    OutlinedButton(
-                                        style: OutlinedButton.styleFrom(
-                                            minimumSize: Size(double.infinity, 50.0)
-                                        ),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text(
-                                          "Pick",
-                                          style:
-                                          TextStyle(color: ColorManager.primary),
-                                        )),
-                                  ],
-                                );
-                              });
+                            return Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                TimePickerSpinner(
+                                  is24HourMode: false,
+                                  normalTextStyle: TextStyle(
+                                      fontSize: 20.sp,
+                                      color: ColorManager.appBarColor
+                                          .withOpacity(.75)),
+                                  highlightedTextStyle: TextStyle(
+                                      fontSize: 24.sp,
+                                      color: ColorManager.appBarColor,
+                                      fontWeight: FontWeight.bold),
+                                  spacing: 40,
+                                  isForce2Digits: true,
+                                  onTimeChange: (time) {
+                                    // if (time.hour >= 0 && time.hour < 12)
+                                    timeSetState(() {
+                                      dateTimeAm = time;
+                                      amTimeController.text =
+                                          DateFormat().add_jm().format(time);
+                                    });
+                                  },
+                                ),
+                                OutlinedButton(
+                                    style: OutlinedButton.styleFrom(
+                                        minimumSize:
+                                            Size(double.infinity, 50.0)),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text(
+                                      "Pick",
+                                      style: TextStyle(
+                                          color: ColorManager.appBarColor),
+                                    )),
+                              ],
+                            );
+                          });
                         });
                   },
                   readOnly: true,
@@ -176,15 +178,14 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
               child: Container(
                 margin: EdgeInsets.all(AppMargin.m12),
                 decoration: BoxDecoration(
-                  color: ColorManager.white.withOpacity(.5),
-                  borderRadius: BorderRadius.circular(8)
-                ),
+                    color: ColorManager.appBarColor.withOpacity(.8),
+                    borderRadius: BorderRadius.circular(30)),
                 child: ExpansionTile(
-                  title: Text('Show More',style: TextStyle(
-                    color: ColorManager.primary
-                  ),),
+                  title: Text(
+                    'Show More',
+                    style: TextStyle(color: ColorManager.white),
+                  ),
                   children: [
-
                     const SizedBox(
                       height: AppSize.s20,
                     ),
@@ -197,55 +198,57 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                           showModalBottomSheet(
                               showDragHandle: true,
                               shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                  BorderRadius.vertical(top: Radius.circular(24))),
+                                  borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(24))),
                               context: context,
                               builder: (_) {
                                 return StatefulBuilder(
                                     builder: (context, timeSetState) {
-                                      return Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          TimePickerSpinner(
-                                            is24HourMode: false,
-                                            normalTextStyle: TextStyle(
-                                                fontSize: 20.sp,
+                                  return Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      TimePickerSpinner(
+                                        is24HourMode: false,
+                                        normalTextStyle: TextStyle(
+                                            fontSize: 20.sp,
+                                            color: ColorManager.appBarColor
+                                                .withOpacity(.75)),
+                                        highlightedTextStyle: TextStyle(
+                                            fontSize: 24.sp,
+                                            color: ColorManager.appBarColor,
+                                            fontWeight: FontWeight.bold),
+                                        spacing: 40,
+                                        isForce2Digits: true,
+                                        onTimeChange: (time) {
+                                          if (time.hour >= 12 &&
+                                              time.hour <= 23)
+                                            timeSetState(() {
+                                              dateTimePm = time;
+                                              pmTimeController.text =
+                                                  DateFormat()
+                                                      .add_jm()
+                                                      .format(time);
+                                            });
+                                        },
+                                      ),
+                                      OutlinedButton(
+                                          style: OutlinedButton.styleFrom(
+                                              minimumSize:
+                                                  Size(double.infinity, 50.0)),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text(
+                                            "Pick",
+                                            style: TextStyle(
                                                 color:
-                                                ColorManager.primary.withOpacity(.75)),
-                                            highlightedTextStyle: TextStyle(
-                                                fontSize: 24.sp,
-                                                color: ColorManager.primary,
-                                                fontWeight: FontWeight.bold),
-                                            spacing: 40,
-                                            isForce2Digits: true,
-
-                                            onTimeChange: (time) {
-                                              if (time.hour >= 12 && time.hour <= 23)
-                                              timeSetState(() {
-                                                dateTimePm=time;
-                                                pmTimeController.text =
-                                                    DateFormat().add_jm().format(time);
-                                              });
-                                            },
-                                          ),
-                                          OutlinedButton(
-                                              style: OutlinedButton.styleFrom(
-                                                  minimumSize: Size(double.infinity, 50.0)
-                                              ),
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                              child: Text(
-                                                "Pick",
-                                                style:
-                                                TextStyle(color: ColorManager.primary),
-                                              )),
-                                        ],
-                                      );
-                                    });
+                                                    ColorManager.appBarColor),
+                                          )),
+                                    ],
+                                  );
+                                });
                               });
                         },
-
                         readOnly: true,
                         controller: pmTimeController,
                       ),
@@ -262,59 +265,63 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                           showModalBottomSheet(
                               showDragHandle: true,
                               shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                  BorderRadius.vertical(top: Radius.circular(24))),
+                                  borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(24))),
                               context: context,
                               builder: (_) {
                                 return StatefulBuilder(
                                     builder: (context, timeSetState) {
-                                      return Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          NumberPicker(
-                                            decoration: BoxDecoration(
-                                              color: ColorManager.primary.withOpacity(.2),
-                                              borderRadius: BorderRadius.circular(8.0),
-                                            ),
-                                            textStyle: StylesManager.titleBoldTextStyle(
-                                                size: 20.sp
-                                            ),
-                                            selectedTextStyle: StylesManager.titleBoldTextStyle(
-                                                color: ColorManager.primary,
-                                                size: 24.sp
-                                            ),
-                                            value: _currentValue,
-                                            minValue: 0,
-                                            step: 1,
-                                            infiniteLoop: true,
-                                            maxValue: 60,
-                                            haptics: true,
-                                            onChanged: (value) => timeSetState(() {
-                                              _currentValue = value;
-                                              intervalTimeController.text = value.toString()+ " time";
-                                            }),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(AppPadding.p8),
-                                            child: OutlinedButton(
-                                                style: OutlinedButton.styleFrom(
-                                                    minimumSize: Size(double.infinity, 50.0)
-                                                ),
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                child: Text(
-                                                  "Pick",
-                                                  style:
-                                                  TextStyle(color: ColorManager.primary),
-                                                )),
-                                          )
-                                        ],
-                                      );
-                                    });
+                                  return Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      NumberPicker(
+                                        decoration: BoxDecoration(
+                                          color: ColorManager.appBarColor
+                                              .withOpacity(.2),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        textStyle:
+                                            StylesManager.titleBoldTextStyle(
+                                                size: 20.sp),
+                                        selectedTextStyle:
+                                            StylesManager.titleBoldTextStyle(
+                                                color: ColorManager.appBarColor,
+                                                size: 24.sp),
+                                        value: _currentValue,
+                                        minValue: 0,
+                                        step: 1,
+                                        infiniteLoop: true,
+                                        maxValue: 60,
+                                        haptics: true,
+                                        onChanged: (value) => timeSetState(() {
+                                          _currentValue = value;
+                                          intervalTimeController.text =
+                                              value.toString() + " time";
+                                        }),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.all(AppPadding.p8),
+                                        child: OutlinedButton(
+                                            style: OutlinedButton.styleFrom(
+                                                minimumSize: Size(
+                                                    double.infinity, 50.0)),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text(
+                                              "Pick",
+                                              style: TextStyle(
+                                                  color:
+                                                      ColorManager.appBarColor),
+                                            )),
+                                      )
+                                    ],
+                                  );
+                                });
                               });
                         },
-
                         readOnly: true,
                         controller: intervalTimeController,
                       ),
@@ -328,20 +335,28 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
               padding: const EdgeInsets.all(AppPadding.p12),
               child: ButtonApp(
                 text: 'Add',
-                onPressed: () async {;
-                  String? hour12 = dateTimePm!=null?DateFormat('h').format(dateTimePm!):null;
+                onPressed: () async {
+                  ;
+                  String? hour12 = dateTimePm != null
+                      ? DateFormat('h').format(dateTimePm!)
+                      : null;
 
-                  int? pmH=int.tryParse(hour12??'');
-                  int? pmM=dateTimePm?.minute;
-                  int? amM=dateTimeAm?.minute;
-                  int? amH=dateTimeAm?.hour;
-                  int dayNumber=_currentIndex+1;
+                  int? pmH = int.tryParse(hour12 ?? '');
+                  int? pmM = dateTimePm?.minute;
+                  int? amM = dateTimeAm?.minute;
+                  int? amH = dateTimeAm?.hour;
+                  int dayNumber = _currentIndex + 1;
                   // print(ScheduleModel(dayNumber: dayNumber, duration: _currentValue
                   // ,timeAmH: amH,timeAmM: amM,timePmH: pmH,timePmM: pmM).toJson());
                   if (_formKey.currentState!.validate()) {
-                    await scheduleController.addScheduleModel(context, scheduleModel:
-                    ScheduleModel(dayNumber: dayNumber, duration: _currentValue
-                        ,timeAmH: amH,timeAmM: amM,timePmH: pmH,timePmM: pmM));
+                    await scheduleController.addScheduleModel(context,
+                        scheduleModel: ScheduleModel(
+                            dayNumber: dayNumber,
+                            duration: _currentValue,
+                            timeAmH: amH,
+                            timeAmM: amM,
+                            timePmH: pmH,
+                            timePmM: pmM));
                     // Get.back();
                   }
                 },
@@ -371,8 +386,8 @@ class DayWidget extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           color: isSelected
-              ? ColorManager.secondary
-              : ColorManager.secondary.withOpacity(.1)),
+              ? ColorManager.appBarColor
+              : ColorManager.appBarColor.withOpacity(.2)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -380,8 +395,9 @@ class DayWidget extends StatelessWidget {
             child: Text(
               getAbbreviatedDayName(day),
               style: StylesManager.titleBoldTextStyle(
-                  color:
-                      isSelected ? ColorManager.black : ColorManager.secondary,
+                  color: isSelected
+                      ? ColorManager.white
+                      : ColorManager.appBarColor,
                   size: 20.sp),
             ),
           ),

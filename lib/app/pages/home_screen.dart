@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 import 'package:smart_plans/app/controller/plant_controller.dart';
 import 'package:smart_plans/app/controller/service/fcm_controller.dart';
 import 'package:smart_plans/app/controller/utils/firebase.dart';
@@ -203,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       label: Text(
                                         '${countUnRead}',
                                         style: TextStyle(
-                                            color: ColorManager.gradientColor2),
+                                            color: ColorManager.white),
                                       ),
                                     );
                             } else {
