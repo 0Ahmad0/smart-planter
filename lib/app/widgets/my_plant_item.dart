@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_plans/app/pages/details/monitor_details_screen.dart';
+import 'package:smart_plans/app/pages/details/new_monitor_details_screen.dart';
 import 'package:smart_plans/app/widgets/constans.dart';
 import 'package:smart_plans/app/widgets/gradient_container_widget.dart';
 import 'package:smart_plans/core/utils/app_string.dart';
@@ -103,6 +104,9 @@ class MyPlantItem extends StatelessWidget {
                                             .read<PlanetModelProvider>()
                                             .arguments,
                                       );
+                                    } else if (e.text == 'Monitor') {
+                                      Get.to(() => NewMonitorDetailsScreen(),
+                                          transition: Transition.rightToLeft);
                                     } else if (e.text == 'Water') {
                                       context
                                           .read<PlanetModelProvider>()
@@ -157,10 +161,10 @@ class MyPlantItem extends StatelessWidget {
                 width: double.infinity,
                 margin: EdgeInsets.all(AppMargin.m10),
                 decoration: BoxDecoration(
-                    color: ColorManager.gradientColor2.withOpacity(.75),
+                    color: ColorManager.appBarColor.withOpacity(.75),
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                        color: ColorManager.gradientColor2, width: 4)),
+                    border:
+                        Border.all(color: ColorManager.appBarColor, width: 4)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -186,8 +190,8 @@ class MyPlantItem extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: AppMargin.m12),
                 decoration: BoxDecoration(
-                    border: Border.all(
-                        color: ColorManager.gradientColor2, width: 3),
+                    border:
+                        Border.all(color: ColorManager.appBarColor, width: 3),
                     borderRadius: BorderRadius.circular(14.0)),
                 child: LinearPercentIndicator(
                   padding: EdgeInsets.zero,
@@ -208,24 +212,34 @@ class MyPlantItem extends StatelessWidget {
                     ' ${planetModel.age ?? 0} / ${(planetModel.age ?? 0) > 50 ? planetModel.age! : 50}',
                     style: StylesManager.titleBoldTextStyle(
                       size: 20.sp,
-                      color: ColorManager.gradientColor2,
+                      color: ColorManager.appBarColor,
                     ),
                   ),
                 ),
               ),
               const SizedBox(
-                height: AppSize.s0_5,
+                height: AppSize.s10,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text(
+                    'Sowing Date : ',
+                    style: TextStyle(color: ColorManager.brownColor),
+                  ),
+                ),
               ),
               ListTile(
                 leading: Icon(
                   Icons.date_range,
-                  color: ColorManager.gradientColor2,
+                  color: ColorManager.appBarColor,
                 ),
                 title: Text(
                   DateFormat.yMd()
                       .format(planetModel.createdAt ?? DateTime.now()),
                   style: TextStyle(
-                    color: ColorManager.gradientColor2,
+                    color: ColorManager.appBarColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -237,8 +251,9 @@ class MyPlantItem extends StatelessWidget {
             right: 0,
             child: IconButton(
               icon: Icon(
-                Icons.info_outline,//infoooooooooo
+                Icons.info_outline, //infoooooooooo
                 size: 30.sp,
+                color: ColorManager.orangeColor,
               ),
               onPressed: () {
                 context.read<PlanetModelProvider>().planetModel = planetModel;
@@ -282,6 +297,39 @@ class MyPlantItem extends StatelessWidget {
                                                 'assets/images/logo.png'),
                                       ),
                                       const SizedBox(
+                                        height: AppSize.s20,
+                                      ),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            color: ColorManager.appBarColor
+                                                .withOpacity(.8),
+                                            borderRadius:
+                                                BorderRadius.circular(12.0)),
+                                        child: ExpansionTile(
+                                          title: Text(
+                                            'Show Info',
+                                            style: TextStyle(
+                                              color: ColorManager.white,
+                                              fontSize: 20.sp,
+                                              height: 1,
+                                            ),
+                                          ),
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.all(
+                                                  AppPadding.p10),
+                                              child: Text(
+                                                planetModel.description ?? '',
+                                                style: TextStyle(
+                                                  fontSize: 16.sp,
+                                                  height: 2,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
                                         height: AppSize.s0_5,
                                       ),
                                       DetailsPlantLineWidget(
@@ -298,7 +346,8 @@ class MyPlantItem extends StatelessWidget {
                                         onTap: null,
                                         active: false,
                                         text:
-                                            '${planetModel.soil_ph.degree ?? planetModel.soil_ph.minimum ?? 0} inch',
+                                            // '${planetModel.soil_ph.degree ?? planetModel.soil_ph.minimum ?? 0} inch',
+                                            '1 inch',
                                         image: AssetsManager.waterDropIMG,
                                         label: 'Watering',
                                       ),
@@ -314,7 +363,7 @@ class MyPlantItem extends StatelessWidget {
                                         onTap: null,
                                         active: false,
                                         text:
-                                            '${((planetModel.sunlight.degree ?? planetModel.sunlight.minimum ?? 0) / 10).toStringAsFixed(0)} %',
+                                            '${((planetModel.sunlight.degree ?? planetModel.sunlight.minimum ?? 0)).toStringAsFixed(0)} %',
                                         image: AssetsManager.sunIMG,
                                         label: 'Fully Sunlight',
                                       ),
@@ -322,7 +371,7 @@ class MyPlantItem extends StatelessWidget {
                                         onTap: null,
                                         active: false,
                                         text:
-                                            '${((planetModel.soil_ph.degree ?? planetModel.soil_ph.minimum ?? 0) / 10).toStringAsFixed(0)} %',
+                                            '${((planetModel.soil_ph.degree ?? planetModel.soil_ph.minimum ?? 0)).toStringAsFixed(0)} ',
                                         image: AssetsManager.phIMG,
                                         label: 'Optimal Ph',
                                       ),
@@ -330,27 +379,66 @@ class MyPlantItem extends StatelessWidget {
                                         onTap: null,
                                         active: false,
                                         text:
-                                            '${((planetModel.soil_moister.degree ?? planetModel.soil_moister.minimum ?? 0) / 10).toStringAsFixed(0)} %',
+                                            '${((planetModel.soil_moister.degree ?? planetModel.soil_moister.minimum ?? 0)).toStringAsFixed(0)} %',
                                         image: AssetsManager.soilIMG,
                                         label: 'Soil Moister',
                                       ),
                                       const SizedBox(
                                         height: AppSize.s20,
                                       ),
+                                      // Container(
+                                      //   decoration: BoxDecoration(
+                                      //       color: ColorManager.appBarColor
+                                      //           .withOpacity(.7),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(12.0)),
+                                      //   child: ExpansionTile(
+                                      //     title: Text('Show Info'),
+                                      //     children: [
+                                      //       Padding(
+                                      //         padding: const EdgeInsets.all(
+                                      //             AppPadding.p12),
+                                      //         child: Text(
+                                      //           planetModel.description ?? '',
+                                      //           style: TextStyle(
+                                      //             fontSize: 16.sp,
+                                      //             height: 1.6,
+                                      //           ),
+                                      //         ),
+                                      //       ),
+                                      //     ],
+                                      //   ),
+                                      // ),
+                                      const SizedBox(
+                                        height: AppSize.s20,
+                                      ),
                                       Container(
                                         decoration: BoxDecoration(
-                                            color: ColorManager.gradientColor2
+                                            color: ColorManager.appBarColor
                                                 .withOpacity(.7),
                                             borderRadius:
                                                 BorderRadius.circular(12.0)),
                                         child: ExpansionTile(
-                                          title: Text('Show Info'),
+                                          leading: SizedBox(
+                                            width: 45, // Adjust width as needed
+                                            height:
+                                                45, // Adjust height as needed
+                                            child: Image.asset(
+                                                'assets/icons/soil.png'),
+                                          ),
+                                          title: Text(
+                                              'Soil Moister' +
+                                                  '  ${((planetModel.soil_moister.degree ?? planetModel.soil_moister.minimum ?? 0)).toStringAsFixed(0)} %',
+                                              style: TextStyle(
+                                                  color: ColorManager.white,
+                                                  fontWeight: FontWeight.normal,
+                                                  fontSize: 20.sp)),
                                           children: [
                                             Padding(
                                               padding: const EdgeInsets.all(
                                                   AppPadding.p12),
                                               child: Text(
-                                                planetModel.description ?? '',
+                                                'Show Info Show Info Show Info Show Info Show Info Show Info Show Info Show Info Show Info Show Info',
                                                 style: TextStyle(
                                                   fontSize: 16.sp,
                                                   height: 1.6,
@@ -380,7 +468,7 @@ class MyPlantItem extends StatelessWidget {
                   },
                   icon: Icon(
                     Icons.cancel_outlined,
-                    color: ColorManager.primary,
+                    color: ColorManager.appBarColor,
                     size: 30.sp,
                   )))
         ],
@@ -416,6 +504,8 @@ class HomeScreenListTileWidget extends StatelessWidget {
     );
   }
 }
+
+//////////
 
 /// OLD CODE
 /*

@@ -50,18 +50,24 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   var getNotifications;
   late NotificationProvider notificationProvider;
-  getNotificationsFun()  {
-    String idUser=context.read<ProfileProvider>().user.id;
-    getNotifications = FirebaseFirestore.instance.collection(AppConstants.collectionNotification)
-        .where('idUser',isEqualTo:idUser).snapshots();
+  getNotificationsFun() {
+    String idUser = context.read<ProfileProvider>().user.id;
+    getNotifications = FirebaseFirestore.instance
+        .collection(AppConstants.collectionNotification)
+        .where('idUser', isEqualTo: idUser)
+        .snapshots();
     return getNotifications;
   }
+
   @override
   void initState() {
-    notificationProvider=  Provider.of<NotificationProvider>(context,listen: false);;
+    notificationProvider =
+        Provider.of<NotificationProvider>(context, listen: false);
+    ;
     getNotificationsFun();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return GradientContainerWidget(
@@ -70,9 +76,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
         appBar: AppBar(
           title: Text(AppString.notifications),
         ),
-        body:
-        StreamBuilder<QuerySnapshot>(
-          //prints the messages to the screen0
+        body: StreamBuilder<QuerySnapshot>(
+            //prints the messages to the screen0
             stream: getNotifications,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -82,44 +87,53 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   return const Text('Error');
                 } else if (snapshot.hasData) {
                   Const.SHOWLOADINGINDECATOR();
-                  notificationProvider.notifications.listNotificationModel.clear();
+                  notificationProvider.notifications.listNotificationModel
+                      .clear();
                   if (snapshot.data!.docs!.length > 0) {
-                    notificationProvider.notifications = NotificationModels.fromJson(snapshot.data!.docs!);
+                    notificationProvider.notifications =
+                        NotificationModels.fromJson(snapshot.data!.docs!);
                   }
-                  List<NotificationModel> listNotifications=notificationProvider.notifications.listNotificationModel;
-                  return
-                    listNotifications.isEmpty?
-                    Const.emptyWidget(context,text: "No Notification Yet")
-                        :
-                    ListView.builder(
-                        itemCount:listNotifications.length,
-                        itemBuilder: (_, index) {
-                          bool isSameDate = true;
-                          final String dateString = list[0]['time'];
-                          final DateTime date = listNotifications[index].dateTime;//DateTime.parse(dateString);
-                          final item = listNotifications[index];
-                          if (index == 0) {
-                            isSameDate = false;
-                          } else {
-                            //final String prevDateString = list[index - 1]['time'];
-                            final DateTime prevDate = listNotifications[index-1].dateTime; //DateTime.parse(prevDateString);
-                            isSameDate = date.isSameDate(prevDate);
-                          }
-                          if (index == 0 || !(isSameDate)) {
-                            return NotificationWidget(date: date,index: index,notificationModel: item,);
-                          } else {
-                            return NotificationItem(index: index, notificationModel: item,);
-                          }
-                        })
-                  ;
+                  List<NotificationModel> listNotifications =
+                      notificationProvider.notifications.listNotificationModel;
+                  return listNotifications.isEmpty
+                      ? Const.emptyWidget(context, text: "No Notification Yet")
+                      : ListView.builder(
+                          itemCount: listNotifications.length,
+                          itemBuilder: (_, index) {
+                            bool isSameDate = true;
+                            final String dateString = list[0]['time'];
+                            final DateTime date = listNotifications[index]
+                                .dateTime; //DateTime.parse(dateString);
+                            final item = listNotifications[index];
+                            if (index == 0) {
+                              isSameDate = false;
+                            } else {
+                              //final String prevDateString = list[index - 1]['time'];
+                              final DateTime prevDate = listNotifications[
+                                      index - 1]
+                                  .dateTime; //DateTime.parse(prevDateString);
+                              isSameDate = date.isSameDate(prevDate);
+                            }
+                            if (index == 0 || !(isSameDate)) {
+                              return NotificationWidget(
+                                date: date,
+                                index: index,
+                                notificationModel: item,
+                              );
+                            } else {
+                              return NotificationItem(
+                                index: index,
+                                notificationModel: item,
+                              );
+                            }
+                          });
                 } else {
                   return const Text('Empty data');
                 }
               } else {
                 return Text('State: ${snapshot.connectionState}');
               }
-            })
-        ,
+            }),
       ),
     );
   }
@@ -127,7 +141,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
 class NotificationItem extends StatelessWidget {
   const NotificationItem({
-    super.key, required this.index,
+    super.key,
+    required this.index,
     required this.notificationModel,
   });
 
@@ -137,31 +152,38 @@ class NotificationItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
-        notificationModel.checkRec=true;
-        context.read<NotificationProvider>().updateNotification(context, notification: notificationModel);
+      onTap: () {
+        notificationModel.checkRec = true;
+        context
+            .read<NotificationProvider>()
+            .updateNotification(context, notification: notificationModel);
       },
       child: Container(
         margin: EdgeInsets.symmetric(
             horizontal: AppMargin.m14, vertical: AppMargin.m4),
         decoration: BoxDecoration(
           color: !notificationModel.checkRec
-              ?ColorManager.secondary:ColorManager.white,
+              ? ColorManager.appBarColor.withOpacity(0.8)
+              : ColorManager.white,
           borderRadius: BorderRadius.circular(6.r),
         ),
         child: ListTile(
           title: Text(
-            notificationModel.title+' $index',
+            notificationModel.title + ' $index',
             style: StylesManager.titleBoldTextStyle(
-              size: 20.sp,
-              color: ColorManager.primary,
-            ),
+                size: 20.sp,
+                color: notificationModel.checkRec
+                    ? ColorManager.black
+                    : ColorManager.white),
           ),
           subtitle: Text(
             notificationModel.subtitle,
-            style: TextStyle().copyWith(color: ColorManager.black),
+            style: TextStyle().copyWith(
+                color: notificationModel.checkRec
+                    ? ColorManager.black
+                    : ColorManager.white),
           ),
-          trailing: Icon(!notificationModel.checkRec?null:Icons.check),
+          trailing: Icon(!notificationModel.checkRec ? null : Icons.check),
         ),
       ),
     );
@@ -171,7 +193,9 @@ class NotificationItem extends StatelessWidget {
 class NotificationWidget extends StatelessWidget {
   const NotificationWidget({
     super.key,
-    required this.date, required this.index, required this.notificationModel,
+    required this.date,
+    required this.index,
+    required this.notificationModel,
   });
 
   final DateTime date;
@@ -187,20 +211,28 @@ class NotificationWidget extends StatelessWidget {
           Row(
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: AppMargin.m8,top: AppMargin.m10,bottom:AppMargin.m8 ),
-
+                padding: const EdgeInsets.only(
+                    left: AppMargin.m8,
+                    top: AppMargin.m10,
+                    bottom: AppMargin.m8),
                 child: Text(
                   date.formatDate(),
                   style: StylesManager.titleNormalTextStyle(
                     size: 16.sp,
-                    color: ColorManager.white,
+                    color: ColorManager.appBarColor,
                   ),
                 ),
               ),
-              Expanded(child: Divider(color: Colors.white,))
+              Expanded(
+                  child: Divider(
+                color: ColorManager.appBarColor,
+              ))
             ],
           ),
-          NotificationItem(index: index,notificationModel: notificationModel,)
+          NotificationItem(
+            index: index,
+            notificationModel: notificationModel,
+          )
         ]);
   }
 }

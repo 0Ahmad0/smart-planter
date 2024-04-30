@@ -21,17 +21,15 @@ class ThemeManager {
           appBarTheme: AppBarTheme(
             backgroundColor: ColorManager.appBarColor,
             iconTheme: IconThemeData(
-              color: ColorManager.primary,
+              color: ColorManager.white,
             ),
             elevation: 0.0,
             centerTitle: true,
             titleTextStyle: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: ColorManager.primary,
+                color: ColorManager.white,
                 fontSize: 24.sp),
           ),
-          listTileTheme: ListTileThemeData(
-              titleTextStyle: TextStyle(color: ColorManager.white)),
           drawerTheme: DrawerThemeData(backgroundColor: ColorManager.secondary))
       .copyWith(
           textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),

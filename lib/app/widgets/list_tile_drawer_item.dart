@@ -29,7 +29,7 @@ class ListTileDrawerItem extends StatelessWidget {
             color: ColorManager.white, size: 18.sp),
       ),
       trailing: trailing,
-      iconColor: ColorManager.gradientColor1,
+      iconColor: ColorManager.white,
       selectedTileColor: ColorManager.gradientColor2,
     );
   }
