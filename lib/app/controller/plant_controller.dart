@@ -225,7 +225,7 @@ class PlantController {
             notification: NotificationModel(
                 idUser: idUser,
                 subtitle: AppString.notify_max_temperature_plant +
-                    ' ${planetModel2.name}',
+                    ' ${planetModel2.name}  ' + '${planetModel2.temperature.degree}',
                 dateTime: DateTime.now(),
                 title: AppString.notify_change_plant_warning,
                 message: ''));
@@ -236,7 +236,7 @@ class PlantController {
             notification: NotificationModel(
                 idUser: idUser,
                 subtitle: AppString.notify_min_temperature_plant +
-                    ' ${planetModel2.name}',
+                    ' ${planetModel2.name}  ' + '${planetModel2.temperature.degree}',
                 dateTime: DateTime.now(),
                 title: AppString.notify_change_plant_warning,
                 message: ''));
@@ -251,7 +251,7 @@ class PlantController {
             notification: NotificationModel(
                 idUser: idUser,
                 subtitle: AppString.notify_max_sunlight_plant +
-                    ' ${planetModel2.name}',
+                    ' ${planetModel2.name}  ' +'${planetModel2.sunlight.degree}',
                 dateTime: DateTime.now(),
                 title: AppString.notify_change_plant_warning,
                 message: ''));
@@ -262,7 +262,7 @@ class PlantController {
             notification: NotificationModel(
                 idUser: idUser,
                 subtitle: AppString.notify_min_sunlight_plant +
-                    ' ${planetModel2.name}',
+                    ' ${planetModel2.name}  ' + '${planetModel2.sunlight.degree}',
                 dateTime: DateTime.now(),
                 title: AppString.notify_change_plant_warning,
                 message: ''));
@@ -276,8 +276,8 @@ class PlantController {
             notification: NotificationModel(
                 idUser: idUser,
                 subtitle: AppString.notify_max_soil_ph_plant +
-                    ' ${planetModel2.name}' +
-                    '${planetModel2.soil_ph}',
+                    ' ${planetModel2.name}  ' +
+                    '${planetModel2.soil_ph.degree}',
                 dateTime: DateTime.now(),
                 title: AppString.notify_change_plant_warning,
                 message: ''));
@@ -288,7 +288,7 @@ class PlantController {
             notification: NotificationModel(
                 idUser: idUser,
                 subtitle: AppString.notify_min_soil_ph_plant +
-                    ' ${planetModel2.name}',
+                    ' ${planetModel2.name}  '+ '${planetModel2.soil_ph.degree}',
                 dateTime: DateTime.now(),
                 title: AppString.notify_change_plant_warning,
                 message: ''));
@@ -305,7 +305,8 @@ class PlantController {
             notification: NotificationModel(
                 idUser: idUser,
                 subtitle: AppString.notify_max_soil_moister_plant +
-                    ' ${planetModel2.name}',
+                    ' ${planetModel2.name}  '
+                +'${planetModel2.soil_moister.degree}',
                 dateTime: DateTime.now(),
                 title: AppString.notify_change_plant_warning,
                 message: ''));
@@ -316,7 +317,8 @@ class PlantController {
             notification: NotificationModel(
                 idUser: idUser,
                 subtitle: AppString.notify_min_soil_moister_plant +
-                    ' ${planetModel2.name}',
+                    ' ${planetModel2.name}  '+
+                '${planetModel2.soil_moister.degree}',
                 dateTime: DateTime.now(),
                 title: AppString.notify_change_plant_warning,
                 message: ''));
