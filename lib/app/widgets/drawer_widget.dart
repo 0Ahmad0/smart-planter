@@ -113,15 +113,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               Get.toNamed(AppRoute.addNewPlantRoute);
             },
           ),
-          Divider(),
-          ListTileDrawerItem(
-            text: AppString.aiChat,
-            icon: Icons.question_answer,
-            onTap: () {
-              Get.back();
-              Get.to(()=>ChatBotScreen(),transition: Transition.topLevel);
-            },
-          ),
+
           const Spacer(),
           ListTileDrawerItem(
             text: 'Log out',

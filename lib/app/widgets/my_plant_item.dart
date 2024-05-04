@@ -168,18 +168,55 @@ class MyPlantItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    HomeScreenListTileWidget(
-                      image: AssetsManager.sunIMG,
-                      text:
-                          'Fully Sunlight  ${((planetModel.sunlight.degree ?? planetModel.sunlight.minimum ?? 0) / 10).toStringAsFixed(0)}  %',
+                    IntrinsicHeight(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: HomeScreenListTileWidget(
+                              image: AssetsManager.sunIMG,
+                              text:
+                                  '${((planetModel.sunlight.degree ?? planetModel.sunlight.minimum ?? 0) / 10).toStringAsFixed(0)}  %',
+                            ),
+                          ),
+                          VerticalDivider(
+                            color: ColorManager.white,
+                          ),
+                          Expanded(
+                            child: HomeScreenListTileWidget(
+                              image: AssetsManager.phIMG,
+                              text:
+                                  '${(planetModel.soil_ph.degree ?? planetModel.soil_ph.minimum ?? 0)} ',
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     const Divider(
                       height: 0.0,
+                      color: ColorManager.white,
                     ),
-                    HomeScreenListTileWidget(
-                      image: AssetsManager.thermometerIMG,
-                      text:
-                          'Temperature  ${planetModel.temperature.degree ?? planetModel.temperature.minimum ?? 0}  C°',
+                    IntrinsicHeight(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: HomeScreenListTileWidget(
+                              image: AssetsManager.thermometerIMG,
+                              text:
+                                  '${planetModel.temperature.degree ?? planetModel.temperature.minimum ?? 0}  C°',
+                            ),
+                          ),
+                          VerticalDivider(
+                            color: ColorManager.white,
+                          ),
+                          Expanded(
+                            child: HomeScreenListTileWidget(
+                              image: AssetsManager.soilIMG,
+                              text:
+                                  '${planetModel.soil_moister.degree ?? planetModel.soil_moister.minimum ?? 0} %',
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -292,7 +329,9 @@ class MyPlantItem extends StatelessWidget {
                                             )),
                                         child: planetModel.url_image != null
                                             ? Image.network(
-                                                planetModel.url_image ?? '')
+                                                planetModel.url_image ?? '',
+
+                                        )
                                             : Image.asset(
                                                 'assets/images/logo.png'),
                                       ),
@@ -354,100 +393,40 @@ class MyPlantItem extends StatelessWidget {
                                       DetailsPlantLineWidget(
                                         onTap: null,
                                         active: false,
-                                        text:
-                                            ' 0 - ${planetModel.temperature.degree ?? planetModel.temperature.minimum ?? 0} c',
+                                        text: '25 c',
+                                        // text:
+                                        //     ' 0 - ${planetModel.temperature.degree ?? planetModel.temperature.minimum ?? 0} c',
                                         image: AssetsManager.thermometerIMG,
                                         label: 'Temperature',
                                       ),
                                       DetailsPlantLineWidget(
                                         onTap: null,
                                         active: false,
-                                        text:
-                                            '${((planetModel.sunlight.degree ?? planetModel.sunlight.minimum ?? 0)).toStringAsFixed(0)} %',
+                                        text: '100 %',
+                                        // text:
+                                        //     '${((planetModel.sunlight.degree ?? planetModel.sunlight.minimum ?? 0)).toStringAsFixed(0)} %',
                                         image: AssetsManager.sunIMG,
                                         label: 'Fully Sunlight',
                                       ),
                                       DetailsPlantLineWidget(
                                         onTap: null,
                                         active: false,
-                                        text:
-                                            '${((planetModel.soil_ph.degree ?? planetModel.soil_ph.minimum ?? 0)).toStringAsFixed(0)} ',
+                                        text: '4.5',
+                                        // text:
+                                        //     '${((planetModel.soil_ph.degree ?? planetModel.soil_ph.minimum ?? 0)).toStringAsFixed(0)} ',
                                         image: AssetsManager.phIMG,
                                         label: 'Optimal Ph',
                                       ),
                                       DetailsPlantLineWidget(
                                         onTap: null,
                                         active: false,
-                                        text:
-                                            '${((planetModel.soil_moister.degree ?? planetModel.soil_moister.minimum ?? 0)).toStringAsFixed(0)} %',
+                                        text: '50 %',
+                                        // text:
+                                        //     '${((planetModel.soil_moister.degree ?? planetModel.soil_moister.minimum ?? 0)).toStringAsFixed(0)} %',
                                         image: AssetsManager.soilIMG,
                                         label: 'Soil Moister',
                                       ),
-                                      const SizedBox(
-                                        height: AppSize.s20,
-                                      ),
-                                      // Container(
-                                      //   decoration: BoxDecoration(
-                                      //       color: ColorManager.appBarColor
-                                      //           .withOpacity(.7),
-                                      //       borderRadius:
-                                      //           BorderRadius.circular(12.0)),
-                                      //   child: ExpansionTile(
-                                      //     title: Text('Show Info'),
-                                      //     children: [
-                                      //       Padding(
-                                      //         padding: const EdgeInsets.all(
-                                      //             AppPadding.p12),
-                                      //         child: Text(
-                                      //           planetModel.description ?? '',
-                                      //           style: TextStyle(
-                                      //             fontSize: 16.sp,
-                                      //             height: 1.6,
-                                      //           ),
-                                      //         ),
-                                      //       ),
-                                      //     ],
-                                      //   ),
-                                      // ),
-                                      const SizedBox(
-                                        height: AppSize.s20,
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                            color: ColorManager.appBarColor
-                                                .withOpacity(.7),
-                                            borderRadius:
-                                                BorderRadius.circular(12.0)),
-                                        child: ExpansionTile(
-                                          leading: SizedBox(
-                                            width: 45, // Adjust width as needed
-                                            height:
-                                                45, // Adjust height as needed
-                                            child: Image.asset(
-                                                'assets/icons/soil.png'),
-                                          ),
-                                          title: Text(
-                                              'Soil Moister' +
-                                                  '  ${((planetModel.soil_moister.degree ?? planetModel.soil_moister.minimum ?? 0)).toStringAsFixed(0)} %',
-                                              style: TextStyle(
-                                                  color: ColorManager.white,
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 20.sp)),
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.all(
-                                                  AppPadding.p12),
-                                              child: Text(
-                                                'Show Info Show Info Show Info Show Info Show Info Show Info Show Info Show Info Show Info Show Info',
-                                                style: TextStyle(
-                                                  fontSize: 16.sp,
-                                                  height: 1.6,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
+
                                     ],
                                   ),
                                 );
@@ -499,6 +478,7 @@ class HomeScreenListTileWidget extends StatelessWidget {
         text,
         style: TextStyle(
           color: ColorManager.white,
+          fontSize: 20.0
         ),
       ),
     );

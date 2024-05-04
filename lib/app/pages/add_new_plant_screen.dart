@@ -241,10 +241,10 @@ class _AddPlantFormWidgetState extends State<AddPlantFormWidget> {
   final nameController = TextEditingController();
   final soilPhController = TextEditingController();
   final fertilizerQuantityController = TextEditingController();
-  final repeatFertlizingController = TextEditingController();
+  final repeatFertlizingController = TextEditingController(text: '0');
   final waterQuantityController = TextEditingController();
   final soilMoisterController = TextEditingController();
-  final repeatWateringController = TextEditingController();
+  final repeatWateringController = TextEditingController(text: '0');
   final temperatureController = TextEditingController();
   final sunlightController = TextEditingController();
   final descriptionController = TextEditingController();
@@ -317,15 +317,15 @@ class _AddPlantFormWidgetState extends State<AddPlantFormWidget> {
                 controller: fertilizerQuantityController,
                 hintText: 'Fertilizer quantity',
               ),
-              const SizedBox(
-                height: AppSize.s10,
-              ),
-              TextFiledApp(
-                keyboardType: textInputType,
-                filteringTextFormatterList: textInputFormatter,
-                controller: repeatFertlizingController,
-                hintText: 'Repeat fertlizing',
-              ),
+              // const SizedBox(
+              //   height: AppSize.s10,
+              // ),
+              // TextFiledApp(
+              //   keyboardType: textInputType,
+              //   filteringTextFormatterList: textInputFormatter,
+              //   controller: repeatFertlizingController,
+              //   hintText: 'Repeat fertlizing',
+              // ),
               const SizedBox(
                 height: AppSize.s10,
               ),
@@ -344,15 +344,15 @@ class _AddPlantFormWidgetState extends State<AddPlantFormWidget> {
                 controller: soilMoisterController,
                 hintText: 'Soil moister',
               ),
-              const SizedBox(
-                height: AppSize.s10,
-              ),
-              TextFiledApp(
-                keyboardType: textInputType,
-                filteringTextFormatterList: textInputFormatter,
-                controller: repeatWateringController,
-                hintText: 'Repeat watering',
-              ),
+              // const SizedBox(
+              //   height: AppSize.s10,
+              // ),
+              // TextFiledApp(
+              //   keyboardType: textInputType,
+              //   filteringTextFormatterList: textInputFormatter,
+              //   controller: repeatWateringController,
+              //   hintText: 'Repeat watering',
+              // ),
               const SizedBox(
                 height: AppSize.s10,
               ),
