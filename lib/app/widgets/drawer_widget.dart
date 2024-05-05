@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:smart_plans/core/utils/values_manager.dart';
 import '../../core/utils/app_constant.dart';
 import '../models/notification_model.dart';
-import '../pages/chat_gpt/chat_bot_page.dart';
 import '/core/route/app_route.dart';
 import '/core/utils/app_string.dart';
 import '/core/utils/color_manager.dart';
