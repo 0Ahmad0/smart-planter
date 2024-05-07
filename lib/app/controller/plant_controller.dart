@@ -206,6 +206,8 @@ class PlantController {
     String idUser = context.read<ProfileProvider>().user.id;
     if (oldPlanetModel == null)
       ;
+
+
     // NotificationProvider().addNotification(context,
     //     notification: NotificationModel(idUser:idUser, subtitle:AppString.notify_new_plant_subtitle+ ' ${planetModel2.name}', dateTime: DateTime.now(), title:AppString.notify_new_plant_title, message: ''));
 
@@ -219,7 +221,7 @@ class PlantController {
             planetModel2.temperature.maximum ||
         oldPlanetModel.temperature.degree != planetModel2.temperature.degree) {
       if (compareNumber(planetModel2.temperature.degree,
-          planetModel2.temperature.maximum) ==
+          planetModel2.temperature.maximum??30) ==
           1)
         NotificationProvider().addNotification(context,
             notification: NotificationModel(
@@ -230,7 +232,7 @@ class PlantController {
                 title: AppString.notify_change_plant_warning,
                 message: ''));
       else if (compareNumber(planetModel2.temperature.degree,
-          planetModel2.temperature.minimum) ==
+          planetModel2.temperature.minimum??20) ==
           -1)
         NotificationProvider().addNotification(context,
             notification: NotificationModel(
@@ -244,8 +246,8 @@ class PlantController {
         planetModel2.sunlight.minimum ||
         oldPlanetModel.sunlight.maximum != planetModel2.sunlight.maximum ||
         oldPlanetModel.sunlight.degree != planetModel2.sunlight.degree) {
-      if (compareNumber(
-          planetModel2.sunlight.degree, planetModel2.sunlight.maximum) ==
+     if (compareNumber(
+          planetModel2.sunlight.degree, planetModel2.sunlight.maximum??999) ==
           1)
         NotificationProvider().addNotification(context,
             notification: NotificationModel(
@@ -256,8 +258,9 @@ class PlantController {
                 title: AppString.notify_change_plant_warning,
                 message: ''));
       else if (compareNumber(
-          planetModel2.sunlight.degree, planetModel2.sunlight.minimum) ==
+          planetModel2.sunlight.degree, planetModel2.sunlight.minimum??900) ==
           -1)
+
         NotificationProvider().addNotification(context,
             notification: NotificationModel(
                 idUser: idUser,
@@ -270,7 +273,7 @@ class PlantController {
         oldPlanetModel.soil_ph.maximum != planetModel2.soil_ph.maximum ||
         oldPlanetModel.soil_ph.degree != planetModel2.soil_ph.degree) {
       if (compareNumber(
-          planetModel2.soil_ph.degree, planetModel2.soil_ph.maximum) ==
+          planetModel2.soil_ph.degree, planetModel2.soil_ph.maximum??5.5) ==
           1)
         NotificationProvider().addNotification(context,
             notification: NotificationModel(
@@ -282,8 +285,9 @@ class PlantController {
                 title: AppString.notify_change_plant_warning,
                 message: ''));
       else if (compareNumber(
-          planetModel2.soil_ph.degree, planetModel2.soil_ph.minimum) ==
+          planetModel2.soil_ph.degree, planetModel2.soil_ph.minimum??5.5) ==
           -1)
+
         NotificationProvider().addNotification(context,
             notification: NotificationModel(
                 idUser: idUser,
@@ -299,7 +303,7 @@ class PlantController {
         oldPlanetModel.soil_moister.degree !=
             planetModel2.soil_moister.degree) {
       if (compareNumber(planetModel2.soil_moister.degree,
-          planetModel2.soil_moister.maximum) ==
+          planetModel2.soil_moister.maximum??40) ==
           1)
         NotificationProvider().addNotification(context,
             notification: NotificationModel(
@@ -310,8 +314,9 @@ class PlantController {
                 dateTime: DateTime.now(),
                 title: AppString.notify_change_plant_warning,
                 message: ''));
+
       else if (compareNumber(planetModel2.soil_moister.degree,
-          planetModel2.soil_moister.minimum) ==
+          planetModel2.soil_moister.minimum??40) ==
           -1)
         NotificationProvider().addNotification(context,
             notification: NotificationModel(
