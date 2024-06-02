@@ -34,7 +34,7 @@ class DetailsPlantWidget extends StatelessWidget {
           padding: const EdgeInsets.all(AppPadding.p8),
           decoration: BoxDecoration(
               color: active
-                  ? ColorManager.gradientColor2
+                  ? ColorManager.appBarColor.withOpacity(0.9)
                   : ColorManager.gradientColor2,
               borderRadius: BorderRadius.circular(14.r)),
           child: Column(
@@ -44,9 +44,7 @@ class DetailsPlantWidget extends StatelessWidget {
                 width: AppSize.s50,
                 height: AppSize.s50,
                 decoration: BoxDecoration(
-                    color: active
-                        ? ColorManager.gradientColor1
-                        : ColorManager.grey,
+                    color: active ? ColorManager.fwhite : ColorManager.grey,
                     shape: BoxShape.circle),
                 child: Padding(
                   padding: const EdgeInsets.all(AppPadding.p10),
@@ -154,15 +152,15 @@ class DetailsPlantLineWidget extends StatelessWidget {
         children: [
           Container(
               alignment: Alignment.bottomCenter,
-              margin: const EdgeInsets.only(
-                  top: AppMargin.m30, left: AppMargin.m30),
+              margin:
+                  const EdgeInsets.only(top: AppMargin.m4, left: AppMargin.m4),
               padding: const EdgeInsets.only(
-                left: AppPadding.p20,
+                left: AppPadding.p40,
               ),
               decoration: BoxDecoration(
                   color: active
-                      ? ColorManager.gradientColor2
-                      : ColorManager.gradientColor2,
+                      ? ColorManager.appBarColor
+                      : ColorManager.appBarColor.withOpacity(0.8),
                   borderRadius: BorderRadius.circular(14.r)),
               child: ListTile(
                 title: Text(
@@ -177,28 +175,27 @@ class DetailsPlantLineWidget extends StatelessWidget {
                   child: Text(
                     text,
                     style: StylesManager.titleBoldTextStyle(
-                      size: 18.sp,
-                      //ToDo: Change Text Color
-                      color: ColorManager.white
-                    ),
+                        size: 18.sp,
+                        //ToDo: Change Text Color
+                        color: ColorManager.white),
                   ),
                 ),
               )),
           Positioned(
-            bottom: 6.0,
-            left: 0.0,
+            bottom: 10.0,
+            left: 8.0,
             child: Container(
-              width: AppSize.s60,
-              height: AppSize.s60,
-              decoration: BoxDecoration(
-                  border: Border.all(
-                    color: ColorManager.gradientColor1,
-                    width: AppSize.s4,
-                  ),
-                  color: active
-                      ? ColorManager.gradientColor1
-                      : ColorManager.gradientColor2,
-                  shape: BoxShape.circle),
+              width: AppSize.s50,
+              height: AppSize.s50,
+              // decoration: BoxDecoration(
+              //     border: Border.all(
+              //       color: ColorManager.gradientColor1,
+              //       width: AppSize.s4,
+              //     ),
+              //     color: active
+              //         ? ColorManager.gradientColor1
+              //         : ColorManager.gradientColor2,
+              //     shape: BoxShape.circle),
               child: Padding(
                 padding: const EdgeInsets.all(AppPadding.p10),
                 child: Image.asset(

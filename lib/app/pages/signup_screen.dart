@@ -38,6 +38,7 @@ class _SignupScreenState extends State<SignupScreen> {
     authController = AuthController(context: context);
     super.initState();
   }
+
   @override
   void dispose() {
     nameController.dispose();
@@ -63,29 +64,29 @@ class _SignupScreenState extends State<SignupScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const SizedBox(
-                      height: AppSize.s20,
+                      height: AppSize.s10,
                     ),
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: AppString.welcome + ' ',
-                            style: StylesManager.titleBoldTextStyle(
-                              size: 30.sp,
-                            ),
-                          ),
-                          TextSpan(
-                            text: AppString.appName,
-                            style: StylesManager.titleBoldTextStyle(
-                              size: 32.sp,
-                            ),
-                          ),
-                        ],
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
+                    // Text.rich(
+                    //   TextSpan(
+                    //     children: [
+                    //       TextSpan(
+                    //         text: AppString.welcome + ' ',
+                    //         style: StylesManager.titleBoldTextStyle(
+                    //           size: 30.sp,
+                    //         ),
+                    //       ),
+                    //       TextSpan(
+                    //         text: AppString.appName,
+                    //         style: StylesManager.titleBoldTextStyle(
+                    //           size: 32.sp,
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    //   textAlign: TextAlign.center,
+                    // ),
                     const SizedBox(
-                      height: AppSize.s20,
+                      height: AppSize.s30,
                     ),
                     Image.asset(
                       AssetsManager.logoIMG,
@@ -96,7 +97,8 @@ class _SignupScreenState extends State<SignupScreen> {
                       height: AppSize.s40,
                     ),
                     TextFiledApp(
-                      validator: (value)=>Validator.validateName(name: nameController.text),
+                      validator: (value) =>
+                          Validator.validateName(name: nameController.text),
                       controller: nameController,
                       iconData: Icons.person_outline,
                       hintText: AppString.name,
@@ -105,7 +107,8 @@ class _SignupScreenState extends State<SignupScreen> {
                       height: AppSize.s30,
                     ),
                     TextFiledApp(
-                      validator: (value)=>Validator.validateEmail(email: emailController.text),
+                      validator: (value) =>
+                          Validator.validateEmail(email: emailController.text),
                       controller: emailController,
                       iconData: Icons.alternate_email,
                       hintText: AppString.email,
@@ -114,7 +117,9 @@ class _SignupScreenState extends State<SignupScreen> {
                       height: AppSize.s30,
                     ),
                     TextFiledApp(
-                      validator: (value)=>Validator.validatePassword(password: passwordController.text),
+                      textColor: ColorManager.appBarColor,
+                      validator: (value) => Validator.validatePassword(
+                          password: passwordController.text),
                       controller: passwordController,
                       iconData: Icons.lock_outline,
                       hintText: AppString.passWord,
@@ -125,10 +130,9 @@ class _SignupScreenState extends State<SignupScreen> {
                       height: AppSize.s30,
                     ),
                     TextFiledApp(
-                      validator: (value)=>Validator.validateConfirmPassword(
-                        confirmPassword: confirmPasswordController.text,
-                        password: passwordController.text
-                      ),
+                      validator: (value) => Validator.validateConfirmPassword(
+                          confirmPassword: confirmPasswordController.text,
+                          password: passwordController.text),
                       controller: confirmPasswordController,
                       iconData: Icons.lock_outline,
                       hintText: AppString.confirmPassword,
@@ -140,15 +144,15 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     ButtonApp(
                       text: AppString.signup,
-                      textColor: ColorManager.primary,
-                      backgroundColor: ColorManager.secondary,
+                      textColor: ColorManager.fwhite,
+                      backgroundColor: ColorManager.appBarColor,
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                            authController.signUp(context,
-                                email: emailController.value.text,
-                                password: passwordController.value.text,
-                                typeUser: AppConstants.collectionUser,
-                                name: nameController.value.text);
+                          authController.signUp(context,
+                              email: emailController.value.text,
+                              password: passwordController.value.text,
+                              typeUser: AppConstants.collectionUser,
+                              name: nameController.value.text);
                         } else {
                           print('No');
                         }
@@ -168,14 +172,15 @@ class _SignupScreenState extends State<SignupScreen> {
                               text: AppString.allReadyHaveAccount,
                               style: TextStyle(
                                 fontSize: 20.sp,
-                                color: ColorManager.secondary.withOpacity(.75),
+                                color:
+                                    ColorManager.appBarColor.withOpacity(.75),
                               )),
                           TextSpan(
                               text: AppString.login,
                               style: TextStyle(
                                 fontSize: 22.sp,
                                 fontWeight: FontWeight.bold,
-                                color: ColorManager.secondary,
+                                color: ColorManager.appBarColor,
                                 decoration: TextDecoration.underline,
                               ))
                         ])))

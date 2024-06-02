@@ -24,6 +24,8 @@ class TextFiledApp extends StatefulWidget {
       this.readOnly = false,
       this.maxLine = 1,
       this.minLine = 1,
+      this.hintColor = ColorManager.appBarColor,
+      this.textColor = ColorManager.appBarColor,
       this.filteringTextFormatterList,
       this.iconDataImage})
       : super(key: key);
@@ -34,6 +36,8 @@ class TextFiledApp extends StatefulWidget {
   final IconData? iconData;
   final String? iconDataImage;
   final String? hintText;
+  final Color? hintColor;
+  final Color? textColor;
   final bool suffixIcon;
   final bool autofocus;
   final bool readOnly;
@@ -59,6 +63,7 @@ class _TextFiledAppState extends State<TextFiledApp> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      style: TextStyle(color: widget.textColor),
       inputFormatters: widget.filteringTextFormatterList,
       maxLines: widget.maxLine,
       minLines: widget.minLine,
@@ -86,7 +91,7 @@ class _TextFiledAppState extends State<TextFiledApp> {
         enabledBorder: StylesManager.borderTextFiled(),
         focusedBorder: StylesManager.borderTextFiled(width: 4),
         hintStyle: TextStyle(
-          color: ColorManager.white,
+          color: widget.hintColor,
         ),
         errorStyle: TextStyle(color: ColorManager.secondary),
         errorMaxLines: 2,

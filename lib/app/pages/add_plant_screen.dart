@@ -27,7 +27,7 @@ class AddPlantScreen extends StatefulWidget {
 }
 
 class _AddPlantScreenState extends State<AddPlantScreen> {
-  bool isGrid = false;
+  bool isGrid = true;
   var getPlants;
 
   DateTime selectDate = DateTime.now();
@@ -58,7 +58,7 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
             FloatingActionButton(
               backgroundColor: ColorManager.white,
               onPressed: () {
-                Get.to(()=>AddNewPlantScreen(),transition: Transition.zoom);
+                Get.to(() => AddNewPlantScreen(), transition: Transition.zoom);
               },
               child: Image.asset(
                 AssetsManager.addNewPlantIconIMG,
@@ -71,13 +71,11 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                 left: 0,
                 child: Container(
                   decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: ColorManager.secondary
-                  ),
+                      shape: BoxShape.circle, color: ColorManager.appBarColor),
                   child: Icon(
                     Icons.add,
                     size: 24.sp,
-                    color: ColorManager.primary,
+                    color: ColorManager.fwhite,
                   ),
                 ))
           ],
@@ -107,9 +105,10 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
 
                   List<PlanetModel> plants = [];
                   if (snapshot.data!.docs!.length > 0) {
-                    plants =
-                        PlanetModels.fromJson(snapshot.data!.docs!).planetModels;
-                    plantController.processDefaultPlants(context, plants: plants);
+                    plants = PlanetModels.fromJson(snapshot.data!.docs!)
+                        .planetModels;
+                    plantController.processDefaultPlants(context,
+                        plants: plants);
                   } else {
                     {
                       plants =

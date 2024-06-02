@@ -28,6 +28,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
     authController = AuthController(context: context);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return GradientContainerWidget(
@@ -47,19 +48,20 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   Container(
                     padding: EdgeInsets.all(AppPadding.p12),
                     decoration: BoxDecoration(
-                        color: ColorManager.secondary,
+                        color: ColorManager.appBarColor,
                         borderRadius: BorderRadius.circular(8.r)),
                     child: ListTile(
                       contentPadding: EdgeInsets.zero,
-                      title: Icon(Icons.notes_sharp,color: ColorManager.error,),
+                      title: Icon(
+                        Icons.notes_sharp,
+                        color: ColorManager.error,
+                      ),
                       subtitle: Text(
                         AppString.emailRecoveryDescription,
                         textAlign: TextAlign.center,
                         style: StylesManager.titleNormalTextStyle(
-                          size: 20.sp,
-
-                          color: ColorManager.black
-                        )?.copyWith(
+                                size: 20.sp, color: ColorManager.fwhite)
+                            ?.copyWith(
                           height: 1.8,
                         ),
                       ),
@@ -71,10 +73,10 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   Form(
                     key: _formKey,
                     child: TextFiledApp(
-                      validator: (value){
-                        if(!value!.isEmail){
+                      validator: (value) {
+                        if (!value!.isEmail) {
                           return 'error';
-                        }else{
+                        } else {
                           return null;
                         }
                       },
@@ -88,11 +90,12 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   ),
                   ButtonApp(
                     text: AppString.send,
-                    textColor: ColorManager.primary,
-                    backgroundColor: ColorManager.secondary,
+                    textColor: ColorManager.fwhite,
+                    backgroundColor: ColorManager.appBarColor,
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        await authController.sendPasswordResetEmail(context, email: emailController.value.text);
+                        await authController.sendPasswordResetEmail(context,
+                            email: emailController.value.text);
                         print('Send Email ');
                       } else {
                         print('Error');

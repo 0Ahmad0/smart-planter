@@ -18,6 +18,13 @@ class ColorManager {
   /// Prefer Two Color
   static const secondary = Color(0xff0C3B2E);
 
+  //static const fwhite = Color(0xff0EAE4D6);
+  static const fwhite = Color.fromARGB(239, 249, 243, 228);
+  //static const fwhite = Color.fromARGB(255, 237, 229, 199);
+///////////////////////////////////////////////////////// my test collor
+  //static const appBarColor = Color(0xff10643c);
+  //static const fwhite = Color(0xff9ac1b2);
+
   /// Prefer Two Color
   ///
   ///
@@ -31,14 +38,20 @@ class ColorManager {
 
   ///
 
-  ///
-  static const textFieldColor = Color(0xffD9D9D9);
+  ///#10643c
+  static const textFieldColor = Color.fromARGB(255, 68, 65, 37);
   static const textFieldHintColor = Color(0xffB9B9B9);
   static const facebookButtonColor = Color(0xff4C8ECC);
-  static const appBarColor = Color(0xff212A34);
-  static const drawerColor = Color(0xff212A34);
+  //static const appBarColor = Color(0xff403E2C);
+
+  static const appBarColor = Color.fromARGB(255, 68, 65, 37);
+
+  //static const drawerColor = Color(0xff403E2C);
+  static const drawerColor = Color(0xffe3d496);
+
   static const progressColor = Color(0xffAFD056);
-  static const orangeColor = Color(0xffFFBA00);
+  //static const orangeColor = Color(0xffEFBC24);
+  static const orangeColor = Color(0xffefc73e);
   static const brownColor = Color(0xffBB8A52);
 
   ///--- Neutral

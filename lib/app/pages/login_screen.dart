@@ -36,6 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
     authController = AuthController(context: context);
     super.initState();
   }
+
   @override
   void dispose() {
     emailController.dispose();
@@ -59,16 +60,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const SizedBox(
-                      height: AppSize.s20,
+                      height: AppSize.s30,
                     ),
-                    Text(
-                      AppString.appName,
-                      style: StylesManager.titleBoldTextStyle(
-                        size: 40,
-                      ),
-                    ),
+                    // Text(AppString.appName,
+                    //     style: TextStyle(
+                    //         color: ColorManager.appBarColor,
+                    //         fontWeight: FontWeight.bold,
+                    //         fontSize: 40)),
                     const SizedBox(
-                      height: AppSize.s20,
+                      height: AppSize.s30,
                     ),
                     Image.asset(
                       AssetsManager.logoIMG,
@@ -79,7 +79,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: AppSize.s40,
                     ),
                     TextFiledApp(
-                      validator: (value)=>Validator.validateEmail(email: emailController.text),
+                      validator: (value) =>
+                          Validator.validateEmail(email: emailController.text),
                       controller: emailController,
                       iconData: Icons.alternate_email,
                       hintText: AppString.email,
@@ -88,7 +89,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: AppSize.s30,
                     ),
                     TextFiledApp(
-                      validator: (value)=>Validator.validatePassword(password: passwordController.text),
+                      validator: (value) => Validator.validatePassword(
+                          password: passwordController.text),
                       controller: passwordController,
                       iconData: Icons.lock_outline,
                       hintText: AppString.passWord,
@@ -100,11 +102,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     ButtonApp(
                       text: AppString.login,
+                      textColor: ColorManager.fwhite,
+                      backgroundColor: ColorManager.appBarColor,
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           authController.login(
                             context,
-                            email:emailController.value.text ,
+                            email: emailController.value.text,
                             password: passwordController.value.text,
                           );
                         } else {
@@ -117,8 +121,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     ButtonApp(
                       text: AppString.signup,
-                      textColor: ColorManager.primary,
-                      backgroundColor: ColorManager.secondary,
+                      textColor: ColorManager.appBarColor,
+                      backgroundColor: ColorManager.fwhite,
                       onPressed: () {
                         Get.offNamed(
                           AppRoute.signupRoute,
@@ -138,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           AppString.forgetPassword,
                           style: TextStyle(
                               fontSize: 20.sp,
-                              color: ColorManager.secondary.withOpacity(.75),
+                              color: ColorManager.appBarColor.withOpacity(.75),
                               decoration: TextDecoration.underline),
                         ))
                   ],

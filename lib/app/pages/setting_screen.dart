@@ -12,14 +12,14 @@ import '../widgets/button_app.dart';
 import '../widgets/constans.dart';
 
 class SettingScreen extends StatefulWidget {
-   SettingScreen({super.key});
+  SettingScreen({super.key});
 
   @override
   State<SettingScreen> createState() => _SettingScreenState();
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  TextEditingController passwordController=TextEditingController(text:  '');
+  TextEditingController passwordController = TextEditingController(text: '');
 
   late AuthController authController;
 
@@ -28,6 +28,7 @@ class _SettingScreenState extends State<SettingScreen> {
     authController = AuthController(context: context);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return GradientContainerWidget(
@@ -36,56 +37,65 @@ class _SettingScreenState extends State<SettingScreen> {
         appBar: AppBar(
           title: Text(AppString.userProfile),
         ),
-        body:
-        ChangeNotifierProvider<ProfileProvider>.value(
-          value: Provider.of<ProfileProvider>(context),
-          child:
-          Consumer<ProfileProvider>(builder: (context, value, child){
-            passwordController=TextEditingController(text:  '${value.user.password}');
-       return Center(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(AppPadding.p16),
-              child: Column(
-                children: [
-                  const SizedBox(height: AppSize.s20,),
-                  TextFiledApp(
-                    controller:value.name, //TextEditingController(text:   '${value.user.name}',),
-                    iconData: Icons.person_outline,
+        body: ChangeNotifierProvider<ProfileProvider>.value(
+            value: Provider.of<ProfileProvider>(context),
+            child: Consumer<ProfileProvider>(builder: (context, value, child) {
+              passwordController =
+                  TextEditingController(text: '${value.user.password}');
+              return Center(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(AppPadding.p16),
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: AppSize.s20,
+                        ),
+                        TextFiledApp(
+                          controller: value
+                              .name, //TextEditingController(text:   '${value.user.name}',),
+                          iconData: Icons.person_outline,
+                          textColor: ColorManager.appBarColor,
+                        ),
+                        const SizedBox(
+                          height: AppSize.s20,
+                        ),
+                        TextFiledApp(
+                          controller: value
+                              .email, //TextEditingController(text:   '${value.user.name}',),
+                          iconData: Icons.alternate_email,
+                          textColor: ColorManager.appBarColor,
+                        ),
+                        const SizedBox(
+                          height: AppSize.s20,
+                        ),
+                        TextFiledApp(
+                          suffixIcon: true,
+                          obscureText: true,
+                          controller: passwordController,
+                          iconData: Icons.lock_outline,
+                          textColor: ColorManager.appBarColor,
+                        ),
+                        const SizedBox(
+                          height: AppSize.s100,
+                        ),
+                        ButtonApp(
+                          text: AppString.update,
+                          onPressed: () async {
+                            Const.loading(context);
+                            await value.editUser(context);
+                            await authController.recoveryPassword(context,
+                                password: passwordController.value.text);
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: AppSize.s20,),
-
-                  TextFiledApp(
-                    controller: value.email,//TextEditingController(text:   '${value.user.name}',),
-                    iconData: Icons.alternate_email,
-                  ),
-                  const SizedBox(height: AppSize.s20,),
-                  TextFiledApp(
-                    suffixIcon: true,
-                    obscureText: true,
-                    controller: passwordController,
-                    iconData: Icons.lock_outline,
-                  ),
-                  const SizedBox(height: AppSize.s100,),
-
-                  ButtonApp(
-                    text: AppString.update,
-                    onPressed: () async {
-
-                        Const.loading(context);
-                        await value.editUser(context);
-                        await authController.recoveryPassword(context, password: passwordController.value.text);
-                        Navigator.of(context).pop();
-
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );})),
+                ),
+              );
+            })),
       ),
     );
-
   }
 }

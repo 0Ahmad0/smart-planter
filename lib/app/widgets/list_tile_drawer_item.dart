@@ -26,10 +26,10 @@ class ListTileDrawerItem extends StatelessWidget {
       title: Text(
         text,
         style: StylesManager.titleNormalTextStyle(
-            color: ColorManager.white, size: 18.sp),
+            color: ColorManager.appBarColor, size: 18.sp),
       ),
       trailing: trailing,
-      iconColor: ColorManager.gradientColor1,
+      iconColor: ColorManager.appBarColor,
       selectedTileColor: ColorManager.gradientColor2,
     );
   }
