@@ -14,3 +14,4 @@ Future<void> main() async {
   Provider.debugCheckInvalidValueType = null;
   runApp(SmartPlantsApp());
 }
+

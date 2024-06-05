@@ -126,10 +126,9 @@ class Const {
             Text(
               text,
               style: TextStyle(
-                  //fontSize: MediaQuery.of(context).size.width * 0.06,
+                  fontSize: MediaQuery.of(context).size.width * 0.06,
                   fontWeight: FontWeight.bold,
-                  color: ColorManager.appBarColor.withOpacity(0.8),
-                  fontSize: 20),
+                  color: ColorManager.appBarColor),
             ),
           ],
         )),
