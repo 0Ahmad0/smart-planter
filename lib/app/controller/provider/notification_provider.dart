@@ -16,9 +16,9 @@ class NotificationProvider extends ChangeNotifier{
 
     result =await FirebaseFun.addNotification(notification: notification);
     // FCMService().showLocalNotification(title: notification.title, description: notification.subtitle);
-    //  print(result);
+    //print(result);
     // Const.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()));
-    //    return result;
+       return result;
   }
   updateNotification(context,{ required NotificationModel notification}) async {
     var result;

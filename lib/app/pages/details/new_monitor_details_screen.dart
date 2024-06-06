@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -14,53 +15,85 @@ class NewMonitorDetailsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Monitor Details'),
       ),
-      backgroundColor: ColorManager.white,
-      body: ListView.separated(
-        padding: const EdgeInsets.all(12.0),
-        itemBuilder: (context, index) => MonitorDetailsWidget(
-          index: index,
-        ),
-        separatorBuilder: (_, __) => const SizedBox(
-          height: 10.0,
-        ),
-        itemCount: 15,
-      ),
+      backgroundColor: ColorManager.fwhite,
+      body: StreamBuilder(
+          stream:
+              FirebaseFirestore.instance.collection('detections').snapshots(),
+          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            var documents = snapshot.data!.docs;
+            return ListView.separated(
+              padding: const EdgeInsets.all(12.0),
+              itemBuilder: (context, index) {
+                var data = documents[index].data() as Map<String, dynamic>;
+                // تحويل العدد الصحيح إلى DateTime
+                int timestamp = data['timestamp'];
+                DateTime dateTime =
+                    DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+
+                // تنسيق التاريخ
+                String formattedDate =
+                    DateFormat('yyyy-MM-dd – kk:mm').format(dateTime);
+
+                return MonitorDetailsWidget(
+                  image: data['url'],
+                  text: data['class'],
+                  timeStamp: formattedDate,
+                );
+              },
+              separatorBuilder: (_, __) => const SizedBox(
+                height: 10.0,
+              ),
+              itemCount: documents.length,
+            );
+          }),
     );
   }
 }
 
 class MonitorDetailsWidget extends StatelessWidget {
-  const MonitorDetailsWidget({super.key, required this.index});
+  const MonitorDetailsWidget({
+    super.key,
+    required this.image,
+    required this.text,
+    required this.timeStamp,
+  });
 
-  final int index;
+  final String image;
+  final String text;
+  final String timeStamp;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => Get.dialog(
-        DetailsDialog(),
+        DetailsDialog(
+          image: image,
+          text: text,
+        ),
       ),
       child: Container(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(10.0),
         decoration: BoxDecoration(
-            color: ColorManager.primary.withOpacity(.2),
+            color: ColorManager.drawerColor,
             borderRadius: BorderRadius.circular(14.0)),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: 100,
-              height: 100.0,
+              clipBehavior: Clip.hardEdge,
+              width: 60,
+              height: 60.0,
               decoration: BoxDecoration(
-                  color: ColorManager.white,
-                  borderRadius: BorderRadius.circular(12.0)),
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Image.asset(
-                  index.isEven
-                      ? AssetsManager.insectIconIMG
-                      : AssetsManager.plantGrassIconIMG,
-                ),
+                  color: ColorManager.white.withOpacity(0.8),
+                  borderRadius: BorderRadius.circular(6.0)),
+              child: Image.network(
+                image,
+                fit: BoxFit.cover,
               ),
             ),
             const SizedBox(
@@ -70,8 +103,8 @@ class MonitorDetailsWidget extends StatelessWidget {
               child: ListTile(
                 contentPadding: EdgeInsets.zero,
                 title: Text(
-                  'This IS ${index}',
-                  style: StylesManager.titleBoldTextStyle(size: 20.0),
+                  text,
+                  style: StylesManager.titleBoldTextStyle(size: 18.0),
                 ),
                 trailing: TextButton.icon(
                     onPressed: null,
@@ -80,14 +113,17 @@ class MonitorDetailsWidget extends StatelessWidget {
                       size: 14.0,
                     ),
                     icon: Text(
-                      '${DateFormat.yMd().format(DateTime.now())}',
-                      style: TextStyle(color: ColorManager.primary),
+                      timeStamp,
+                      style: TextStyle(color: ColorManager.appBarColor),
                     )),
-                subtitle: Text(
-                  'Here IS A Ma',
-                  maxLines: 3,
-                  style: StylesManager.titleNormalTextStyle(size: 16.0),
-                ),
+                // subtitle: Text(
+                //   index.isEven ////////////////////////////////////////////////////////////
+                //       ? 'Inscet: Caterpillars' // ${index}'
+                //       : 'Disease: Fusarium wilt' // ${index}',
+                //   ,
+                //   maxLines: 3,
+                //   style: StylesManager.titleNormalTextStyle(size: 16.0),
+                // ),
               ),
             ),
           ],
@@ -99,8 +135,11 @@ class MonitorDetailsWidget extends StatelessWidget {
 
 class DetailsDialog extends StatelessWidget {
   const DetailsDialog({
-    super.key,
+    super.key, required this.image, required this.text,
   });
+
+  final String image;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +161,7 @@ class DetailsDialog extends StatelessWidget {
                   Stack(
                     children: [
                       Image.network(
-                        'https://th.bing.com/th/id/OIP.ENKNxlxJIQMHc3d6lkUKFAHaFj?rs=1&pid=ImgDetMain',
+                        image,
                         width: MediaQuery.sizeOf(context).width,
                         height: MediaQuery.sizeOf(context).width,
                         fit: BoxFit.cover,
@@ -148,18 +187,18 @@ class DetailsDialog extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Inscet: Caterpillars',
+                          text,
                           style: TextStyle(
                               color: ColorManager.primary, fontSize: 20.0),
                         ),
                         const SizedBox(
                           height: 10.0,
                         ),
-                        Text(
-                          'Plant type: Basil plant',
-                          style: TextStyle(
-                              color: ColorManager.primary, fontSize: 16.0),
-                        ),
+                        // Text(
+                        //   'Plant type: Basil plant',
+                        //   style: TextStyle(
+                        //       color: ColorManager.primary, fontSize: 16.0),
+                        // ),
                       ],
                     ),
                   )

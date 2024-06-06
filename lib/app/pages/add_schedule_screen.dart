@@ -168,6 +168,7 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                   },
                   readOnly: true,
                   controller: amTimeController,
+                  textColor: ColorManager.appBarColor,
                 ),
               ),
             ),
@@ -194,6 +195,7 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                       child: TextFiledApp(
                         iconDataImage: AssetsManager.clockIMG,
                         hintText: AppString.secondTime,
+                        hintColor: ColorManager.fwhite,
                         onTap: () async {
                           showModalBottomSheet(
                               showDragHandle: true,
@@ -261,6 +263,7 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                       child: TextFiledApp(
                         iconDataImage: AssetsManager.clockIMG,
                         hintText: 'interval Time',
+                        hintColor: ColorManager.fwhite,
                         onTap: () async {
                           showModalBottomSheet(
                               showDragHandle: true,
@@ -297,7 +300,7 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                                         onChanged: (value) => timeSetState(() {
                                           _currentValue = value;
                                           intervalTimeController.text =
-                                              value.toString() + " time";
+                                              value.toString() + " minutes";
                                         }),
                                       ),
                                       Padding(
