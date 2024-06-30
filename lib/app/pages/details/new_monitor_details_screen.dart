@@ -37,12 +37,13 @@ class NewMonitorDetailsScreen extends StatelessWidget {
 
                 // تنسيق التاريخ
                 String formattedDate =
-                    DateFormat('yyyy-MM-dd – kk:mm').format(dateTime);
+                    DateFormat('yyyy-MM-dd – kk:m').format(dateTime);
 
                 return MonitorDetailsWidget(
                   image: data['url'],
                   text: data['class'],
                   timeStamp: formattedDate,
+                  subString: timestamp.toString(),
                 );
               },
               separatorBuilder: (_, __) => const SizedBox(
@@ -61,20 +62,19 @@ class MonitorDetailsWidget extends StatelessWidget {
     required this.image,
     required this.text,
     required this.timeStamp,
+    required this.subString,
   });
 
   final String image;
   final String text;
   final String timeStamp;
+  final String subString;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => Get.dialog(
-        DetailsDialog(
-          image: image,
-          text: text,
-        ),
+        DetailsDialog(image: image, text: text, subString: subString),
       ),
       child: Container(
         padding: EdgeInsets.all(10.0),
@@ -106,6 +106,10 @@ class MonitorDetailsWidget extends StatelessWidget {
                   text,
                   style: StylesManager.titleBoldTextStyle(size: 18.0),
                 ),
+                subtitle: Text(
+                  subString,
+                  style: StylesManager.titleNormalTextStyle(size: 14.0),
+                ),
                 trailing: TextButton.icon(
                     onPressed: null,
                     label: Icon(
@@ -135,11 +139,15 @@ class MonitorDetailsWidget extends StatelessWidget {
 
 class DetailsDialog extends StatelessWidget {
   const DetailsDialog({
-    super.key, required this.image, required this.text,
+    super.key,
+    required this.image,
+    required this.text,
+    required this.subString,
   });
 
   final String image;
   final String text;
+  final String subString;
 
   @override
   Widget build(BuildContext context) {
@@ -194,11 +202,11 @@ class DetailsDialog extends StatelessWidget {
                         const SizedBox(
                           height: 10.0,
                         ),
-                        // Text(
-                        //   'Plant type: Basil plant',
-                        //   style: TextStyle(
-                        //       color: ColorManager.primary, fontSize: 16.0),
-                        // ),
+                        Text(
+                          subString,
+                          style: TextStyle(
+                              color: ColorManager.primary, fontSize: 16.0),
+                        ),
                       ],
                     ),
                   )
